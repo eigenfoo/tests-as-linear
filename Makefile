@@ -20,3 +20,6 @@ venv:  # Set up Python virtual environment.
 	deactivate; \
 	)
 	@printf "\n\nVirtual environment created! \033[1;34mRun \`source ${VENV_PATH}/bin/activate\` to activate it.\033[0m\n\n\n"
+
+test:
+	${SHELL} scripts/test.sh
