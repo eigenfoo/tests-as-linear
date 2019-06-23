@@ -1,4 +1,4 @@
-.PHONY: help venv
+.PHONY: help venv test run
 .DEFAULT_GOAL = help
 
 PYTHON = python3
@@ -24,5 +24,6 @@ venv:  # Set up Python virtual environment.
 test:  # Run test scripts.
 	${SHELL} scripts/test.sh
 
-run:  # Run `tests-as-linear.ipynb` in-place.
-	jupyter nbconvert --to notebook --execute tests-as-linear.ipynb
+run:  # Run notebook in-place and generate HTML files.
+	jupyter nbconvert --to notebook --inplace --execute tests-as-linear.ipynb
+	jupyter nbconvert --to html tests-as-linear.ipynb
