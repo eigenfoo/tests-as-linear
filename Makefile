@@ -21,5 +21,8 @@ venv:  # Set up Python virtual environment.
 	)
 	@printf "\n\nVirtual environment created! \033[1;34mRun \`source ${VENV_PATH}/bin/activate\` to activate it.\033[0m\n\n\n"
 
-test:
+test:  # Run test scripts.
 	${SHELL} scripts/test.sh
+
+run:  # Run `tests-as-linear.ipynb` in-place.
+	jupyter nbconvert --to notebook --execute tests-as-linear.ipynb
