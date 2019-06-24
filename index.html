@@ -13623,16 +13623,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tabulate and display</span>
-<span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">res1</span><span class="p">,</span> <span class="n">res2</span><span class="p">]</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;scipy.stats.pearsonr&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (scaled)&quot;</span><span class="p">])</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;slope&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;p-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">pvalues</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;t-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.025 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.975 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
-
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                       <span class="p">[</span><span class="n">res1</span><span class="p">,</span> <span class="n">res2</span><span class="p">],</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.pearsonr&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (scaled)&quot;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13668,7 +13661,7 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>slope</th>
+      <th>value</th>
       <th>p-values</th>
       <th>t-values</th>
       <th>0.025 CI</th>
@@ -13742,15 +13735,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tabulate and display</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;scipy.stats.spearmanr&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (ranked)&quot;</span><span class="p">])</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;slope&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">x</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;p-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">pvalues</span><span class="o">.</span><span class="n">x</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;t-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">x</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.025 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.975 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
-
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                       <span class="n">res</span><span class="p">,</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.spearmanr&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (ranked)&quot;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13786,7 +13773,7 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>slope</th>
+      <th>value</th>
       <th>p-values</th>
       <th>t-values</th>
       <th>0.025 CI</th>
@@ -13912,16 +13899,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tabulate and display</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_1samp&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1)&quot;</span><span class="p">])</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;slope&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;p-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">pvalues</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;t-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;df&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">df_resid</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.025 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.975 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
-
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                       <span class="n">res</span><span class="p">,</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_1samp&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1)&quot;</span><span class="p">],</span>
+                       <span class="n">x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13957,10 +13938,9 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>slope</th>
+      <th>value</th>
       <th>p-values</th>
       <th>t-values</th>
-      <th>df</th>
       <th>0.025 CI</th>
       <th>0.975 CI</th>
     </tr>
@@ -13973,14 +13953,12 @@ div#notebook {
       <td>2.493053</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
     </tr>
     <tr>
       <th>smf.ols (y ~ 1)</th>
       <td>0.369656</td>
       <td>0.016092</td>
       <td>2.493053</td>
-      <td>49.0</td>
       <td>0.071687</td>
       <td>0.667624</td>
     </tr>
@@ -14025,16 +14003,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tabulate and display</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;scipy.stats.wilcoxon&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1, signed rank)&quot;</span><span class="p">])</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;slope&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;p-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">pvalues</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;t-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;df&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">df_resid</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.025 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.975 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
-
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                       <span class="n">res</span><span class="p">,</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.wilcoxon&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1, signed rank)&quot;</span><span class="p">],</span>
+                       <span class="n">x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14070,10 +14042,9 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>slope</th>
+      <th>value</th>
       <th>p-values</th>
       <th>t-values</th>
-      <th>df</th>
       <th>0.025 CI</th>
       <th>0.975 CI</th>
     </tr>
@@ -14086,14 +14057,12 @@ div#notebook {
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
     </tr>
     <tr>
       <th>smf.ols (y ~ 1, signed rank)</th>
       <td>7.62</td>
       <td>0.057262</td>
       <td>1.947136</td>
-      <td>49.0</td>
       <td>-0.244352</td>
       <td>15.484352</td>
     </tr>
@@ -14166,16 +14135,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tabulate and display</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_ind&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">])</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;slope&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;p-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">pvalues</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;t-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;df&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">df_resid</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.025 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.975 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
-
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                       <span class="n">res</span><span class="p">,</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_ind&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">],</span>
+                       <span class="n">x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14211,10 +14174,9 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>slope</th>
+      <th>value</th>
       <th>p-values</th>
       <th>t-values</th>
-      <th>df</th>
       <th>0.025 CI</th>
       <th>0.975 CI</th>
     </tr>
@@ -14227,14 +14189,12 @@ div#notebook {
       <td>-0.387612</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
     </tr>
     <tr>
       <th>smf.ols (y_sub_y2 ~ 1)</th>
       <td>-0.079916</td>
       <td>0.702639</td>
       <td>-0.384001</td>
-      <td>49.0</td>
       <td>-0.498137</td>
       <td>0.338305</td>
     </tr>
@@ -14277,16 +14237,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tabulate and display</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;scipy.stats.wilcoxon&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">])</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;slope&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;p-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">pvalues</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;t-values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">Intercept</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;df&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">df_resid</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.025 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;0.975 CI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
-
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                       <span class="n">res</span><span class="p">,</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.wilcoxon&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">],</span>
+                       <span class="n">x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14322,10 +14276,9 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>slope</th>
+      <th>value</th>
       <th>p-values</th>
       <th>t-values</th>
-      <th>df</th>
       <th>0.025 CI</th>
       <th>0.975 CI</th>
     </tr>
@@ -14338,14 +14291,12 @@ div#notebook {
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
     </tr>
     <tr>
       <th>smf.ols (y_sub_y2 ~ 1)</th>
       <td>3.22</td>
       <td>0.428812</td>
       <td>0.797842</td>
-      <td>49.0</td>
       <td>-4.890423</td>
       <td>11.330423</td>
     </tr>
@@ -14458,19 +14409,6 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
