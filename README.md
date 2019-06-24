@@ -5,6 +5,7 @@
 
 > This is a Python port of Jonas Kristoffer Lindeløv's post [Common statistical
 > tests are linear models (or: how to teach
-> stats)](https://lindeloev.github.io/tests-as-linear/).
+> stats)](https://lindeloev.github.io/tests-as-linear/), which originally had
+> accompanying code in R.
 
 Work in progress. Details forthcoming.
