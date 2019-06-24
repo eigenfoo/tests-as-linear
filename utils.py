@@ -15,6 +15,26 @@ def format_decimals_factory(num_decimals=1):
 
 
 def tabulate_results(test_values, ols_results, names, x=True):
+    """
+    Tabulates results of statistical tests and equivalent linear regressions to
+    demonstrate that the two methods are in fact equivalent.
+
+    Parameters
+    ----------
+    test_values : list
+        List of values from the scipy statistical test to display.
+    ols_results : statsmodels.RegressionResults or list thereof
+        Result object(s) of equivalent linear regression to display.
+    names : list
+        List of strings to display.
+    x : bool
+        If True, display `x` coefficient for parameters, p and t values.
+        Otherwise, display `Intercept` coefficient.
+
+    Returns
+    -------
+    table : pd.DataFrame
+    """
     # There may be only one OLS result. If so, wrap it up as a single list.
     if not isinstance(ols_results, list):
         ols_results = [ols_results]
