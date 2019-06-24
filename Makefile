@@ -1,4 +1,4 @@
-.PHONY: help venv test run
+.PHONY: help venv test run clean
 .DEFAULT_GOAL = help
 
 PYTHON = python3
