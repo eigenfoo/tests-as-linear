@@ -3,7 +3,7 @@
 set -e
 
 jupyter nbconvert --to notebook --execute tests-as-linear.ipynb
-nbdiff tests-as-linear.ipynb tests-as-linear.nbconvert.ipynb > diff.txt
+nbdiff --ignore-output tests-as-linear.ipynb tests-as-linear.nbconvert.ipynb > diff.txt
 
 if [ -s diff.txt ]
 then
