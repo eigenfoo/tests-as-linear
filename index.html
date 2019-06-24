@@ -13126,8 +13126,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Publication information</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
 <span class="kn">import</span> <span class="nn">utils</span>
 <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;Last updated: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B </span><span class="si">%d</span><span class="s2">, %Y&quot;</span><span class="p">))))</span>
@@ -13174,16 +13173,27 @@ div#notebook {
 </ul>
 </li>
 <li><a href="#4-One-mean">4 One mean</a><ul>
-<li><a href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">4.1 One sample t-test and Wilcoxon signed-rank</a><ul>
+<li><a href="#4.1-One-sample-$t$-test-and-Wilcoxon-signed-rank">4.1 One sample $t$-test and Wilcoxon signed-rank</a><ul>
 <li><a href="#4.1.1-Theory:-As-linear-models">4.1.1 Theory: As linear models</a></li>
-<li><a href="#4.1.2-Python-code:-One-sample-t-test">4.1.2 Python code: One-sample t-test</a></li>
+<li><a href="#4.1.2-Python-code:-One-sample-$t$-test">4.1.2 Python code: One-sample $t$-test</a></li>
 <li><a href="#4.1.3-Python-code:-Wilcoxon-signed-rank-test">4.1.3 Python code: Wilcoxon signed-rank test</a></li>
 </ul>
 </li>
-<li><a href="#4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">4.2 Paired samples t-test and Wilcoxon matched pairs</a><ul>
+<li><a href="#4.2-Paired-samples-$t$-test-and-Wilcoxon-matched-pairs">4.2 Paired samples $t$-test and Wilcoxon matched pairs</a><ul>
 <li><a href="#4.2.1-Theory:-As-linear-models">4.2.1 Theory: As linear models</a></li>
-<li><a href="#4.2.2-Python-code:-Paired-sample-t-test">4.2.2 Python code: Paired sample t-test</a></li>
+<li><a href="#4.2.2-Python-code:-Paired-sample-$t$-test">4.2.2 Python code: Paired sample $t$-test</a></li>
 <li><a href="#4.2.3-Python-code:-Wilcoxon-matched-pairs">4.2.3 Python code: Wilcoxon matched pairs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#5-Two-means">5 Two means</a><ul>
+<li><a href="#5.1-Independent-t-test-and-Mann-Whitney-U">5.1 Independent t-test and Mann-Whitney U</a><ul>
+<li><a href="#5.1.1-Theory:-As-linear-models">5.1.1 Theory: As linear models</a></li>
+<li><a href="#5.1.2-Theory:-Dummy-coding">5.1.2 Theory: Dummy coding</a></li>
+<li><a href="#5.1.3-Theory:-Dummy-coding-(continued">5.1.3 Theory: Dummy coding (continued)</a>)</li>
+<li><a href="#5.1.4-Python-code:-independent-t-test">5.1.4 Python code: independent t-test</a></li>
+<li><a href="#5.1.5-Python-code:-Mann-Whitney-U">5.1.5 Python code: Mann-Whitney U</a></li>
 </ul>
 </li>
 </ul>
@@ -13201,7 +13211,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="1-The-simplicity-underlying-common-tests">1 The simplicity underlying common tests<a class="anchor-link" href="#1-The-simplicity-underlying-common-tests">&#182;</a></h1><p>Most of the common statistical models (t-test, correlation, ANOVA, chi-square, etc.) are special cases of linear models, or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to $y = a \cdot x + b$ which most students know from high school. Unfortunately, introductory statistics courses are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike.</p>
+<h1 id="1-The-simplicity-underlying-common-tests">1 The simplicity underlying common tests<a class="anchor-link" href="#1-The-simplicity-underlying-common-tests">&#182;</a></h1><p>Most of the common statistical models ($t$-test, correlation, ANOVA, chi-square, etc.) are special cases of linear models, or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to $y = a \cdot x + b$ which most students know from high school. Unfortunately, introductory statistics courses are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike.</p>
 <p>This needless complexity multiplies when students try to rote learn the parametric assumptions underlying each test separately rather than deducing them from the linear model.</p>
 <p>For this reason, I think that teaching linear models first and foremost and <em>then</em> name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing <em>understanding</em> over rote learning. Since linear models are the same across frequentist, Bayesian, and permutation-based inferences, I'd argue that it's better to start with modeling than p-values, type-1 errors, Bayes factors, or other inferences.</p>
 <p>Concerning the teaching of <em>"non-parametric"</em> tests in intro-courses, I think that we can justify <a href="https://en.wikipedia.org/wiki/Lie-to-children">lying-to-children</a> and teach "non-parametric"" tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think "ranks!" than to believe that you can magically throw away assumptions. Indeed, the Bayesian equivalents of "non-parametric"" tests implemented in <a href="https://jasp-stats.org">JASP</a> <a href="https://arxiv.org/abs/1712.06941">literally just do (latent) ranking</a> and that's it. For the frequentist "non-parametric"" tests considered here, this approach is highly accurate for N &gt; 15.</p>
@@ -13494,7 +13504,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is often simply called a <strong>regression</strong> model which can be extended to <strong>multiple regression</strong> where there are several $\beta$s and on the right-hand side multiplied with the predictors. Everything below, from <a href="#t1">one-sample t-test</a> to <a href="#anova2">two-way ANOVA</a> are just special cases of this system. Nothing more, nothing less.</p>
+<p>This is often simply called a <strong>regression</strong> model which can be extended to <strong>multiple regression</strong> where there are several $\beta$s and on the right-hand side multiplied with the predictors. Everything below, from <a href="#t1">one-sample $t$-test</a> to <a href="#anova2">two-way ANOVA</a> are just special cases of this system. Nothing more, nothing less.</p>
 <p>As the name implies, the <strong>Spearman rank correlation</strong> is a <strong>Pearson correlation</strong> on rank-transformed $x$ and $y$:</p>
 <p>$\text{rank}(y) = \beta_0 + \beta_1 \cdot \text{rank}(x) \qquad \mathcal{H}_0: \beta_1 = 0$</p>
 <p>I'll introduce <a href="#Theory:-rank-transformation">ranks</a> in a minute. For now, notice that the correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is is <a href="simulations/simulate_spearman.html">appropriate for samples greater than N=10 and almost perfect when N &gt; 20</a>.</p>
@@ -13815,7 +13825,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="4-One-mean">4 One mean<a class="anchor-link" href="#4-One-mean">&#182;</a></h1><h2 id="4.1-One-sample-t-test-and-Wilcoxon-signed-rank">4.1 One sample t-test and Wilcoxon signed-rank<a class="anchor-link" href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">&#182;</a></h2><h3 id="4.1.1-Theory:-As-linear-models">4.1.1 Theory: As linear models<a class="anchor-link" href="#4.1.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>t-test</strong> model: A single number predicts $y$.</p>
+<h1 id="4-One-mean">4 One mean<a class="anchor-link" href="#4-One-mean">&#182;</a></h1><h2 id="4.1-One-sample-$t$-test-and-Wilcoxon-signed-rank">4.1 One sample $t$-test and Wilcoxon signed-rank<a class="anchor-link" href="#4.1-One-sample-$t$-test-and-Wilcoxon-signed-rank">&#182;</a></h2><h3 id="4.1.1-Theory:-As-linear-models">4.1.1 Theory: As linear models<a class="anchor-link" href="#4.1.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>$t$-test</strong> model: A single number predicts $y$.</p>
 <p>$y = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$</p>
 <p>In other words, it's our good old $y = \beta_0 + \beta_1*x$ where the last term is gone since there is no $x$ (essentially $x=0$, see left figure below).</p>
 <p>The same is to a very close approximately true for <strong>Wilcoxon signed-rank test</strong>, just with the <a href="#rank">signed ranks</a> of $y$ instead of $y$ itself (see right panel below).</p>
@@ -13841,7 +13851,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4.1.2-Python-code:-One-sample-t-test">4.1.2 Python code: One-sample t-test<a class="anchor-link" href="#4.1.2-Python-code:-One-sample-t-test">&#182;</a></h3><p>Try running the R code below and see that the linear model (<code>lm</code>) produces the same $t$, $p$, and $r$ as the built-in <code>t.test</code>. The confidence interval is not presented in the output of <code>lm</code> but is also identical if you use <code>confint(lm(...))</code>:</p>
+<h3 id="4.1.2-Python-code:-One-sample-$t$-test">4.1.2 Python code: One-sample $t$-test<a class="anchor-link" href="#4.1.2-Python-code:-One-sample-$t$-test">&#182;</a></h3><p>Try running the R code below and see that the linear model (<code>lm</code>) produces the same $t$, $p$, and $r$ as the built-in <code>t.test</code>. The confidence interval is not presented in the output of <code>lm</code> but is also identical if you use <code>confint(lm(...))</code>:</p>
 
 </div>
 </div>
@@ -13963,7 +13973,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">signed_rank_data</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">wilcoxon</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wilcoxon</span><span class="p">(</span><span class="n">signed_rank_data</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wilcoxon</span><span class="p">(</span><span class="n">signed_rank_data</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ 1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">signed_rank_data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 
@@ -14063,19 +14073,19 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">4.2 Paired samples t-test and Wilcoxon matched pairs<a class="anchor-link" href="#4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">&#182;</a></h2><h3 id="4.2.1-Theory:-As-linear-models">4.2.1 Theory: As linear models<a class="anchor-link" href="#4.2.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>t-test</strong> model: a single number (intercept) predicts the pairwise differences.</p>
+<h2 id="4.2-Paired-samples-$t$-test-and-Wilcoxon-matched-pairs">4.2 Paired samples $t$-test and Wilcoxon matched pairs<a class="anchor-link" href="#4.2-Paired-samples-$t$-test-and-Wilcoxon-matched-pairs">&#182;</a></h2><h3 id="4.2.1-Theory:-As-linear-models">4.2.1 Theory: As linear models<a class="anchor-link" href="#4.2.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>$t$-test</strong> model: a single number (intercept) predicts the pairwise differences.</p>
 <p>$y_2-y_1 = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$</p>
-<p>This means that there is just one $y = y_2 - y_1$ to predict and it becomes a <a href="#t1">one-sample t-test</a> on the pairwise differences. The visualization is therefore also the same as for the one-sample t-test. At the risk of overcomplicating a simple substraction, you can think of these pairwise differences as slopes (see left panel of the figure), which we can represent as y-offsets (see right panel of the figure):</p>
+<p>This means that there is just one $y = y_2 - y_1$ to predict and it becomes a <a href="#t1">one-sample $t$-test</a> on the pairwise differences. The visualization is therefore also the same as for the one-sample $t$-test. At the risk of overcomplicating a simple substraction, you can think of these pairwise differences as slopes (see left panel of the figure), which we can represent as y-offsets (see right panel of the figure):</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO</span>
 </pre></div>
 
     </div>
@@ -14094,10 +14104,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO</span>
 </pre></div>
 
     </div>
@@ -14108,13 +14118,13 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4.2.2-Python-code:-Paired-sample-t-test">4.2.2 Python code: Paired sample t-test<a class="anchor-link" href="#4.2.2-Python-code:-Paired-sample-t-test">&#182;</a></h3>
+<h3 id="4.2.2-Python-code:-Paired-sample-$t$-test">4.2.2 Python code: Paired sample $t$-test<a class="anchor-link" href="#4.2.2-Python-code:-Paired-sample-$t$-test">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y - y2 ~ 1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -14135,7 +14145,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y - y2 ~ 1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">signed_rank_data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -14151,6 +14161,69 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>For large sample sizes (N &gt;&gt; 100), this approaches the <strong>sign test</strong> to a reasonable degree, but this approximation is too inaccurate to flesh out here.</p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="5-Two-means">5 Two means<a class="anchor-link" href="#5-Two-means">&#182;</a></h1><h2 id="5.1-Independent-t-test-and-Mann-Whitney-U">5.1 Independent t-test and Mann-Whitney U<a class="anchor-link" href="#5.1-Independent-t-test-and-Mann-Whitney-U">&#182;</a></h2><h3 id="5.1.1-Theory:-As-linear-models">5.1.1 Theory: As linear models<a class="anchor-link" href="#5.1.1-Theory:-As-linear-models">&#182;</a></h3><p>Independent t-test model: two means predict $y$.</p>
+<p>$y_i = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$</p>
+<p>where $x_i$ is an indicator (0 or 1) saying whether data point $i$ was sampled from one or the other group. <a href="https://en.wikipedia.org/wiki/Dummy_variable_(statistics">Indicator variables (also called "dummy coding")</a>) underly a lot of linear models and we'll take an aside to see how it works in a minute.</p>
+<p><strong>Mann-Whitney U</strong> (also known as <strong>Wilcoxon rank-sum test</strong> for two independent groups; no <em>signed</em> rank this time) is the same model to a very close approximation, just on the ranks of $x$ and $y$ instead of the actual values:</p>
+<p>$\text{rank}(y_i) = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$</p>
+<p>To me, equivalences like this make "non-parametric" statistics much easier to understand. The approximation is appropriate <a href="simulations/simulate_mannwhitney.html">when the sample size is larger than 11 in each group and virtually perfect when N &gt; 30 in each group</a>.</p>
+<h3 id="5.1.2-Theory:-Dummy-coding">5.1.2 Theory: Dummy coding<a class="anchor-link" href="#5.1.2-Theory:-Dummy-coding">&#182;</a></h3><p>Dummy coding can be understood visually. The indicator is on the x-axis so data points from the first group are located at $x = 0$ and data points from the second group is located at $x = 1$. Then $\beta_0$ is the intercept (blue line) and $\beta_1$ is the slope between the two means (red line). Why? Because when $\Delta x = 1$ the slope equals the difference because:</p>
+<p>$\text{slope} = \Delta y / \Delta x = \Delta y / 1 = \Delta y = \text{difference}$</p>
+<p>Magic! Even categorical differences can be modelled using linear models! It's a true Swiss army knife.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.1.3-Theory:-Dummy-coding-(continued)">5.1.3 Theory: Dummy coding (continued)<a class="anchor-link" href="#5.1.3-Theory:-Dummy-coding-(continued)">&#182;</a></h3><p>If you feel like you get dummy coding now, just skip ahead to the next section. Here is a more elaborate explanation of dummy coding:</p>
+<p>If a data point was sampled from the first group, i.e., when $x_i = 0$, the model simply becomes $y = \beta_0 + \beta_1 \cdot 0 = \beta_0$. In other words, the model predicts that that data point is $beta_0$. It turns out that the $\beta$ which best predicts a set of data points is the <em>mean</em> of those data points, so $\beta_0$ is the mean of group 1.</p>
+<p>On the other hand, data points sampled from the second group would have $x_i = 1$ so the model becomes $y_i = \beta_0 + \beta_1\cdot 1 = \beta_0 + \beta_1$. In other words, we add $\beta_1$ to "shift" from the mean of the first group to the mean of the second group. Thus $\beta_1$ becomes the <em>mean difference</em> between the groups.</p>
+<p>As an example, say group 1 is 25 years old ($\beta_0 = 25$) and group 2 is 28 years old ($\beta_1 = 3$), then the model for a person in group 1 is $y = 25 + 3 \cdot 0 = 25$ and the model for a person in group 2 is $y = 25 + 3 \cdot 1 = 28$.</p>
+<p>Hooray, it works! For first-timers it takes a few moments to understand dummy coding, but you only need to know addition and multiplication to get there!</p>
+<h3 id="5.1.4-Python-code:-independent-t-test">5.1.4 Python code: independent t-test<a class="anchor-link" href="#5.1.4-Python-code:-independent-t-test">&#182;</a></h3><p>As a reminder, when we write <code>y ~ 1 + x</code> in R, it is shorthand for $y = \beta_0 \cdot 1 + \beta_1 \cdot x$ and R goes on computing the $\beta$s for you. Thus <code>y ~ 1 + x</code> is the R-way of writing $y = a \cdot x + b$.</p>
+<p>Notice the identical <code>t</code>, <code>df</code>, <code>p</code>, and estimates. We can get the confidence interval by running <code>confint(lm(...))</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.1.5-Python-code:-Mann-Whitney-U">5.1.5 Python code: Mann-Whitney U<a class="anchor-link" href="#5.1.5-Python-code:-Mann-Whitney-U">&#182;</a></h3>
 </div>
 </div>
 </div>
