@@ -89,3 +89,23 @@ def ttest_wilcoxon_plot(data, intercept_ttest, intercept_wilcoxon):
         ax.legend(fontsize="large")
 
     return fig, axarr
+
+
+def pairs_wilcoxon_plot(data, intercept_wilcoxon):
+    fig, axarr = plt.subplots(ncols=2, figsize=[18, 8])
+
+    axarr[0].scatter(np.zeros_like(data.y), data.y, color="k")
+    axarr[0].scatter(np.ones_like(data.y2), data.y2, color="k")
+    for y, y2 in zip(data.y, data.y2):
+        axarr[0].plot([0, 1], [y, y2], color="k")
+    axarr[0].set_title("Pairs")
+
+    axarr[1].scatter(np.zeros_like(data.y_sub_y2), data.y_sub_y2, color="k")
+    annotations = data.y_sub_y2.apply(format_decimals_factory())
+    for i, annot in enumerate(annotations):
+        axarr[1].annotate(annot, (0, data.y_sub_y2[i]), color="grey")
+    axarr[1].axhline(intercept_wilcoxon, color="b", label=r"$\beta_0$ (Intercept)")
+    axarr[1].set_title("$t$-test")
+    axarr[1].legend(fontsize="large")
+
+    return fig, axarr
