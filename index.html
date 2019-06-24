@@ -13121,6 +13121,41 @@ div#notebook {
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">&#182;</a></h1><ul>
+<li><a href="#Common-statistical-tests-are-linear-models-(or:-how-to-teach-stats">Common statistical tests are linear models (or: how to teach stats)</a>)</li>
+<li><a href="#Table-of-contents">Table of contents</a></li>
+<li><a href="#1-The-simplicity-underlying-common-tests">1 The simplicity underlying common tests</a></li>
+<li><a href="#2-Settings-and-toy-data">2 Settings and toy data</a></li>
+<li><a href="#3-Pearson-and-Spearman-correlation">3 Pearson and Spearman correlation</a><ul>
+<li><a href="#3.0.1-Theory:-As-linear-models">3.0.1 Theory: As linear models</a></li>
+<li><a href="#3.0.2-Theory:-rank-transformation">3.0.2 Theory: rank-transformation</a></li>
+<li><a href="#3.0.3-Python-code:-Pearson-correlation">3.0.3 Python code: Pearson correlation</a></li>
+<li><a href="#3.0.4-Python-code:-Spearman-correlation">3.0.4 Python code: Spearman correlation</a></li>
+</ul>
+</li>
+<li><a href="#4-One-mean">4 One mean</a><ul>
+<li><a href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">4.1 One sample t-test and Wilcoxon signed-rank</a><ul>
+<li><a href="#4.1.1-Theory:-As-linear-models">4.1.1 Theory: As linear models</a></li>
+<li><a href="#4.1.2-Python-code:-One-sample-t-test">4.1.2 Python code: One-sample t-test</a></li>
+<li><a href="#4.1.3-Python-code:-Wilcoxon-signed-rank-test">4.1.3 Python code: Wilcoxon signed-rank test</a></li>
+</ul>
+</li>
+<li><a href="#4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">4.2 Paired samples t-test and Wilcoxon matched pairs</a><ul>
+<li><a href="#4.2.1-Theory:-As-linear-models">4.2.1 Theory: As linear models</a></li>
+<li><a href="#4.2.2-Python-code:-Paired-sample-t-test">4.2.2 Python code: Paired sample t-test</a></li>
+<li><a href="#4.2.3-Python-code:-Wilcoxon-matched-pairs">4.2.3 Python code: Wilcoxon matched pairs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
@@ -13163,12 +13198,12 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-simplicity-underlying-common-tests">The simplicity underlying common tests<a class="anchor-link" href="#The-simplicity-underlying-common-tests">&#182;</a></h1><p>Most of the common statistical models (t-test, correlation, ANOVA, chi-square, etc.) are special cases of linear models, or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to $y = a \cdot x + b$ which most students know from high school. Unfortunately, introductory statistics courses are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike.</p>
+<h1 id="1-The-simplicity-underlying-common-tests">1 The simplicity underlying common tests<a class="anchor-link" href="#1-The-simplicity-underlying-common-tests">&#182;</a></h1><p>Most of the common statistical models (t-test, correlation, ANOVA, chi-square, etc.) are special cases of linear models, or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to $y = a \cdot x + b$ which most students know from high school. Unfortunately, introductory statistics courses are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike.</p>
 <p>This needless complexity multiplies when students try to rote learn the parametric assumptions underlying each test separately rather than deducing them from the linear model.</p>
 <p>For this reason, I think that teaching linear models first and foremost and <em>then</em> name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing <em>understanding</em> over rote learning. Since linear models are the same across frequentist, Bayesian, and permutation-based inferences, I'd argue that it's better to start with modeling than p-values, type-1 errors, Bayes factors, or other inferences.</p>
 <p>Concerning the teaching of <em>"non-parametric"</em> tests in intro-courses, I think that we can justify <a href="https://en.wikipedia.org/wiki/Lie-to-children">lying-to-children</a> and teach "non-parametric"" tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think "ranks!" than to believe that you can magically throw away assumptions. Indeed, the Bayesian equivalents of "non-parametric"" tests implemented in <a href="https://jasp-stats.org">JASP</a> <a href="https://arxiv.org/abs/1712.06941">literally just do (latent) ranking</a> and that's it. For the frequentist "non-parametric"" tests considered here, this approach is highly accurate for N &gt; 15.</p>
 <p>Use the menu to jump to your favourite section. There are links to lots of similar (though more scattered) stuff under <a href="#links">sources</a> and <a href="#course">teaching materials</a>. I hope that you will join in suggesting improvements or submitting improvements yourself in <a href="https://github.com/lindeloev/tests-as-linear">the Github repo to this page</a>. Let's make it awesome!</p>
-<h1 id="Settings-and-toy-data">Settings and toy data<a class="anchor-link" href="#Settings-and-toy-data">&#182;</a></h1>
+<h1 id="2-Settings-and-toy-data">2 Settings and toy data<a class="anchor-link" href="#2-Settings-and-toy-data">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -13373,7 +13408,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Pearson-and-Spearman-correlation">Pearson and Spearman correlation<a class="anchor-link" href="#Pearson-and-Spearman-correlation">&#182;</a></h1><h3 id="Theory:-As-linear-models">Theory: As linear models<a class="anchor-link" href="#Theory:-As-linear-models">&#182;</a></h3><p>Model: the recipe for $y$ is a slope ($\beta_1$) times $x$ plus an intercept ($\beta_0$, aka a straight line).</p>
+<h1 id="3-Pearson-and-Spearman-correlation">3 Pearson and Spearman correlation<a class="anchor-link" href="#3-Pearson-and-Spearman-correlation">&#182;</a></h1><h3 id="3.0.1-Theory:-As-linear-models">3.0.1 Theory: As linear models<a class="anchor-link" href="#3.0.1-Theory:-As-linear-models">&#182;</a></h3><p>Model: the recipe for $y$ is a slope ($\beta_1$) times $x$ plus an intercept ($\beta_0$, aka a straight line).</p>
 <p>$y = \beta_0 + \beta_1 x \qquad \mathcal{H}_0: \beta_1 = 0$</p>
 <p>... which is a math-y way of writing the good old $y = ax + b$ (here ordered as $y = b + ax$). Using <code>patsy</code> lets us be a bit lazier and write <code>y ~ 1 + x</code> which reads like <code>y = 1*number + x*othernumber</code>. and the task of linear models is simply to find the numbers that best predict <code>y</code>.</p>
 <p>Either way you write it, it's an intercept ($\beta_0$) and a slope ($\beta_1$) yielding a straight line:</p>
@@ -13507,7 +13542,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Theory:-rank-transformation">Theory: rank-transformation<a class="anchor-link" href="#Theory:-rank-transformation">&#182;</a></h3><p><code>np.argsort</code> simply takes a list of numbers and "replaces" them with the integers of their rank (1st smallest, 2nd smallest, 3rd smallest, etc.). So the result of the rank-transformation <code>np.argsort([3.6, 3.4, -5.0, 8.2])</code> is <code>[3, 2, 1, 4]</code>. See that in the figure above?</p>
+<h3 id="3.0.2-Theory:-rank-transformation">3.0.2 Theory: rank-transformation<a class="anchor-link" href="#3.0.2-Theory:-rank-transformation">&#182;</a></h3><p><code>np.argsort</code> simply takes a list of numbers and "replaces" them with the integers of their rank (1st smallest, 2nd smallest, 3rd smallest, etc.). So the result of the rank-transformation <code>np.argsort([3.6, 3.4, -5.0, 8.2])</code> is <code>[3, 2, 1, 4]</code>. See that in the figure above?</p>
 <p>A <em>signed</em> rank is the same, just where we rank according to absolute size first and then add in the sign second. So the signed rank here would be <code>[2, 1, -3, 4]</code>. Or in code:</p>
 
 </div>
@@ -13531,7 +13566,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I hope I don't offend anyone when I say that ranks are easy; yet it's all you need to do to convert most parametric tests into their "non-parametric" counterparts! One interesting implication is that <em>many "non-parametric tests" are about as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on rank-transformed data</em>. That's why I put "non-parametric" in quotation marks.</p>
-<h3 id="Python-code:-Pearson-correlation">Python code: Pearson correlation<a class="anchor-link" href="#Python-code:-Pearson-correlation">&#182;</a></h3><p>It couldn't be much simpler to run these models with <code>statsmodels</code> (<a href="https://www.statsmodels.org/stable/example_formulas.html#ols-regression-using-formulas"><code>smf.ols</code></a>) or <code>scipy</code> (<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html"><code>scipy.stats.pearson</code></a>). They yield identical slopes, <code>p</code> and <code>t</code> values, but there's a catch: <code>smf.ols</code> gives you the <em>slope</em> and even though that is usually much more interpretable and informative than the <em>correlation coefficient</em> $r$, you may still want $r$. Luckily, the slope becomes $r$ if <code>x</code> and <code>y</code> have a standard deviation of exactly 1. You can do this by scaling the data: <code>data /= data.std()</code>.</p>
+<h3 id="3.0.3-Python-code:-Pearson-correlation">3.0.3 Python code: Pearson correlation<a class="anchor-link" href="#3.0.3-Python-code:-Pearson-correlation">&#182;</a></h3><p>It couldn't be much simpler to run these models with <code>statsmodels</code> (<a href="https://www.statsmodels.org/stable/example_formulas.html#ols-regression-using-formulas"><code>smf.ols</code></a>) or <code>scipy</code> (<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html"><code>scipy.stats.pearson</code></a>). They yield identical slopes, <code>p</code> and <code>t</code> values, but there's a catch: <code>smf.ols</code> gives you the <em>slope</em> and even though that is usually much more interpretable and informative than the <em>correlation coefficient</em> $r$, you may still want $r$. Luckily, the slope becomes $r$ if <code>x</code> and <code>y</code> have a standard deviation of exactly 1. You can do this by scaling the data: <code>data /= data.std()</code>.</p>
 
 </div>
 </div>
@@ -13650,7 +13685,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Notice how scipy.stats and smf.ols (scaled) have the same values.</p>
-<h3 id="Python-code:-Spearman-correlation">Python code: Spearman correlation<a class="anchor-link" href="#Python-code:-Spearman-correlation">&#182;</a></h3><p>Note that we can interpret the slope which is the number of ranks $y$ change for each rank on $x$. I think that this is a pretty interesting number. However, the intercept is less interpretable since it lies at $\text{rank}(x) = 0$ which is impossible since x starts at 1.</p>
+<h3 id="3.0.4-Python-code:-Spearman-correlation">3.0.4 Python code: Spearman correlation<a class="anchor-link" href="#3.0.4-Python-code:-Spearman-correlation">&#182;</a></h3><p>Note that we can interpret the slope which is the number of ranks $y$ change for each rank on $x$. I think that this is a pretty interesting number. However, the intercept is less interpretable since it lies at $\text{rank}(x) = 0$ which is impossible since x starts at 1.</p>
 <p>See the identical <code>r</code> (now "rho") and <code>p</code>:</p>
 
 </div>
@@ -13759,7 +13794,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="One-mean">One mean<a class="anchor-link" href="#One-mean">&#182;</a></h1><h2 id="One-sample-t-test-and-Wilcoxon-signed-rank">One sample t-test and Wilcoxon signed-rank<a class="anchor-link" href="#One-sample-t-test-and-Wilcoxon-signed-rank">&#182;</a></h2><h3 id="Theory:-As-linear-models">Theory: As linear models<a class="anchor-link" href="#Theory:-As-linear-models">&#182;</a></h3><p><strong>t-test</strong> model: A single number predicts $y$.</p>
+<h1 id="4-One-mean">4 One mean<a class="anchor-link" href="#4-One-mean">&#182;</a></h1><h2 id="4.1-One-sample-t-test-and-Wilcoxon-signed-rank">4.1 One sample t-test and Wilcoxon signed-rank<a class="anchor-link" href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">&#182;</a></h2><h3 id="4.1.1-Theory:-As-linear-models">4.1.1 Theory: As linear models<a class="anchor-link" href="#4.1.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>t-test</strong> model: A single number predicts $y$.</p>
 <p>$y = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$</p>
 <p>In other words, it's our good old $y = \beta_0 + \beta_1*x$ where the last term is gone since there is no $x$ (essentially $x=0$, see left figure below).</p>
 <p>The same is to a very close approximately true for <strong>Wilcoxon signed-rank test</strong>, just with the <a href="#rank">signed ranks</a> of $y$ instead of $y$ itself (see right panel below).</p>
@@ -13785,7 +13820,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Python-code:-One-sample-t-test">Python code: One-sample t-test<a class="anchor-link" href="#Python-code:-One-sample-t-test">&#182;</a></h3><p>Try running the R code below and see that the linear model (<code>lm</code>) produces the same $t$, $p$, and $r$ as the built-in <code>t.test</code>. The confidence interval is not presented in the output of <code>lm</code> but is also identical if you use <code>confint(lm(...))</code>:</p>
+<h3 id="4.1.2-Python-code:-One-sample-t-test">4.1.2 Python code: One-sample t-test<a class="anchor-link" href="#4.1.2-Python-code:-One-sample-t-test">&#182;</a></h3><p>Try running the R code below and see that the linear model (<code>lm</code>) produces the same $t$, $p$, and $r$ as the built-in <code>t.test</code>. The confidence interval is not presented in the output of <code>lm</code> but is also identical if you use <code>confint(lm(...))</code>:</p>
 
 </div>
 </div>
@@ -13895,7 +13930,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Python-code:-Wilcoxon-signed-rank-test">Python code: Wilcoxon signed-rank test<a class="anchor-link" href="#Python-code:-Wilcoxon-signed-rank-test">&#182;</a></h3><p>In addition to matching <code>p</code>-values, <code>lm</code> also gives us the mean signed rank, which I find to be an informative number.</p>
+<h3 id="4.1.3-Python-code:-Wilcoxon-signed-rank-test">4.1.3 Python code: Wilcoxon signed-rank test<a class="anchor-link" href="#4.1.3-Python-code:-Wilcoxon-signed-rank-test">&#182;</a></h3><p>In addition to matching <code>p</code>-values, <code>lm</code> also gives us the mean signed rank, which I find to be an informative number.</p>
 
 </div>
 </div>
@@ -14007,7 +14042,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Paired-samples-t-test-and-Wilcoxon-matched-pairs">Paired samples t-test and Wilcoxon matched pairs<a class="anchor-link" href="#Paired-samples-t-test-and-Wilcoxon-matched-pairs">&#182;</a></h2><h3 id="Theory:-As-linear-models">Theory: As linear models<a class="anchor-link" href="#Theory:-As-linear-models">&#182;</a></h3><p><strong>t-test</strong> model: a single number (intercept) predicts the pairwise differences.</p>
+<h2 id="4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">4.2 Paired samples t-test and Wilcoxon matched pairs<a class="anchor-link" href="#4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">&#182;</a></h2><h3 id="4.2.1-Theory:-As-linear-models">4.2.1 Theory: As linear models<a class="anchor-link" href="#4.2.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>t-test</strong> model: a single number (intercept) predicts the pairwise differences.</p>
 <p>$y_2-y_1 = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$</p>
 <p>This means that there is just one $y = y_2 - y_1$ to predict and it becomes a <a href="#t1">one-sample t-test</a> on the pairwise differences. The visualization is therefore also the same as for the one-sample t-test. At the risk of overcomplicating a simple substraction, you can think of these pairwise differences as slopes (see left panel of the figure), which we can represent as y-offsets (see right panel of the figure):</p>
 
@@ -14052,7 +14087,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Python-code:-Paired-sample-t-test">Python code: Paired sample t-test<a class="anchor-link" href="#Python-code:-Paired-sample-t-test">&#182;</a></h3>
+<h3 id="4.2.2-Python-code:-Paired-sample-t-test">4.2.2 Python code: Paired sample t-test<a class="anchor-link" href="#4.2.2-Python-code:-Paired-sample-t-test">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14072,7 +14107,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Python-code:-Wilcoxon-matched-pairs">Python code: Wilcoxon matched pairs<a class="anchor-link" href="#Python-code:-Wilcoxon-matched-pairs">&#182;</a></h3><p>Again, we do the signed-ranks trick. This is still an approximation, but a close one:</p>
+<h3 id="4.2.3-Python-code:-Wilcoxon-matched-pairs">4.2.3 Python code: Wilcoxon matched pairs<a class="anchor-link" href="#4.2.3-Python-code:-Wilcoxon-matched-pairs">&#182;</a></h3><p>Again, we do the signed-ranks trick. This is still an approximation, but a close one:</p>
 
 </div>
 </div>
