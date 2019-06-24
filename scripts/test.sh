@@ -3,15 +3,16 @@
 set -e
 
 jupyter nbconvert --to notebook --execute tests-as-linear.ipynb
-diff tests-as-linear.ipynb tests-as-linear.nbconvert.ipynb
-DIFFEXIT=$?
-rm -rf tests-as-linear.nbconvert.ipynb  # Clean up
+nbdiff tests-as-linear.ipynb tests-as-linear.nbconvert.ipynb > diff.txt
 
-if [ $DIFFEXIT -eq 0 ]
+if [ -s diff.txt ]
 then
-   echo "Tests passed!"
-   exit 0
-else
    echo "Notebook not executed in order. Rerun \`tests-as-linear.ipynb\`."
+   cat diff.txt
+   rm -rf diff.txt tests-as-linear.nbconvert.ipynb  # Clean up
    exit 1
+else
+   echo "Tests passed!"
+   rm -rf diff.txt tests-as-linear.nbconvert.ipynb  # Clean up
+   exit 0
 fi

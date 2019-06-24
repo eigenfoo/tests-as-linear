@@ -2,6 +2,7 @@ pandas==0.24.2
 patsy==0.5.1
 jupyter==1.0.0
 matplotlib==3.1.0
+nbdime==1.0.6
 numpy==1.16.4
 scipy==1.2.0
 statsmodels==0.9.0
