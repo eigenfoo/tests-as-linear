@@ -1,9 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
-
-def signed_rank(x, axis=-1):
-    return np.sign(x) * np.argsort(x, axis=axis)
+from utils import signed_rank, format_decimals_factory
 
 
 def linear_regression_plot(data, intercept, slope):
@@ -19,10 +16,6 @@ def linear_regression_plot(data, intercept, slope):
     ax.legend()
 
     return fig, ax
-
-
-def format_decimals_factory(num_decimals=1):
-    return lambda x: "{1:.{0}f}".format(num_decimals, x)
 
 
 # pylint: disable=R0913,R0914
@@ -81,7 +74,7 @@ def ttest_wilcoxon_plot(data, intercept_ttest, intercept_wilcoxon):
         [intercept_ttest, intercept_wilcoxon],
     ):
         # Scatter plot
-        ax.scatter(np.ones(50), dataset, color="k")
+        ax.scatter(np.ones_like(dataset), dataset, color="k")
 
         # Annotate data points
         annotations = dataset.apply(to_str)
