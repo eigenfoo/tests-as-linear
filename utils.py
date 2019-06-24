@@ -1,25 +1,14 @@
-#!/bin/python
-
-import argparse
 import re
 import json
 import string
 
-parser = argparse.ArgumentParser(
-    description="Print a Markdown table of contents for a Jupyter notebook."
-)
-parser.add_argument(
-    "notebook", type=str, help="Notebook for which to create table of contents."
-)
-args = parser.parse_args()
 
-
-if __name__ == "__main__":
-    toc = []
-
-    with open(args.notebook, "r") as f:
+def generate_toc(notebook="tests-as-linear.ipynb"):
+    """ Generate markdown table of contents """
+    with open(notebook, "r") as f:
         cells = json.load(f)["cells"]
 
+    toc = ["# Table of contents\n"]
     for cell in cells:
         if cell["cell_type"] == "markdown":
             for line in cell["source"]:
@@ -33,8 +22,11 @@ if __name__ == "__main__":
                         + line.strip(" #\n")
                         + "](#"
                         + link
-                        + ")"
+                        + ")\n"
                     )
 
+    out = ""
     for item in toc:
-        print(item)
+        out += item
+
+    return out
