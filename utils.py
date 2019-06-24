@@ -25,7 +25,7 @@ def generate_toc(notebook="tests-as-linear.ipynb"):
     with open(notebook, "r") as f:
         cells = json.load(f)["cells"]
 
-    items = ["# Table of contents\n"]
+    items = ["# Table of contents"]
     for cell in cells:
         if cell["cell_type"] == "markdown":
             for line in cell["source"]:
@@ -39,11 +39,8 @@ def generate_toc(notebook="tests-as-linear.ipynb"):
                         + line.strip(" #\n")
                         + "](#"
                         + link
-                        + ")\n"
+                        + ")"
                     )
 
-    toc = ""
-    for item in items:
-        toc += item
-
+    toc = "\n".join(items)
     return toc
