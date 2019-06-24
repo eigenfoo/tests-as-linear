@@ -1,22 +1,39 @@
+""" Utility functions. """
+
 import re
 import json
-import string
 
 
 def generate_toc(notebook="tests-as-linear.ipynb"):
-    """ Generate markdown table of contents """
+    """
+    Generates a table of contents in Markdown.
+
+    Assumes that headers begin with `#` symbols (e.g. there is no leading
+    whitespace). Considers all symbols after the consecutive `#` symbols (there
+    may be more than one) to be the header.
+
+    Parameters
+    ----------
+    notebook : str
+        Path to notebook for which to generate a table of contents.
+
+    Returns
+    -------
+    toc : str
+        Table of contents as a Markdown string.
+    """
     with open(notebook, "r") as f:
         cells = json.load(f)["cells"]
 
-    toc = ["# Table of contents\n"]
+    items = ["# Table of contents\n"]
     for cell in cells:
         if cell["cell_type"] == "markdown":
             for line in cell["source"]:
-                match = re.search("^#+ \w+", line)
+                match = re.search(r"^#+ ", line)
                 if match:
                     level = len(line) - len(line.lstrip("#"))
                     link = line.strip(" #\n").replace(" ", "-")
-                    toc.append(
+                    items.append(
                         2 * (level - 1) * " "
                         + "- ["
                         + line.strip(" #\n")
@@ -25,8 +42,8 @@ def generate_toc(notebook="tests-as-linear.ipynb"):
                         + ")\n"
                     )
 
-    out = ""
-    for item in toc:
-        out += item
+    toc = ""
+    for item in items:
+        toc += item
 
-    return out
+    return toc
