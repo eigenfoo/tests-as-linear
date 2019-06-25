@@ -58,7 +58,7 @@ def tabulate_results(test_values, ols_results, names, coeff="x"):
     return table
 
 
-def generate_toc(notebook="tests-as-linear.ipynb"):
+def generate_toc(notebook="tests-as-linear.ipynb", max_header_levels=2):
     """
     Generates a table of contents in Markdown.
 
@@ -70,6 +70,9 @@ def generate_toc(notebook="tests-as-linear.ipynb"):
     ----------
     notebook : str
         Path to notebook for which to generate a table of contents.
+    max_header_levels : int
+        Maximum number of header levels to show in table of contents (i.e. the
+        depth of headers to display).
 
     Returns
     -------
@@ -83,7 +86,7 @@ def generate_toc(notebook="tests-as-linear.ipynb"):
     for cell in cells:
         if cell["cell_type"] == "markdown":
             for line in cell["source"]:
-                match = re.search(r"^#+ ", line)
+                match = re.search(r"^[#]{{1,{0}}} ".format(max_header_levels), line)
                 if match:
                     level = len(line) - len(line.lstrip("#"))
                     link = line.strip(" #\n").replace(" ", "-")
