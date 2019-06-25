@@ -7,7 +7,7 @@ import pandas as pd
 
 
 def signed_rank(df):
-    return np.sign(df) * df.rank()
+    return np.sign(df) * df.abs().rank()
 
 
 def format_decimals_factory(num_decimals=1):
