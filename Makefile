@@ -46,7 +46,7 @@ black:  # Format code in-place with black.
 publish:  # Run notebook in-place and generate HTML files.
 	jupyter nbconvert --to notebook --inplace --execute tests-as-linear.ipynb
 	jupyter nbconvert --to html tests-as-linear.ipynb
-	mv tests-as-linear.html index.html
+	sh scripts/embed-clicky.sh
 
 clean:  # Clean directory.
 	rm -rf _site/ __pycache__/
