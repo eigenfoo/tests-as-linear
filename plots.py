@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
 from utils import signed_rank, format_decimals_factory
 
@@ -109,3 +111,23 @@ def pairs_wilcoxon_plot(data, intercept_wilcoxon):
     axarr[1].legend(fontsize="large")
 
     return fig, axarr
+
+
+def dummy_coding_plot():
+    N = 20
+    data1 = np.random.multivariate_normal([0, 0], np.identity(2), N)
+    data2 = np.random.multivariate_normal([4, 4], np.identity(2), N)
+    df = pd.DataFrame(data=np.concatenate([data1, data2]), columns=["x", "y"])
+    df["dummy"] = np.concatenate([np.zeros(N), np.ones(N)])
+
+    res = smf.ols(formula="y ~ 1 + dummy", data=df).fit()
+    beta0, beta1 = res.params
+
+    fig, ax = plt.subplots(figsize=[10, 8])
+    ax.scatter(*data1.T, color="k")
+    ax.scatter(*data2.T, color="k")
+    ax.axhline(beta0, color="c", label=r"$\beta_0$ (group 1 mean)")
+    ax.plot([beta0, beta1], [beta0, beta1], color="r", label=r"$\beta_1$ (slope = difference)")
+    ax.axhline(beta1, color="b", label=r"$\beta_0 + \beta_1$ (group 2 mean)")
+    ax.legend(fontsize="large")
+    return fig, ax

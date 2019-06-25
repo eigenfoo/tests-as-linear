@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 
 
-def signed_rank(x, axis=-1):
-    return np.sign(x) * np.argsort(x, axis=axis)
+def signed_rank(df):
+    return np.sign(df) * df.rank()
 
 
 def format_decimals_factory(num_decimals=1):
