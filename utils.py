@@ -79,7 +79,7 @@ def generate_toc(notebook="tests-as-linear.ipynb"):
     with open(notebook, "r") as f:
         cells = json.load(f)["cells"]
 
-    items = ["# Table of contents"]
+    items = ["# Contents"]
     for cell in cells:
         if cell["cell_type"] == "markdown":
             for line in cell["source"]:
