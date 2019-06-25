@@ -7,6 +7,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
+<script>var clicky_site_ids = clicky_site_ids || []; clicky_site_ids.push(101159456);</script>
+<script async src="//static.getclicky.com/js"></script>
+
 
 
 <style type="text/css">
@@ -13199,6 +13202,22 @@ div#notebook {
 <li><a href="#5.2-Welch’s-t-test">5.2 Welch’s t-test</a></li>
 </ul>
 </li>
+<li><a href="#6-Three-or-more-means">6 Three or more means</a><ul>
+<li><a href="#6.1-One-way-ANOVA-and-Kruskal-Wallis">6.1 One-way ANOVA and Kruskal-Wallis</a><ul>
+<li><a href="#6.1.1-Theory:-As-linear-models">6.1.1 Theory: As linear models</a></li>
+<li><a href="#6.1.2-Example-data">6.1.2 Example data</a></li>
+<li><a href="#6.1.3-Python-code:-one-way-ANOVA">6.1.3 Python code: one-way ANOVA</a></li>
+<li><a href="#6.1.4-Python-code:-Kruskal-Wallis">6.1.4 Python code: Kruskal-Wallis</a></li>
+</ul>
+</li>
+<li><a href="#6.2-Two-way-ANOVA-(plot-in-progress!">6.2 Two-way ANOVA (plot in progress!)</a>)<ul>
+<li><a href="#6.2.1-Theory:-As-linear-models">6.2.1 Theory: As linear models</a></li>
+<li><a href="#6.2.2-Python-code:-Two-way-ANOVA">6.2.2 Python code: Two-way ANOVA</a></li>
+<li><a href="#6.3-ANCOVA">6.3 ANCOVA</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -13483,9 +13502,9 @@ div#notebook {
 <span class="n">correlated</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">correlated</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
 <span class="n">scaled</span> <span class="o">=</span> <span class="n">correlated</span> <span class="o">/</span> <span class="n">correlated</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
 
+<span class="n">r</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
 <span class="n">res1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y ~ 1 + x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">correlated</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">res2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y ~ 1 + x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">scaled</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="n">r</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13596,8 +13615,8 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ranked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">correlated</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y ~ 1 + x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ranked</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">r</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">ranked</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">ranked</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y ~ 1 + x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ranked</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13762,7 +13781,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                        <span class="n">res</span><span class="p">,</span>
                        <span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_1samp&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1)&quot;</span><span class="p">],</span>
-                       <span class="n">x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                       <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;Intercept&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13865,7 +13884,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                        <span class="n">res</span><span class="p">,</span>
                        <span class="p">[</span><span class="s2">&quot;scipy.stats.wilcoxon&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1, signed rank)&quot;</span><span class="p">],</span>
-                       <span class="n">x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                       <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;Intercept&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14019,8 +14038,8 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                        <span class="n">res</span><span class="p">,</span>
-                       <span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_ind&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">],</span>
-                       <span class="n">x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_rel&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">],</span>
+                       <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;Intercept&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14065,7 +14084,7 @@ div#notebook {
   </thead>
   <tbody>
     <tr>
-      <th>scipy.stats.ttest_ind</th>
+      <th>scipy.stats.ttest_rel</th>
       <td>NaN</td>
       <td>0.019853</td>
       <td>-2.407914</td>
@@ -14121,7 +14140,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                        <span class="n">res</span><span class="p">,</span>
                        <span class="p">[</span><span class="s2">&quot;scipy.stats.wilcoxon&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">],</span>
-                       <span class="n">x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                       <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;Intercept&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14264,10 +14283,176 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">groups</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">]),</span>
+                      <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
+<span class="n">groups</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)])</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Shuffle</span>
+<span class="n">groups</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[22]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>y</th>
+      <th>group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.732451</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.558971</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.072463</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.115983</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.753154</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ 1 + group&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                       <span class="n">res</span><span class="p">,</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_ind&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1 + group)&quot;</span><span class="p">],</span>
+                       <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[24]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>value</th>
+      <th>p-values</th>
+      <th>t-values</th>
+      <th>0.025 CI</th>
+      <th>0.975 CI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>scipy.stats.ttest_ind</th>
+      <td>NaN</td>
+      <td>0.016068</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>smf.ols (y ~ 1 + group)</th>
+      <td>0.468417</td>
+      <td>0.016068</td>
+      <td>2.449793</td>
+      <td>0.088973</td>
+      <td>0.84786</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -14281,13 +14466,95 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">groups</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Only rank `y`, not `group`</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ 1 + group&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                       <span class="n">res</span><span class="p">,</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.mannwhitneyu&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1 + group)&quot;</span><span class="p">],</span>
+                       <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[26]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>value</th>
+      <th>p-values</th>
+      <th>t-values</th>
+      <th>0.025 CI</th>
+      <th>0.975 CI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>scipy.stats.mannwhitneyu</th>
+      <td>NaN</td>
+      <td>0.011351</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>smf.ols (y ~ 1 + group)</th>
+      <td>25.68</td>
+      <td>0.016957</td>
+      <td>2.429124</td>
+      <td>4.700777</td>
+      <td>46.659223</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -14302,10 +14569,262 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># TODO: linear model with per-group variances</span>
+<span class="c1"># See https://lindeloev.github.io/tests-as-linear/#52_welch%E2%80%99s_t-test</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="6-Three-or-more-means">6 Three or more means<a class="anchor-link" href="#6-Three-or-more-means">&#182;</a></h1><p>ANOVAs are linear models with (only) categorical predictors so they simply extend everything we did above, relying heavily on dummy coding. Do make sure to read <a href="#dummy">the section on dummy coding</a> if you haven't already.</p>
+<h2 id="6.1-One-way-ANOVA-and-Kruskal-Wallis">6.1 One-way ANOVA and Kruskal-Wallis<a class="anchor-link" href="#6.1-One-way-ANOVA-and-Kruskal-Wallis">&#182;</a></h2><h3 id="6.1.1-Theory:-As-linear-models">6.1.1 Theory: As linear models<a class="anchor-link" href="#6.1.1-Theory:-As-linear-models">&#182;</a></h3><p>Model: One mean for each group predicts $y$.</p>
+<p>$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +... \qquad \mathcal{H}_0: y = \beta_0$</p>
+<p>where $x_i$ are indicators ($x=0$ or $x=1$) where at most one $x_i=1$ while all others are $x_i=0$.</p>
+<p>Notice how this is just "more of the same" of what we already did in other models above. When there are only two groups, this model is $y = \beta_0 + \beta_1*x$, i.e. the <a href="#t2">independent t-test</a>. If there is only one group, it is $y = \beta_0$, i.e. the <a href="#t1">one-sample t-test</a>. This is easy to see in the visualization below - just cover up a few groups and see that it matches the other visualizations above.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A one-way ANOVA has a log-linear counterpart called <a href="#goodness">goodness-of-fit</a> test which we'll return to. By the way, since we now regress on more than one $x$, the one-way ANOVA is a <strong>multiple regression</strong> model.</p>
+<p>The <strong>Kruskal-Wallis</strong> test is simply a <strong>one-way ANOVA</strong> on the rank-transformed $y$ (<code>value</code>):</p>
+<p>$rank(y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +...$</p>
+<p>This approximation is <a href="simulations/simulate_kruskall.html">good enough for 12 or more data points</a>. Again, if you do this for just one or two groups, we're already acquainted with those equations, i.e. the <a href="#t1">Wilcoxon signed-rank test</a> or the <a href="#t2">Mann-Whitney U test</a> respectively.</p>
+<h3 id="6.1.2-Example-data">6.1.2 Example data<a class="anchor-link" href="#6.1.2-Example-data">&#182;</a></h3><p>We make a three-level factor with the levels <code>a</code>, <code>b</code>, and <code>c</code> so that the <strong>one-way ANOVA</strong> basically becomes a "three-sample t-test". Then we manually do the <a href="#dummy">dummy coding</a> of the groups.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>With group a's intercept omni-present, see how exactly one other parameter is added to predict <code>value</code> for group b and c in a given row (scroll to he end). Thus data points in group b never affect the estimates in group c.</p>
+<h3 id="6.1.3-Python-code:-one-way-ANOVA">6.1.3 Python code: one-way ANOVA<a class="anchor-link" href="#6.1.3-Python-code:-one-way-ANOVA">&#182;</a></h3><p>OK, let's see the identity between a dedicated <strong>ANOVA</strong> function (<code>car::Anova</code>) and the dummy-coded in-your-face linear model in <code>lm</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Actually, <code>car::Anova</code> and <code>aov</code> are wrappers around <code>lm</code> so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax <code>y ~ factor</code>. Indeed, the only real reason to use aov and <code>car::Anova</code> rather than <code>lm</code> is to get a nicely formatted ANOVA table.</p>
+<p>The default output of <code>lm</code> returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because this IS the ANOVA model, you can also get parameter estimates out into the open by calling <code>coefficients(aov(...))</code>.</p>
+<p>Note that I do not use the <code>aov</code> function because it computes type-I sum of squares, which is widely discouraged. There is a BIG polarized debate about whether to use type-II (as <code>car::Anova</code> does by default) or type-III sum of squares (set <code>car::Anova(..., type=3)</code>), but let's skip that for now.</p>
+<h3 id="6.1.4-Python-code:-Kruskal-Wallis">6.1.4 Python code: Kruskal-Wallis<a class="anchor-link" href="#6.1.4-Python-code:-Kruskal-Wallis">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6.2-Two-way-ANOVA-(plot-in-progress!)">6.2 Two-way ANOVA (plot in progress!)<a class="anchor-link" href="#6.2-Two-way-ANOVA-(plot-in-progress!)">&#182;</a></h2><h3 id="6.2.1-Theory:-As-linear-models">6.2.1 Theory: As linear models<a class="anchor-link" href="#6.2.1-Theory:-As-linear-models">&#182;</a></h3><p>Model: one mean per group (main effects) plus these means multiplied across factors (interaction effects). The main effects are the <a href="#anova1">one-way ANOVA</a>s above, though in the context of a larger model. The interaction effect is harder to explain in the abstract even though it's just a few numbers multiplied with each other. I will leave that to the teachers to keep focus on equivalences here :-)</p>
+<p>Switching to matrix notation:</p>
+<p>$y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 \qquad \mathcal{H}_0: \beta_3 = 0$</p>
+<p>Here $\beta_i$ are vectors of betas of which only one is selected by the indicator vector $X_i$. The $\mathcal{H}_0$ shown here is the interaction effect. Note that the intercept $\beta_0$, to which all other $\beta$s are relative, is now the mean for the first level of all factors.</p>
+<p>Continuing with the dataset from the one-way ANOVA above, let's add a crossing factor <code>mood</code> so that we can test the <code>group:mood</code> interaction (a 3x2 ANOVA). We also do the <a href="#dummy">dummy coding</a> of this factor needed for the linear model.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\beta_0$ is now the happy guys from group a!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="6.2.2-Python-code:-Two-way-ANOVA">6.2.2 Python code: Two-way ANOVA<a class="anchor-link" href="#6.2.2-Python-code:-Two-way-ANOVA">&#182;</a></h3><p>Now let's turn to the actual modeling in R. We compare a dedicated ANOVA function (<code>car::Anova</code>; see <a href="#anova1">One-Way ANOVA</a> why) to the linear model (<code>lm</code>). Notice that in ANOVA, we are testing a full factor interaction all at once which involves many parameters (two in this case), so we can't look at the overall model fit nor any particular parameter for the result. Therefore, I use a <a href="https://en.wikipedia.org/wiki/Likelihood-ratio_test">likelihood-ratio test</a> to compare a full two-way ANOVA model ("saturated") to one without the interaction effect(s). The <code>anova</code> function does this test. Even though that looks like cheating, it's just computing likelihoods, p-values, etc. on the models that were already fitted, so it's legit!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below, I present approximate main effect models, though exact calculation of ANOVA main effects <a href="https://stats.idre.ucla.edu/stata/faq/how-can-i-get-anova-simple-main-effects-with-dummy-coding/">is more involved</a> if it is to be accurate and furthermore depend on whether type-II or type-III sum of squares are used for inference.</p>
+<p>Look at the model summary statistics to find values comparable to the <code>Anova</code>-estimated main effects above.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="6.3-ANCOVA">6.3 ANCOVA<a class="anchor-link" href="#6.3-ANCOVA">&#182;</a></h3><p>This is simply ANOVA with a continuous regressor added so that it now contains continuous and (dummy-coded) categorical predictors. For example, if we continue with the <a href="#anova1">one-way ANOVA</a> example, we can add <code>age</code> and it is now called a <strong>one-way ANCOVA</strong>:</p>
+<p>$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_3 \text{age}$</p>
+<p>... where $x_i$ are our usual dummy-coded indicator variables. $\beta_0$ is now the mean for the first group at $age=0$. You can turn all ANOVAs into ANCOVAs this way, e.g. by adding $\beta_N \cdot age$ to our <strong>two-way ANOVA</strong> in the previous section. But let us go ahead with our one-way ANCOVA, starting by adding $age$ to our dataset:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is best visualized using colors for groups instead of x-position. The $\beta$s are still the average $y$-offset of the data points, only now we model each group using a slope instead of an intercept. In other words, the one-way ANOVA is sort of <a href="#t1">one-sample t-tests</a> model for each group ($y = \beta_0$) while the <strong>one-way ANCOVA</strong> is sort of <a href="#correlation">Pearson correlation</a> model for each group ($y_i = \beta_0 + \beta_i + \beta_1 \text{age}$):</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And now some R code to run the one-way ANCOVA as a linear model:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
