@@ -14,7 +14,7 @@ def format_decimals_factory(num_decimals=1):
     return lambda x: "{1:.{0}f}".format(num_decimals, x)
 
 
-def tabulate_results(test_values, ols_results, names, x=True):
+def tabulate_results(test_values, ols_results, names, coeff="x"):
     """
     Tabulates results of statistical tests and equivalent linear regressions to
     demonstrate that the two methods are in fact equivalent.
@@ -27,9 +27,9 @@ def tabulate_results(test_values, ols_results, names, x=True):
         Result object(s) of equivalent linear regression to display.
     names : list
         List of strings to display.
-    x : bool
-        If True, display `x` coefficient for parameters, p and t values.
-        Otherwise, display `Intercept` coefficient.
+    coeff : str
+        Name of coefficient whose test statistics should be displayed. Defaults
+        to "x".
 
     Returns
     -------
@@ -45,7 +45,6 @@ def tabulate_results(test_values, ols_results, names, x=True):
 
     # Construct and return table
     table = pd.DataFrame(index=names)
-    coeff = "x" if x else "Intercept"
     table["value"] = [test_values[0]] + [res.params[coeff] for res in ols_results]
     table["p-values"] = [test_values[1]] + [res.pvalues[coeff] for res in ols_results]
     table["t-values"] = [test_values[2]] + [res.tvalues[coeff] for res in ols_results]
