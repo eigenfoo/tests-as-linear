@@ -13502,9 +13502,9 @@ div#notebook {
 <span class="n">correlated</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">correlated</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
 <span class="n">scaled</span> <span class="o">=</span> <span class="n">correlated</span> <span class="o">/</span> <span class="n">correlated</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
 
+<span class="n">r</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
 <span class="n">res1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y ~ 1 + x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">correlated</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">res2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y ~ 1 + x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">scaled</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="n">r</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13615,8 +13615,8 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ranked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">correlated</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y ~ 1 + x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ranked</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">r</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">ranked</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">ranked</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;y ~ 1 + x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ranked</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14038,7 +14038,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                        <span class="n">res</span><span class="p">,</span>
-                       <span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_ind&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">],</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.ttest_rel&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">],</span>
                        <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;Intercept&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -14084,7 +14084,7 @@ div#notebook {
   </thead>
   <tbody>
     <tr>
-      <th>scipy.stats.ttest_ind</th>
+      <th>scipy.stats.ttest_rel</th>
       <td>NaN</td>
       <td>0.019853</td>
       <td>-2.407914</td>
@@ -14286,7 +14286,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">groups</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">]),</span>
                       <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
 <span class="n">groups</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)])</span>
-<span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Shuffle</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Shuffle</span>
 <span class="n">groups</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -14329,27 +14329,27 @@ div#notebook {
   </thead>
   <tbody>
     <tr>
-      <th>25</th>
+      <th>0</th>
       <td>0.732451</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>38</th>
+      <th>1</th>
       <td>-0.558971</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>78</th>
+      <th>2</th>
       <td>1.072463</td>
       <td>1.0</td>
     </tr>
     <tr>
-      <th>52</th>
+      <th>3</th>
       <td>1.115983</td>
       <td>1.0</td>
     </tr>
     <tr>
-      <th>94</th>
+      <th>4</th>
       <td>1.753154</td>
       <td>1.0</td>
     </tr>
@@ -14469,8 +14469,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ 1 + group&quot;</span><span class="p">,</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">groups</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># FIXME its ranking the groups too!</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">groups</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Only rank `y`, not `group`</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ 1 + group&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14540,11 +14542,11 @@ div#notebook {
     </tr>
     <tr>
       <th>smf.ols (y ~ 1 + group)</th>
-      <td>0.340132</td>
+      <td>25.68</td>
       <td>0.016957</td>
       <td>2.429124</td>
-      <td>0.062262</td>
-      <td>0.618003</td>
+      <td>4.700777</td>
+      <td>46.659223</td>
     </tr>
   </tbody>
 </table>
