@@ -13199,7 +13199,7 @@ div#notebook {
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h1 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">&#182;</a></h1><ul>
+<h1 id="Contents">Contents<a class="anchor-link" href="#Contents">&#182;</a></h1><ul>
 <li><a href="#Common-statistical-tests-are-linear-models-(or:-how-to-teach-stats">Common statistical tests are linear models (or: how to teach stats)</a>)</li>
 <li><a href="#1-The-simplicity-underlying-common-tests">1 The simplicity underlying common tests</a></li>
 <li><a href="#2-Settings-and-toy-data">2 Settings and toy data</a></li>
@@ -13253,6 +13253,24 @@ div#notebook {
 </li>
 </ul>
 </li>
+<li><a href="#7-Proportions:-Chi-square-is-a-log-linear-model">7 Proportions: Chi-square is a log-linear model</a><ul>
+<li><a href="#7.1-Goodness-of-fit">7.1 Goodness of fit</a><ul>
+<li><a href="#7.1.1-Theory:-As-log-linear-model">7.1.1 Theory: As log-linear model</a></li>
+<li><a href="#7.1.2-Example-data">7.1.2 Example data</a></li>
+<li><a href="#7.1.3-Python-code:-Goodness-of-fit">7.1.3 Python code: Goodness of fit</a></li>
+</ul>
+</li>
+<li><a href="#7.2-Contingency-tables">7.2 Contingency tables</a><ul>
+<li><a href="#7.2.1-Theory:-As-log-linear-model">7.2.1 Theory: As log-linear model</a></li>
+<li><a href="#7.2.2-Example-data">7.2.2 Example data</a></li>
+<li><a href="#7.2.3-Python-code:-Chi-square-test">7.2.3 Python code: Chi-square test</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#8-Sources-and-further-equivalences">8 Sources and further equivalences</a></li>
+<li><a href="#9-Teaching-materials-and-a-course-outline">9 Teaching materials and a course outline</a></li>
+<li><a href="#10-Limitations">10 Limitations</a></li>
 </ul>
 
 </div>
@@ -15031,6 +15049,285 @@ div#notebook {
 </div>
 
   </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="7-Proportions:-Chi-square-is-a-log-linear-model">7 Proportions: Chi-square is a log-linear model<a class="anchor-link" href="#7-Proportions:-Chi-square-is-a-log-linear-model">&#182;</a></h1><p>Recall that when you take the logarithm, you can easily make statements about <em>proportions</em>, i.e., that for every increase in $x$, $y$ increases a certain percentage. This turns out to be one of the simplest (and therefore best!) ways to make count data and contingency tables intelligible. See <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">this nice introduction</a> to Chi-Square tests as linear models.</p>
+<h2 id="7.1-Goodness-of-fit">7.1 Goodness of fit<a class="anchor-link" href="#7.1-Goodness-of-fit">&#182;</a></h2><h3 id="7.1.1-Theory:-As-log-linear-model">7.1.1 Theory: As log-linear model<a class="anchor-link" href="#7.1.1-Theory:-As-log-linear-model">&#182;</a></h3><p>Model: a single intercept predicts $log(y)$.</p>
+<p>I'll refer you to take a look at <a href="#contingency">the section on contingency tables</a> which is basically a "two-way goodness of fit".</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="7.1.2-Example-data">7.1.2 Example data<a class="anchor-link" href="#7.1.2-Example-data">&#182;</a></h3><p>For this, we need some wide count data:</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="7.1.3-Python-code:-Goodness-of-fit">7.1.3 Python code: Goodness of fit<a class="anchor-link" href="#7.1.3-Python-code:-Goodness-of-fit">&#182;</a></h3><p>Now let's see that the Goodness of fit is just a log-linear equivalent to a one-way ANOVA. We set <code>family = poisson()</code> which defaults to setting a logarithmic <a href="https://en.wikipedia.org/wiki/Generalized_linear_model#Link_function">link function</a> (<code>family = poisson(link='log')</code>).</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note the strange <code>anova(..., test='Rao')</code> which merely states that p-values should be computed using the (Rao) <a href="https://en.wikipedia.org/wiki/Score_test">score test</a>. We could also have jotted in <code>test='Chisq'</code> or <code>test='LRT'</code> which would have yielded approximate p-values. You may think that we're cheating here, sneaking in some sort of Chi-Square model post-hoc. However, <code>anova</code> only specifies how p-values are calculated whereas all the log-linear modeling happened in <code>glm</code>.</p>
+<p>By the way, if there are only two counts and a large sample size (N &gt; 100), this model begins to approximate the <strong>binomial test</strong>, <code>binom.test</code>, to a reasonable degree. But this sample size is larger than most use cases, so I won't raise to a rule-of-thumb and won't dig deeper into it here.</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="7.2-Contingency-tables">7.2 Contingency tables<a class="anchor-link" href="#7.2-Contingency-tables">&#182;</a></h2><h3 id="7.2.1-Theory:-As-log-linear-model">7.2.1 Theory: As log-linear model<a class="anchor-link" href="#7.2.1-Theory:-As-log-linear-model">&#182;</a></h3><p>The theory here will be a bit more convoluted, and I mainly write it up so that you can get the <em>feeling</em> that it really is just a log-linear <a href="#anova2">two-way ANOVA model</a>. Let's get started...</p>
+<p>For a two-way contingency table, the model of the count variable $y$ is a modeled using the marginal proportions of a contingency table. Why this makes sense, is too involved to go into here, but <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">see the relevant slides by Christoph Scheepers here</a> for an excellent exposition. The model is composed of a lot of counts and the regression coefficients $A_i$ and $B_i$:</p>
+<p>$y_i = N \cdot x_i(A_i/N) \cdot z_j(B_j/N) \cdot x_{ij}/((A_i x_i)/(B_j z_j)/N)$</p>
+<p>What a mess!!! Here, $i$ is the row index, $j$ is the column index, $x_{something}$ is the sum of that row and/or column, $N = sum(y)$. Remember that $y$ is a count variable, so $N$ is just the total count.</p>
+<p>We can simplify the notation by defining the <em>proportions</em>: $\alpha_i = x_i(A_i/N)$, $\beta_i = x_j(B_i/N)$ and $\alpha_i\beta_j =  x_{ij}/(A_i x_i)/(B_j z_j)/N$. Let's write the model again:</p>
+<p>$y_i = N \cdot \alpha_i \cdot \beta_j \cdot \alpha_i\beta_j$</p>
+<p>Ah, much prettier. However, there is still lot's of multiplication which makes it hard to get an intuition about how the actual numbers interact. We can make it much more intelligible when we remember that $log(A \cdot B) = log(A) + log(B)$. Doing logarithms on both sides, we get:</p>
+<p>$log(y_i) = log(N) + log(\alpha_i) + log(\beta_j) + log(\alpha_i\beta_j)$</p>
+<p>Snuggly! Now we can get a better grasp on how the regression coefficients (which are proportions) independently contribute to $y$. This is why logarithms are so nice for proportions. Note that this is just <a href="#anova2">the two-way ANOVA model</a> with some logarithms added, so we are back to our good old linear models - only the interpretation of the regression coefficients have changed! And we cannot use <code>lm</code> anymore in R.</p>
+<h3 id="7.2.2-Example-data">7.2.2 Example data<a class="anchor-link" href="#7.2.2-Example-data">&#182;</a></h3><p>Here we need some long data and we need it in table format for <code>chisq.test</code>:</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="7.2.3-Python-code:-Chi-square-test">7.2.3 Python code: Chi-square test<a class="anchor-link" href="#7.2.3-Python-code:-Chi-square-test">&#182;</a></h3><p>Now let's show the equivalence between a chi-square model and a log-linear model. This is very similar to our <a href="#anova2">two-way ANOVA</a> above:</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you unfold the raw R output, I've included <code>summary(full)</code> so that you can see the raw regression coefficients. Being a log-linear model, these are the <em>percentage increase</em>in $y$ over and above the intercept if that category obtains.</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="8-Sources-and-further-equivalences">8 Sources and further equivalences<a class="anchor-link" href="#8-Sources-and-further-equivalences">&#182;</a></h1><p>Here are links to other sources who have exposed bits and pieces of this puzzle, including many further equivalences not covered here:</p>
+<ul>
+<li><a href="https://stats.stackexchange.com/questions/303269/common-statistical-tests-as-linear-models">My original exposition of the idea</a> at Cross Validated</li>
+<li><a href="https://stats.stackexchange.com/questions/210529/are-parametric-tests-on-rank-transformed-data-equivalent-to-non-parametric-test?noredirect=1#comment399981_210529">An earlier question by me</a> about non-parametric tests and a helpful answer.</li>
+<li><a href="https://stats.stackexchange.com/questions/59047/how-are-regression-the-t-test-and-the-anova-all-versions-of-the-general-linear">This question and replies</a> on t-tests and ANOVA at StackOverflow</li>
+<li><a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">These slides by Christoph Scheepers</a> on Chi-Square as log-linear models.</li>
+<li><a href="https://rpubs.com/palday/glm-test">This notebook by Philip M. Alday</a> on Chi-square, binomial, multinomial, and poisson tests as log-linear and logistic models. These "equivalences" are less exact than what I presented above, and were therefore not included here. They are still great for a conceptual understanding of these tests, though!</li>
+<li><a href="https://rpsychologist.com/r-guide-longitudinal-lme-lmer">This article by Kristoffer Magnusson</a> on RM-ANOVA and growth models using <code>lme4::lmer</code> mixed models.</li>
+<li><a href="https://seriousstats.wordpress.com/2012/02/14/friedman/">This post by Thom Baguley</a> on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to "non-parametric"" tests which ultimately pushed me over the edge to write up the present article.</li>
+</ul>
+<h1 id="9-Teaching-materials-and-a-course-outline">9 Teaching materials and a course outline<a class="anchor-link" href="#9-Teaching-materials-and-a-course-outline">&#182;</a></h1><p>Most advanced stats books (and some intro-books) take the "everything is GLMM" approach as well. However, the "linear model" part often stays at the conceptual level, rather than being made explicit. I wanted to make linear models the <em>tool</em> in a concise way. Luckily, more beginner-friendly materials have emerged lately:</p>
+<ul>
+<li><p>Russ Poldrack's open-source book "Statistical Thinking for the 21st century" (start at <a href="http://statsthinking21.org/fitting-models-to-data.html">chapter 5 on modeling</a>)</p>
+</li>
+<li><p><a href="https://jeffrouder.blogspot.com/2019/03/teaching-undergrad-stats-without-p-f-or.html">Jeff Rouder's course notes</a>, introducing model comparison using just $R^2$ and BIC. It avoids all the jargon on p-values, F-values, etc. The full materials and slides <a href="https://drive.google.com/drive/folders/1CiJK--bAuO0F-ug3B5I3FvmsCdpPGZ03">are available here</a>.</p>
+</li>
+</ul>
+<p>Here are my own thoughts on what I'd do. I've taught parts of this with great success already, but not the whole program since I'm not assigned to teach a full course yet.</p>
+<p>I would spend 50% of the time on linear modeling of data since this contains 70% of what students need to know (bullet 1 below). The rest of the course is fleshing out what happens when you have one group, two groups, etc.</p>
+<p>Note that whereas the understanding of sampling and hypothesis testing is usually the first focus of mainstream stats courses, it is saved for later here to build upon students' prior knowledge, rather than throwing a lot of conceptually novel material at them.</p>
+<ol>
+<li><p><strong>Fundamentals of regression:</strong></p>
+<ol>
+<li><p>Recall from high-school: $y = a \cdot x + b$, and getting a really good intuition about slopes and intercepts. Understanding that this can be written using all variable names, e.g., <code>money = profit * time + starting_money</code> or $y = \beta_1x + \beta_2*1$ or, suppressing the coefficients, as <code>y ~ x + 1</code>. If the audience is receptive, convey the idea of these models <a href="https://magesblog.com/post/modelling-change">as a solution to differential equations</a>, specifying how $y$ <em>changes</em> with $x$.</p>
+</li>
+<li><p>Extend to a few multiple regression as models. Make sure to include plenty of real-life examples and exercises at this point to make all of this really intuitive. Marvel at how briefly these models allow us to represent large datasets.</p>
+</li>
+<li><p>Introduce the idea of rank-transforming non-metric data and try it out.</p>
+</li>
+<li><p>Teach the three assumptions: independence of data points, normality of residuals, and homoscedasticity.</p>
+</li>
+<li><p>Confidence/credible intervals on the parameters. Stress that the Maximum-Likelihood estimate is extremely unlikely, so intervals are more important.</p>
+</li>
+<li><p>Briefly introduce $R^2$ for the simple regression models above. Mention in passing that this is called <a href="#correlation">the Pearson and Spearman correlation coefficients</a>.</p>
+</li>
+</ol>
+</li>
+</ol>
+<ol>
+<li><p><strong>Special case #1: One or two means (t-tests, Wilcoxon, Mann-Whitney):</strong></p>
+<ol>
+<li><p><strong>One mean:</strong> When there is only one x-value, the regression model simplifies to $y = b$. If $y$ is non-metric, you can rank-transform it. Apply the assumptions (homoscedasticity doesn't apply since there is only one $x$). Mention in passing that these intercept-only models are called <a href="#t1">one-sample t-test and Wilcoxon Signed Rank test respectively</a>.</p>
+</li>
+<li><p><strong>Two means:</strong> If we put two variables 1 apart on the x-axis, the difference between the means is the slope. Great! It is accessible to our swizz army knife called linear modeling. Apply the assumption checks to see that homoscedasticity reduces to equal variance between groups. This is called an <a href="#t2">independent t-test</a>. Do a few worked examples and exercises, maybe adding Welch's test, and do the rank-transformed version, called Mann-Whitney U.</p>
+</li>
+<li><p><em>Paired samples:</em> Violates the independence assumption. After computing pairwise differences, this is equivalent to 2.1 (one intercept), though it is called the <a href="#tpair">paired t-test and Wilcoxon's matched pairs</a>.</p>
+</li>
+</ol>
+</li>
+<li><p><strong>Special case #2: Three or more means (ANOVAs)</strong></p>
+<ol>
+<li><p><em><a href="#dummy">Dummy coding</a> of categories:</em> How one regression coefficient for each level of a factor models an intercept for each level when multiplied by a binary indicator. This is just extending what we did in 2.1. to make this data accessible to linear modeling.</p>
+</li>
+<li><p><em>Means of one variable:</em> <a href="#anova1">One-way ANOVA</a>.</p>
+</li>
+<li><p><em>Means of two variables:</em> <a href="#anova2">Two-way ANOVA</a>.</p>
+</li>
+</ol>
+</li>
+</ol>
+<ol>
+<li><p><strong>Special case #3: Three or more proportions (Chi-Square)</strong></p>
+<ol>
+<li><p><em>Logarithmic transformation:</em> Making multiplicative models linear using logarithms, thus modeling proportions. See <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">this excellent introduction</a> to the equivalence of log-linear models and Chi-Square tests as models of proportions. Also needs to introduce (log-)odds ratios. When the multiplicative model is made summative using logarithms, we just add the dummy-coding trick from 3.1, and see that the models are identical to the ANOVA models in 3.2 and 3.3, only the interpretation of the coefficients have changed.</p>
+</li>
+<li><p><em>Proportions of one variable:</em> <a href="#goodness">Goodness of fit</a>.</p>
+</li>
+<li><p><em>Proportions of two variables:</em> <a href="#contingency">Contingency tables</a>.</p>
+</li>
+</ol>
+</li>
+</ol>
+<ol>
+<li><p><strong>Hypothesis testing:</strong></p>
+<ol>
+<li><p><em>Hypothesis testing as model comparisons:</em> Hypothesis testing is the act of choosing between a full model and one where a parameter is fixed to a particular value (often zero, i.e., effectively excluded from the model) instead of being estimated. For example, when fixing one of the two means to zero in the <a href="#t2">t-test</a>, we study how well a single mean (a <a href="#t1">one-sample t-test</a>) explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. As tests of single parameters, hypothesis testing is therefore less informative However, when testing multiple parameters at the same time (e.g., a factor in ANOVA), model comparison becomes invaluable.</p>
+</li>
+<li><p><em>Likelihood ratios:</em> Likelihood ratios are the swizz army knife which will do model comparison all the way from the one-sample t-test to GLMMs. BIC penalizes model complexity. Moreover, add priors and you've got Bayes Factors. One tool, and you're done. I've used LRTs in the ANOVAs above.</p>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="10-Limitations">10 Limitations<a class="anchor-link" href="#10-Limitations">&#182;</a></h1><p>I have made a few simplifications for clarity:</p>
+<ol>
+<li><p>I have not covered assumptions in the examples. This will be another post! But all assumptions of all tests come down to the usual three: a) independence of data points, b) normally distributed residuals, and c) homoscedasticity.</p>
+</li>
+<li><p>I assume that all null hypotheses are the absence of an effect, but everything works the same for non-zero null hypotheses.</p>
+</li>
+<li><p>I have not discussed inference. I am only including p-values in the comparisons as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do <em>inference</em> is another matter. Personally, I'm a Bayesian, but going Bayesian here would render it less accessible to the wider audience. Also, doing <a href="https://en.wikipedia.org/wiki/Robust_statistics">robust models</a> would be preferable, but fail to show the equivalences.</p>
+</li>
+<li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#links">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit "solutions" to <a href="https://github.com/lindeloev/tests-as-linear/">the github repo</a> of this doc!</p>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
 
 
 
