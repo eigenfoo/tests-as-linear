@@ -77,30 +77,37 @@ def pearson_spearman_plot():
 
 
 def ttest_wilcoxon_plot():
-    y = np.random.normal(2, 1, 20)
-    y2 = y + np.random.randn(20)
+    y = pd.DataFrame(data=np.random.normal(1, 1, 20), columns=["y"])
 
-    df = pd.DataFrame()
-    df["y"], df["y2"], df["y_sub_y2"] = y, y2, y-y2
+    res = smf.ols(formula="y ~ 1", data=y).fit()
+    intercept_ttest = res.params.Intercept
 
-    res = smf.ols(formula="y_sub_y2 ~ 1", data=df).fit()
+    res = smf.ols(formula="y ~ 1", data=signed_rank(y)).fit()
     intercept_wilcoxon = res.params.Intercept
 
     fig, axarr = plt.subplots(ncols=2, figsize=[18, 8])
 
-    axarr[0].scatter(np.zeros_like(df.y), df.y.values, color="k")
-    axarr[0].scatter(np.ones_like(df.y2), df.y2.values, color="k")
-    for i, j in zip(df.y, df.y2):
-        axarr[0].plot([0, 1], [i, j], color="k")
-    axarr[0].set_title("Pairs")
+    for ax, dataset, to_str, title, b in zip(
+        axarr,
+        [y, signed_rank(y)],
+        [format_decimals_factory(), format_decimals_factory(0)],
+        ["$t$-test", "Wilcoxon"],
+        [intercept_ttest, intercept_wilcoxon],
+    ):
+        # Scatter plot
+        ax.scatter(np.ones_like(dataset), dataset, color="k")
 
-    axarr[1].scatter(np.zeros_like(df.y_sub_y2), df.y_sub_y2.values, color="k")
-    annotations = df.y_sub_y2.apply(format_decimals_factory())
-    for i, annot in enumerate(annotations):
-        axarr[1].annotate(annot, (0, df.y_sub_y2[i]), color="grey")
-    axarr[1].axhline(intercept_wilcoxon, color="b", label=r"$\beta_0$ (Intercept)")
-    axarr[1].set_title("$t$-test")
-    axarr[1].legend(fontsize="large")
+        # Annotate data points
+        annotations = dataset.y.apply(to_str)
+        for i, annot in enumerate(annotations):
+            ax.annotate(annot, (1, dataset.y[i]), color="grey")
+
+        # Plot lines
+        ax.axhline(b, color="b", label=r"$\beta_0$ (Intercept)")
+
+        # Decorate
+        ax.set_title(title)
+        ax.legend(fontsize="large")
 
     return fig, axarr
 
