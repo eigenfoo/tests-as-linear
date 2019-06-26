@@ -19,11 +19,11 @@ some ideas on how to contribute.
 
 ```bash
 .
+├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── Makefile
 ├── README.md
-├── docs                   # Generated HTML. GitHub Pages serves from here.
-│   └── ...
+├── index.html             # Published HTML.
 ├── plots.py               # Functions for large plots in main notebook.
 ├── requirements-dev.txt   # Dependencies for development.
 ├── requirements.txt       # Dependencies.
@@ -33,7 +33,7 @@ some ideas on how to contribute.
 └── utils.py               # Utility functions used in main notebook.
 ```
 
-## Development guide
+## Development instructions
 
 ```bash
 git clone git@github.com:<USERNAME>/tests-as-linear.git
