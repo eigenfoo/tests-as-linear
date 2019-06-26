@@ -13226,10 +13226,8 @@ div#notebook {
 </li>
 <li><a href="#8-Sources-and-further-equivalences">8 Sources and further equivalences</a></li>
 <li><a href="#9-Teaching-materials-and-a-course-outline">9 Teaching materials and a course outline</a></li>
-<li><a href="#10-Limitations">10 Limitations</a><ul>
+<li><a href="#10-Limitations">10 Limitations</a></li>
 <li><a href="#11-Computing-Environment">11 Computing Environment</a></li>
-</ul>
-</li>
 </ul>
 
 </div>
@@ -13279,6 +13277,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
 <span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">plots</span>
@@ -14221,7 +14220,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                        <span class="n">res</span><span class="p">,</span>
-                       <span class="p">[</span><span class="s2">&quot;scipy.stats.wilcoxon&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1)&quot;</span><span class="p">],</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.wilcoxon&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y_sub_y2 ~ 1, signed rank)&quot;</span><span class="p">],</span>
                        <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;Intercept&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -14274,7 +14273,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>smf.ols (y_sub_y2 ~ 1)</th>
+      <th>smf.ols (y_sub_y2 ~ 1, signed rank)</th>
       <td>-9.82</td>
       <td>0.016212</td>
       <td>-2.490077</td>
@@ -14604,7 +14603,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                        <span class="n">res</span><span class="p">,</span>
-                       <span class="p">[</span><span class="s2">&quot;scipy.stats.mannwhitneyu&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1 + group)&quot;</span><span class="p">],</span>
+                       <span class="p">[</span><span class="s2">&quot;scipy.stats.mannwhitneyu&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1 + group, signed rank)&quot;</span><span class="p">],</span>
                        <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -14657,7 +14656,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>smf.ols (y ~ 1 + group)</th>
+      <th>smf.ols (y ~ 1 + group, signed rank)</th>
       <td>25.68</td>
       <td>0.016957</td>
       <td>2.429124</td>
@@ -14694,7 +14693,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="c1"># TODO: linear model with per-group variances</span>
-<span class="c1"># See https://lindeloev.github.io/tests-as-linear/#52_welch%E2%80%99s_t-test</span>
+<span class="c1"># See https://github.com/eigenfoo/tests-as-linear/issues/12</span>
 </pre></div>
 
     </div>
@@ -14785,32 +14784,17 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_points</span> <span class="o">=</span> <span class="mi">20</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_points</span><span class="p">),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_points</span><span class="p">),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_points</span><span class="p">),</span>
-<span class="p">])</span>
 
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_points</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_points</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_points</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">])</span>
 <span class="n">df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">num_points</span> <span class="o">*</span> <span class="n">char</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="s2">&quot;abc&quot;</span><span class="p">]))</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
-</pre></div>
 
-    </div>
-</div>
-</div>
-
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14900,7 +14884,7 @@ div#notebook {
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>With group a's intercept omni-present, see how exactly one other parameter is added to predict <code>value</code> for group b and c in a given row (scroll to he end). Thus data points in group b never affect the estimates in group c.</p>
+<p>With group a's intercept omni-present, see how exactly one other parameter is added to predict <code>value</code> for group b and c in a given row. Thus data points in group b never affect the estimates in group c.</p>
 
 </div>
 </div>
@@ -14921,10 +14905,7 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">F</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
-                            <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
-                            <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">F</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ 1 + group_b + group_c&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 
@@ -14942,11 +14923,11 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># FIXME what to tabulate here?</span>
-<span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
-                       <span class="n">res</span><span class="p">,</span>
-                       <span class="p">[</span><span class="s2">&quot;scipy.stats.f_oneway&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1 + group_b + group_c)&quot;</span><span class="p">],</span>
-                       <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;group_b&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;F statistic&quot;</span><span class="p">,</span> <span class="s2">&quot;p value&quot;</span><span class="p">,</span> <span class="s2">&quot;df&quot;</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s2">&quot;scipy.stats.f_oneway&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">F</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">table</span><span class="p">[</span><span class="s2">&quot;ols (y ~ 1 + group_b + group_c)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">fvalue</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">f_pvalue</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="p">]</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
     </div>
@@ -14981,29 +14962,23 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>value</th>
-      <th>p-values</th>
-      <th>t-values</th>
-      <th>0.025 CI</th>
-      <th>0.975 CI</th>
+      <th>F statistic</th>
+      <th>p value</th>
+      <th>df</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>scipy.stats.f_oneway</th>
-      <td>NaN</td>
+      <td>4.512932</td>
       <td>0.015156</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>smf.ols (y ~ 1 + group_b + group_c)</th>
-      <td>0.801863</td>
-      <td>0.012126</td>
-      <td>2.591178</td>
-      <td>0.182182</td>
-      <td>1.421545</td>
+      <th>ols (y ~ 1 + group_b + group_c)</th>
+      <td>4.512932</td>
+      <td>0.015156</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -15040,11 +15015,8 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">kruskal</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
-                           <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
-                           <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-
-<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ 1 + group_b + group_c&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># TODO rank</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">signed_rank_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">signed_rank_df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">signed_rank_df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -15052,9 +15024,101 @@ div#notebook {
 </div>
 
   </div>
+
+  
+
+  <div class="
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">kruskal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ 1 + group_b + group_c&quot;</span><span class="p">,</span> <span class="n">signed_rank_df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+  </div>
+
+  
+
+  <div class="
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;p value&quot;</span><span class="p">,</span> <span class="s2">&quot;df&quot;</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s2">&quot;scipy.stats.kruskal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">table</span><span class="p">[</span><span class="s2">&quot;ols (y ~ 1 + group_b + group_c, signed rank)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">f_pvalue</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="p">]</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>p value</th>
+      <th>df</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>scipy.stats.kruskal</th>
+      <td>0.019324</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ols (y ~ 1 + group_b + group_c, signed rank)</th>
+      <td>0.018058</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="6.2-Two-way-ANOVA">6.2 Two-way ANOVA<a class="anchor-link" href="#6.2-Two-way-ANOVA">&#182;</a></h2><h3 id="6.2.1-Theory:-As-linear-models">6.2.1 Theory: As linear models<a class="anchor-link" href="#6.2.1-Theory:-As-linear-models">&#182;</a></h3><p>Model: one mean per group (main effects) plus these means multiplied across factors (interaction effects). The main effects are the <a href="#anova1">one-way ANOVA</a>s above, though in the context of a larger model. The interaction effect is harder to explain in the abstract even though it's just a few numbers multiplied with each other. I will leave that to the teachers to keep focus on equivalences here :-)</p>
+<h2 id="6.2-Two-way-ANOVA">6.2 Two-way ANOVA<a class="anchor-link" href="#6.2-Two-way-ANOVA">&#182;</a></h2><h3 id="6.2.1-Theory:-As-linear-models">6.2.1 Theory: As linear models<a class="anchor-link" href="#6.2.1-Theory:-As-linear-models">&#182;</a></h3><p>Model: one mean per group (main effects) plus these means multiplied across factors (interaction effects). The main effects are the <a href="#6.1-One-way-ANOVA-and-Kruskal-Wallis">one-way ANOVAs</a> above, though in the context of a larger model. The interaction effect is harder to explain in the abstract even though it's just a few numbers multiplied with each other. I will leave that to the teachers to keep focus on equivalences here :-)</p>
 <p>Switching to matrix notation:</p>
 <p>$y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 \qquad \mathcal{H}_0: \beta_3 = 0$</p>
 <p>Here $\beta_i$ are vectors of betas of which only one is selected by the indicator vector $X_i$. The $\mathcal{H}_0$ shown here is the interaction effect. Note that the intercept $\beta_0$, to which all other $\beta$s are relative, is now the mean for the first level of all factors.</p>
@@ -15072,10 +15136,111 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mood&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;sad&quot;</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">mood</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mood&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>y</th>
+      <th>group</th>
+      <th>group_b</th>
+      <th>group_c</th>
+      <th>mood</th>
+      <th>mood_happy</th>
+      <th>mood_sad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.080830</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>happy</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-2.316629</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>sad</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.138365</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>happy</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.003775</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>sad</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.051200</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>happy</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -15096,7 +15261,7 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO</span>
 </pre></div>
 
     </div>
@@ -15419,6 +15584,12 @@ div#notebook {
 <li><a href="https://rpsychologist.com/r-guide-longitudinal-lme-lmer">This article by Kristoffer Magnusson</a> on RM-ANOVA and growth models using <code>lme4::lmer</code> mixed models.</li>
 <li><a href="https://seriousstats.wordpress.com/2012/02/14/friedman/">This post by Thom Baguley</a> on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to "non-parametric"" tests which ultimately pushed me over the edge to write up the present article.</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="9-Teaching-materials-and-a-course-outline">9 Teaching materials and a course outline<a class="anchor-link" href="#9-Teaching-materials-and-a-course-outline">&#182;</a></h1><p>Most advanced stats books (and some intro-books) take the "everything is GLMM" approach as well. However, the "linear model" part often stays at the conceptual level, rather than being made explicit. I wanted to make linear models the <em>tool</em> in a concise way. Luckily, more beginner-friendly materials have emerged lately:</p>
 <ul>
 <li><p>Russ Poldrack's open-source book "Statistical Thinking for the 21st century" (start at <a href="http://statsthinking21.org/fitting-models-to-data.html">chapter 5 on modeling</a>)</p>
@@ -15442,64 +15613,47 @@ div#notebook {
 </li>
 <li><p>Confidence/credible intervals on the parameters. Stress that the Maximum-Likelihood estimate is extremely unlikely, so intervals are more important.</p>
 </li>
-<li><p>Briefly introduce $R^2$ for the simple regression models above. Mention in passing that this is called <a href="#correlation">the Pearson and Spearman correlation coefficients</a>.</p>
+<li><p>Briefly introduce $R^2$ for the simple regression models above. Mention in passing that this is called <a href="#3-Pearson-and-Spearman-correlation">the Pearson and Spearman correlation coefficients</a>.</p>
 </li>
 </ol>
 </li>
-</ol>
-<ol>
 <li><p><strong>Special case #1: One or two means (t-tests, Wilcoxon, Mann-Whitney):</strong></p>
 <ol>
-<li><p><strong>One mean:</strong> When there is only one x-value, the regression model simplifies to $y = b$. If $y$ is non-metric, you can rank-transform it. Apply the assumptions (homoscedasticity doesn't apply since there is only one $x$). Mention in passing that these intercept-only models are called <a href="#t1">one-sample t-test and Wilcoxon Signed Rank test respectively</a>.</p>
+<li><p><strong>One mean:</strong> When there is only one x-value, the regression model simplifies to $y = b$. If $y$ is non-metric, you can rank-transform it. Apply the assumptions (homoscedasticity doesn't apply since there is only one $x$). Mention in passing that these intercept-only models are called <a href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">one-sample t-test and Wilcoxon Signed Rank test respectively</a>.</p>
 </li>
-<li><p><strong>Two means:</strong> If we put two variables 1 apart on the x-axis, the difference between the means is the slope. Great! It is accessible to our swizz army knife called linear modeling. Apply the assumption checks to see that homoscedasticity reduces to equal variance between groups. This is called an <a href="#t2">independent t-test</a>. Do a few worked examples and exercises, maybe adding Welch's test, and do the rank-transformed version, called Mann-Whitney U.</p>
+<li><p><strong>Two means:</strong> If we put two variables 1 apart on the x-axis, the difference between the means is the slope. Great! It is accessible to our swizz army knife called linear modeling. Apply the assumption checks to see that homoscedasticity reduces to equal variance between groups. This is called an <a href="#5.1-Independent-t-test-and-Mann-Whitney-U">independent t-test</a>. Do a few worked examples and exercises, maybe adding Welch's test, and do the rank-transformed version, called Mann-Whitney U.</p>
 </li>
-<li><p><em>Paired samples:</em> Violates the independence assumption. After computing pairwise differences, this is equivalent to 2.1 (one intercept), though it is called the <a href="#tpair">paired t-test and Wilcoxon's matched pairs</a>.</p>
+<li><p><em>Paired samples:</em> Violates the independence assumption. After computing pairwise differences, this is equivalent to 2.1 (one intercept), though it is called the <a href="#4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">paired t-test and Wilcoxon's matched pairs</a>.</p>
 </li>
 </ol>
 </li>
 <li><p><strong>Special case #2: Three or more means (ANOVAs)</strong></p>
 <ol>
-<li><p><em><a href="#dummy">Dummy coding</a> of categories:</em> How one regression coefficient for each level of a factor models an intercept for each level when multiplied by a binary indicator. This is just extending what we did in 2.1. to make this data accessible to linear modeling.</p>
+<li><p><em><a href="#5.1.2-Theory:-Dummy-coding">Dummy coding</a> of categories:</em> How one regression coefficient for each level of a factor models an intercept for each level when multiplied by a binary indicator. This is just extending what we did in 2.1. to make this data accessible to linear modeling.</p>
 </li>
-<li><p><em>Means of one variable:</em> <a href="#anova1">One-way ANOVA</a>.</p>
+<li><p><em>Means of one variable:</em> <a href="#6.1-One-way-ANOVA-and-Kruskal-Wallis">One-way ANOVA</a>.</p>
 </li>
-<li><p><em>Means of two variables:</em> <a href="#anova2">Two-way ANOVA</a>.</p>
-</li>
-</ol>
+<li><p><em>Means of two variables:</em> <a href="#6.2-Two-way-ANOVA">Two-way ANOVA</a>.</p>
 </li>
 </ol>
-<ol>
+</li>
 <li><p><strong>Special case #3: Three or more proportions (Chi-Square)</strong></p>
 <ol>
 <li><p><em>Logarithmic transformation:</em> Making multiplicative models linear using logarithms, thus modeling proportions. See <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">this excellent introduction</a> to the equivalence of log-linear models and Chi-Square tests as models of proportions. Also needs to introduce (log-)odds ratios. When the multiplicative model is made summative using logarithms, we just add the dummy-coding trick from 3.1, and see that the models are identical to the ANOVA models in 3.2 and 3.3, only the interpretation of the coefficients have changed.</p>
 </li>
-<li><p><em>Proportions of one variable:</em> <a href="#goodness">Goodness of fit</a>.</p>
+<li><p><em>Proportions of one variable:</em> <a href="#7.1-Goodness-of-fit">Goodness of fit</a>.</p>
 </li>
-<li><p><em>Proportions of two variables:</em> <a href="#contingency">Contingency tables</a>.</p>
-</li>
-</ol>
+<li><p><em>Proportions of two variables:</em> <a href="#7.2-Contingency-tables">Contingency tables</a>.</p>
 </li>
 </ol>
-<ol>
+</li>
 <li><p><strong>Hypothesis testing:</strong></p>
 <ol>
-<li><p><em>Hypothesis testing as model comparisons:</em> Hypothesis testing is the act of choosing between a full model and one where a parameter is fixed to a particular value (often zero, i.e., effectively excluded from the model) instead of being estimated. For example, when fixing one of the two means to zero in the <a href="#t2">t-test</a>, we study how well a single mean (a <a href="#t1">one-sample t-test</a>) explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. As tests of single parameters, hypothesis testing is therefore less informative However, when testing multiple parameters at the same time (e.g., a factor in ANOVA), model comparison becomes invaluable.</p>
+<li><p><em>Hypothesis testing as model comparisons:</em> Hypothesis testing is the act of choosing between a full model and one where a parameter is fixed to a particular value (often zero, i.e., effectively excluded from the model) instead of being estimated. For example, when fixing one of the two means to zero in the <a href="#5.1-Independent-t-test-and-Mann-Whitney-U">t-test</a>, we study how well a single mean (a <a href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">one-sample t-test</a>) explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. As tests of single parameters, hypothesis testing is therefore less informative However, when testing multiple parameters at the same time (e.g., a factor in ANOVA), model comparison becomes invaluable.</p>
 </li>
 <li><p><em>Likelihood ratios:</em> Likelihood ratios are the swizz army knife which will do model comparison all the way from the one-sample t-test to GLMMs. BIC penalizes model complexity. Moreover, add priors and you've got Bayes Factors. One tool, and you're done. I've used LRTs in the ANOVAs above.</p>
 </li>
 </ol>
-</li>
-</ol>
-<h1 id="10-Limitations">10 Limitations<a class="anchor-link" href="#10-Limitations">&#182;</a></h1><p>I have made a few simplifications for clarity:</p>
-<ol>
-<li><p>I have not covered assumptions in the examples. This will be another post! But all assumptions of all tests come down to the usual three: a) independence of data points, b) normally distributed residuals, and c) homoscedasticity.</p>
-</li>
-<li><p>I assume that all null hypotheses are the absence of an effect, but everything works the same for non-zero null hypotheses.</p>
-</li>
-<li><p>I have not discussed inference. I am only including p-values in the comparisons as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do <em>inference</em> is another matter. Personally, I'm a Bayesian, but going Bayesian here would render it less accessible to the wider audience. Also, doing <a href="https://en.wikipedia.org/wiki/Robust_statistics">robust models</a> would be preferable, but fail to show the equivalences.</p>
-</li>
-<li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#links">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit "solutions" to <a href="https://github.com/lindeloev/tests-as-linear/">the github repo</a> of this doc!</p>
 </li>
 </ol>
 
@@ -15508,7 +15662,24 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="11-Computing-Environment">11 Computing Environment<a class="anchor-link" href="#11-Computing-Environment">&#182;</a></h2>
+<h1 id="10-Limitations">10 Limitations<a class="anchor-link" href="#10-Limitations">&#182;</a></h1><p>I have made a few simplifications for clarity:</p>
+<ol>
+<li><p>I have not covered assumptions in the examples. This will be another post! But all assumptions of all tests come down to the usual three: a) independence of data points, b) normally distributed residuals, and c) homoscedasticity.</p>
+</li>
+<li><p>I assume that all null hypotheses are the absence of an effect, but everything works the same for non-zero null hypotheses.</p>
+</li>
+<li><p>I have not discussed inference. I am only including p-values in the comparisons as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do <em>inference</em> is another matter. Personally, I'm a Bayesian, but going Bayesian here would render it less accessible to the wider audience. Also, doing <a href="https://en.wikipedia.org/wiki/Robust_statistics">robust models</a> would be preferable, but fail to show the equivalences.</p>
+</li>
+<li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#8-Sources-and-further-equivalences">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit "solutions" to <a href="https://github.com/lindeloev/tests-as-linear/">the github repo</a> of this doc!</p>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="11-Computing-Environment">11 Computing Environment<a class="anchor-link" href="#11-Computing-Environment">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -15541,7 +15712,6 @@ div#notebook {
 matplotlib==3.1.0
 numpy==1.16.4
 pandas==0.24.2
-patsy==0.5.1
 scipy==1.3.0
 statsmodels==0.10.0
 </pre>
