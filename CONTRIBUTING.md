@@ -24,13 +24,15 @@ some ideas on how to contribute.
 ├── Makefile
 ├── README.md
 ├── index.html             # Published HTML.
-├── plots.py               # Functions for large plots in main notebook.
 ├── requirements-dev.txt   # Dependencies for development.
 ├── requirements.txt       # Dependencies.
 ├── scripts                # Shell scripts for development, testing and deployment.
 │   └── ...
 ├── tests-as-linear.ipynb  # Main notebook.
-└── utils.py               # Utility functions used in main notebook.
+└── tests_as_linear        # Python source code
+    ├── __init__.py
+    ├── plots.py           # Functions for large plots in main notebook.
+    └── utils.py           # Utility functions used in main notebook.
 ```
 
 ## Development instructions
