@@ -51,3 +51,6 @@ publish:  # Run notebook in-place and generate HTML files.
 
 clean:  # Clean directory.
 	rm -rf _site/ __pycache__/
+	find tests_as_linear/ -type d -name "__pycache__" -exec rm -rf {} +
+	find tests_as_linear/ -type d -name "__pycache__" -delete
+	find tests_as_linear/ -type f -name "*.pyc" -delete
