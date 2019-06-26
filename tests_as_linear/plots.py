@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
-from utils import signed_rank, format_decimals_factory
+from .utils import signed_rank, format_decimals_factory
 
 
 def linear_regression_plot():

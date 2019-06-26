@@ -23,12 +23,12 @@ venv:  # Set up Python virtual environment.
 
 lint-black:
 	@printf "Checking code style with black...\n"
-	black *.py --check --target-version=py36
+	black tests_as_linear/ --check --target-version=py36
 	@printf "\033[1;34mBlack passes!\033[0m\n\n"
 
 lint-pylint:
 	@printf "Checking code style with pylint...\n"
-	pylint *.py --rcfile=.pylintrc
+	pylint tests_as_linear/ --rcfile=.pylintrc
 	@printf "\033[1;34mPylint passes!\033[0m\n\n"
 
 lint: lint-black lint-pylint  # Check code style with black and pylint.
@@ -51,3 +51,6 @@ publish:  # Run notebook in-place and generate HTML files.
 
 clean:  # Clean directory.
 	rm -rf _site/ __pycache__/
+	find tests_as_linear/ -type d -name "__pycache__" -exec rm -rf {} +
+	find tests_as_linear/ -type d -name "__pycache__" -delete
+	find tests_as_linear/ -type f -name "*.pyc" -delete
