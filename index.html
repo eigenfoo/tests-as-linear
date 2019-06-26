@@ -13144,7 +13144,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="k">import</span> <span class="n">generate_toc</span>
+<span class="kn">from</span> <span class="nn">tests_as_linear.utils</span> <span class="k">import</span> <span class="n">generate_toc</span>
 <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;Last updated: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B </span><span class="si">%d</span><span class="s2">, %Y&quot;</span><span class="p">))))</span>
 <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="n">generate_toc</span><span class="p">()))</span>
 </pre></div>
@@ -13164,7 +13164,7 @@ div#notebook {
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<p>Last updated: June 26, 2019</p>
+<p>Last updated: June 27, 2019</p>
 
 </div>
 
@@ -13251,14 +13251,13 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">scipy</span>
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
 <span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">plots</span>
-<span class="kn">import</span> <span class="nn">utils</span>
+<span class="kn">from</span> <span class="nn">tests_as_linear</span> <span class="k">import</span> <span class="n">plots</span><span class="p">,</span> <span class="n">utils</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1618</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">)</span>
 </pre></div>
@@ -13466,7 +13465,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.0.2-Theory:-rank-transformation">3.0.2 Theory: rank-transformation<a class="anchor-link" href="#3.0.2-Theory:-rank-transformation">&#182;</a></h3><p><code>scipy.stats.rankdata</code> simply takes an array of numbers and "replaces" them with the integers of their rank (1st smallest, 2nd smallest, 3rd smallest, etc.). <code>pd.DataFrame.rank</code> performs a similar function, but with support for <code>pandas</code> dataframes. So the result of the rank-transformation <code>scipy.stats.rankdata([3.6, 3.4, -5.0, 8.2])</code> is <code>[3, 2, 1, 4]</code>. See that in the figure above?</p>
+<h3 id="3.0.2-Theory:-rank-transformation">3.0.2 Theory: rank-transformation<a class="anchor-link" href="#3.0.2-Theory:-rank-transformation">&#182;</a></h3><p><code>scipy.stats.rankdata</code> simply takes an array of numbers and "replaces" them with the integers of their rank (1st smallest, 2nd smallest, 3rd smallest, etc.). <code>pd.DataFrame.rank</code> performs a similar function, but with support for <code>pandas.DataFrames</code>. So the result of the rank-transformation <code>scipy.stats.rankdata([3.6, 3.4, -5.0, 8.2])</code> is <code>[3, 2, 1, 4]</code>. See that in the figure above?</p>
 <p>A <em>signed</em> rank is the same, just where we rank according to absolute size first and then add in the sign second. So the signed rank here would be <code>[2, 1, -3, 4]</code>. Or in code:</p>
 
 </div>
@@ -14302,8 +14301,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="5.1.4-Python-code:-independent-t-test">5.1.4 Python code: independent t-test<a class="anchor-link" href="#5.1.4-Python-code:-independent-t-test">&#182;</a></h3><p>As a reminder, when we write <code>y ~ 1 + x</code> with <code>patsy</code>, it is shorthand for $y = \beta_0 \cdot 1 + \beta_1 \cdot x$ and it goes on computing the $\beta$s for you. Thus <code>y ~ 1 + x</code> is the <code>patsy</code> (and/or R) way of writing $y = a \cdot x + b$.</p>
-<p>Notice the identical <code>t</code>, <code>df</code>, <code>p</code>, and estimates. We can get the confidence interval by running <code>confint(lm(...))</code>.</p>
+<h3 id="5.1.4-Python-code:-independent-t-test">5.1.4 Python code: independent t-test<a class="anchor-link" href="#5.1.4-Python-code:-independent-t-test">&#182;</a></h3><p>As a reminder, when we write <code>y ~ 1 + x</code> with <code>patsy</code>, it is shorthand for $y = \beta_0 \cdot 1 + \beta_1 \cdot x$ and Python goes on computing the $\beta$s for you. Thus <code>y ~ 1 + x</code> is the <code>patsy</code> (and/or R) way of writing $y = a \cdot x + b$.</p>
+<p>Notice the identical <code>p</code> estimates.</p>
 
 </div>
 </div>
@@ -14803,7 +14802,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="6.1.3-Python-code:-one-way-ANOVA">6.1.3 Python code: one-way ANOVA<a class="anchor-link" href="#6.1.3-Python-code:-one-way-ANOVA">&#182;</a></h3><p>OK, let's see the identity between a dedicated <strong>ANOVA</strong> function (<code>car::Anova</code>) and the dummy-coded in-your-face linear model in <code>lm</code>.</p>
+<h3 id="6.1.3-Python-code:-one-way-ANOVA">6.1.3 Python code: one-way ANOVA<a class="anchor-link" href="#6.1.3-Python-code:-one-way-ANOVA">&#182;</a></h3><p>OK, let's see the identity between <code>scipy</code>'s dedicated <strong>ANOVA</strong> function (<code>scipy.stats.f_oneway</code>) and the dummy-coded in-your-face linear model with <code>smf.ols</code>.</p>
 
 </div>
 </div>
@@ -14899,9 +14898,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Actually, <code>car::Anova</code> and <code>aov</code> are wrappers around <code>lm</code> so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax <code>y ~ factor</code>. Indeed, the only real reason to use aov and <code>car::Anova</code> rather than <code>lm</code> is to get a nicely formatted ANOVA table.</p>
-<p>The default output of <code>lm</code> returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because this IS the ANOVA model, you can also get parameter estimates out into the open by calling <code>coefficients(aov(...))</code>.</p>
-<p>Note that I do not use the <code>aov</code> function because it computes type-I sum of squares, which is widely discouraged. There is a BIG polarized debate about whether to use type-II (as <code>car::Anova</code> does by default) or type-III sum of squares (set <code>car::Anova(..., type=3)</code>), but let's skip that for now.</p>
+<p>Note that <a href="https://www.statsmodels.org/stable/generated/statsmodels.stats.anova.anova_lm.html"><code>sm.stats.anova_lm</code></a> gives you a pretty ANOVA table with relevant statistics, if you give it the fitted <code>res</code> object. By default it computes type-I sum of squares, which is widely discouraged. There is a BIG polarized debate about whether to use type-II (by passing <code>typ=2</code>) or type-III sum of squares (<code>typ=3</code>), but let's skip that for now.</p>
 
 </div>
 </div>
