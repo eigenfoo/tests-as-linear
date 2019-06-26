@@ -277,3 +277,39 @@ def two_way_anova_plot(df):
     ax.legend(fontsize="large")
 
     return fig, ax
+
+
+def ancova_plot(df):
+    # Logical masks
+    is_a = df["group"] == "a"
+    is_b = df["group"] == "b"
+    is_c = df["group"] == "c"
+
+    # ANCOVA equivalent linear model
+    res = smf.ols("y ~ 1 + group + age", df).fit()
+    beta_0, beta_b, beta_c, beta_age = res.params
+
+    # Plot
+    fig, ax = plt.subplots(figsize=[10, 8])
+
+    ax.scatter(df[is_a]["age"], df[is_a]["y"], label="Group A", color="r")
+    ax.scatter(df[is_b]["age"], df[is_b]["y"], label="Group B", color="b")
+    ax.scatter(df[is_c]["age"], df[is_c]["y"], label="Group C", color="g")
+
+    ax.plot(ax.get_xlim(), [beta_age * x + beta_0 for x in ax.get_xlim()], color="r")
+    ax.plot(
+        ax.get_xlim(),
+        [beta_age * x + beta_0 + beta_b for x in ax.get_xlim()],
+        color="b",
+    )
+    ax.plot(
+        ax.get_xlim(),
+        [beta_age * x + beta_0 + beta_c for x in ax.get_xlim()],
+        color="g",
+    )
+
+    ax.set_xlabel("age", fontsize="large")
+    ax.set_ylabel("y", fontsize="large")
+    ax.legend(fontsize="large")
+
+    return fig, ax
