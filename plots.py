@@ -185,6 +185,7 @@ def dummy_coding_plot():
 
 
 def one_way_anova_plot():
+    # Construct data as a pd.DataFrame
     a = np.random.normal(0, 1, 20)
     b = np.random.normal(-2, 1, 20)
     c = np.random.normal(3, 1, 20)
@@ -200,17 +201,21 @@ def one_way_anova_plot():
     )
     df["group_4"] = np.concatenate(3 * [np.zeros_like(d)] + [np.ones_like(d)])
 
+    # ANOVA equivalent linear model
     res = smf.ols("y ~ 1 + group_2 + group_3 + group_4", df).fit()
     beta0, beta1, beta2, beta3 = res.params
 
+    # Plot
     fig, ax = plt.subplots(figsize=[10, 8])
     ax.scatter(0 * np.ones_like(a), a, color="k")
     ax.scatter(1 * np.ones_like(b), b, color="k")
     ax.scatter(2 * np.ones_like(c), c, color="k")
     ax.scatter(3 * np.ones_like(d), d, color="k")
 
+    # Group 1 (baseline)
     ax.axhline(beta0, color="b", label=r"$\beta_0$ (group 1 mean)")
 
+    # Group 2
     ax.plot([0.7, 1.3], 2 * [beta0 + beta1], color="navy")
     ax.plot(
         [0, 1],
@@ -219,6 +224,7 @@ def one_way_anova_plot():
         label=r"$\beta_1, \beta_2, ...$ (slopes/differences to $\beta_0$)",
     )
 
+    # Group 3
     ax.plot(
         [1.7, 2.3],
         2 * [beta0 + beta2],
@@ -227,6 +233,7 @@ def one_way_anova_plot():
     )
     ax.plot([1, 2], [beta0, beta0 + beta2], color="r")
 
+    # Group 4
     ax.plot([2.7, 3.3], 2 * [beta0 + beta3], color="navy")
     ax.plot([2, 3], [beta0, beta0 + beta3], color="r")
 
