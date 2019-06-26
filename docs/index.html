@@ -1,14 +1,16 @@
-
-
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
 
-
 <title>tests-as-linear</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <script>var clicky_site_ids = clicky_site_ids || []; clicky_site_ids.push(101159456);</script>
 <script async src="//static.getclicky.com/js"></script>
+
+
 
 <style type="text/css">
     /*!
@@ -13057,6 +13059,19 @@ ul.typeahead-list  > li > a.pull-right {
 .ansi-bold { font-weight: bold; }
 
     </style>
+<style type="text/css">
+    /*This file contains any manual css for this page that needs to override the global styles.
+This is only required when different pages style the same element differently. This is just
+a hack to deal with our current css styles and no new styling should be added in this file.*/
+
+#ipython-main-app {
+    position: relative;
+}
+#jupyter-main-app {
+    position: relative;
+}
+
+    </style>
 
 
 <style type="text/css">
@@ -13073,17 +13088,20 @@ div#notebook {
   div.cell {
     display: block;
     page-break-inside: avoid;
-  }
-  div.output_wrapper {
+  } 
+  div.output_wrapper { 
     display: block;
-    page-break-inside: avoid;
+    page-break-inside: avoid; 
   }
-  div.output {
+  div.output { 
     display: block;
-    page-break-inside: avoid;
+    page-break-inside: avoid; 
   }
 }
 </style>
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
@@ -13106,64 +13124,22 @@ div#notebook {
         }
     });
     </script>
-    <!-- End of mathjax configuration -->
-
-<style>
-        .cell.nbinteract-left {
-            width: 50%;
-            float: left;
-        }
-
-        .cell.nbinteract-right {
-            width: 50%;
-            float: right;
-        }
-
-        .cell.nbinteract-hide_in > .input {
-            display: none;
-        }
-
-        .cell.nbinteract-hide_out > .output_wrapper {
-            display: none;
-        }
-
-        .cell:after {
-          content: "";
-          display: table;
-          clear: both;
-        }
-
-        div.output_subarea {
-            max-width: initial;
-        }
-
-        .jp-OutputPrompt {
-            display: none;
-        }
-    </style></head>
+    <!-- End of mathjax configuration --></head>
 <body>
   <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container">
-      
+    <div class="container" id="notebook-container">
 
-
-
-
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Common-statistical-tests-are-linear-models-(or:-how-to-teach-stats)">Common statistical tests are linear models (or: how to teach stats)<a class="anchor-link" href="#Common-statistical-tests-are-linear-models-(or:-how-to-teach-stats)">&#182;</a></h1><p>Original post by Jonas Kristoffer Lindeløv (<a href="https://lindeloev.net">blog</a>, <a href="http://personprofil.aau.dk/117060">profile</a>). Python port by George Ho (<a href="https://eigenfoo.xyz">blog</a>).</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
@@ -13183,7 +13159,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt"></div>
+
 
 
 <div class="output_markdown rendered_html output_subarea ">
@@ -13195,7 +13172,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt"></div>
+
 
 
 <div class="output_markdown rendered_html output_subarea ">
@@ -13237,8 +13215,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This document is summarised in the table below. It shows the linear models underlying common parametric and "non-parametric" tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="linear_tests_cheat_sheet.png">as an image</a> or <a href="linear_tests_cheat_sheet.pdf">as a PDF</a>.</p>
 <hr>
@@ -13248,7 +13227,8 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="1-The-simplicity-underlying-common-tests">1 The simplicity underlying common tests<a class="anchor-link" href="#1-The-simplicity-underlying-common-tests">&#182;</a></h1><p>Most of the common statistical models (t-test, correlation, ANOVA, chi-square, etc.) are special cases of linear models, or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to $y = a \cdot x + b$ which most students know from high school. Unfortunately, introductory statistics courses are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike.</p>
 <p>This needless complexity multiplies when students try to rote learn the parametric assumptions underlying each test separately rather than deducing them from the linear model.</p>
@@ -13259,19 +13239,16 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="2-Settings-and-toy-data">2 Settings and toy data<a class="anchor-link" href="#2-Settings-and-toy-data">&#182;</a></h1>
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -13290,14 +13267,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
@@ -13319,7 +13292,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[3]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -13393,8 +13367,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="3-Pearson-and-Spearman-correlation">3 Pearson and Spearman correlation<a class="anchor-link" href="#3-Pearson-and-Spearman-correlation">&#182;</a></h1><h3 id="3.0.1-Theory:-As-linear-models">3.0.1 Theory: As linear models<a class="anchor-link" href="#3.0.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>Model:</strong> the recipe for $y$ is a slope ($\beta_1$) times $x$ plus an intercept ($\beta_0$, aka a straight line).</p>
 <p>$y = \beta_0 + \beta_1 x \qquad \mathcal{H}_0: \beta_1 = 0$</p>
@@ -13404,13 +13379,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">linear_regression_plot</span><span class="p">()</span>
@@ -13427,7 +13398,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt"></div>
+
 
 
 
@@ -13442,8 +13414,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is often simply called a <em>regression</em> model which can be extended to <em>multiple regression</em> where there are several $\beta$s and on the right-hand side multiplied with the predictors. Everything below, from <a href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">one-sample t-test</a> to <a href="#6.2-Two-way-ANOVA">two-way ANOVA</a> are just special cases of this system. Nothing more, nothing less.</p>
 <p>As the name implies, the <em>Spearman rank correlation</em> is a <em>Pearson correlation</em> on rank-transformed $x$ and $y$:</p>
@@ -13454,13 +13427,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">pearson_spearman_plot</span><span class="p">()</span>
@@ -13477,7 +13446,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt"></div>
+
 
 
 
@@ -13492,8 +13462,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="3.0.2-Theory:-rank-transformation">3.0.2 Theory: rank-transformation<a class="anchor-link" href="#3.0.2-Theory:-rank-transformation">&#182;</a></h3><p><code>scipy.stats.rankdata</code> simply takes an array of numbers and "replaces" them with the integers of their rank (1st smallest, 2nd smallest, 3rd smallest, etc.). <code>pd.DataFrame.rank</code> performs a similar function, but with support for <code>pandas</code> dataframes. So the result of the rank-transformation <code>scipy.stats.rankdata([3.6, 3.4, -5.0, 8.2])</code> is <code>[3, 2, 1, 4]</code>. See that in the figure above?</p>
 <p>A <em>signed</em> rank is the same, just where we rank according to absolute size first and then add in the sign second. So the signed rank here would be <code>[2, 1, -3, 4]</code>. Or in code:</p>
@@ -13501,13 +13472,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">signed_rank</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
@@ -13518,15 +13485,17 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I hope I don't offend anyone when I say that ranks are easy; yet it's all you need to do to convert most parametric tests into their "non-parametric" counterparts! One interesting implication is that <em>many "non-parametric tests" are about as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on rank-transformed data</em>. That's why I put "non-parametric" in quotation marks.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="3.0.3-Python-code:-Pearson-correlation">3.0.3 Python code: Pearson correlation<a class="anchor-link" href="#3.0.3-Python-code:-Pearson-correlation">&#182;</a></h3><p>It couldn't be much simpler to run these models with <code>statsmodels</code> (<a href="https://www.statsmodels.org/stable/example_formulas.html#ols-regression-using-formulas"><code>smf.ols</code></a>) or <code>scipy</code> (<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html"><code>scipy.stats.pearson</code></a>). They yield identical slopes, <code>p</code> and <code>t</code> values, but there's a catch: <code>smf.ols</code> gives you the <em>slope</em> and even though that is usually much more interpretable and informative than the <em>correlation coefficient</em> $r$, you may still want $r$. Luckily, the slope becomes $r$ if <code>x</code> and <code>y</code> have a standard deviation of exactly 1. You can do this by scaling the data: <code>data /= data.std()</code>.</p>
 <p>Notice how <code>scipy.stats.pearsonr</code> and <code>smf.ols (scaled)</code> have the same slopes, $p$ and $t$ values.</p>
@@ -13534,13 +13503,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">correlated</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
@@ -13558,14 +13523,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -13583,7 +13544,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[8]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -13647,21 +13609,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="3.0.4-Python-code:-Spearman-correlation">3.0.4 Python code: Spearman correlation<a class="anchor-link" href="#3.0.4-Python-code:-Spearman-correlation">&#182;</a></h3><p>Note that we can interpret the slope which is the number of ranks $y$ change for each rank on $x$. I think that this is a pretty interesting number. However, the intercept is less interpretable since it lies at $\text{rank}(x) = 0$ which is impossible since x starts at 1.</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ranked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">correlated</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -13674,14 +13633,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -13699,7 +13654,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[10]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -13755,8 +13711,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="4-One-mean">4 One mean<a class="anchor-link" href="#4-One-mean">&#182;</a></h1><h2 id="4.1-One-sample-t-test-and-Wilcoxon-signed-rank">4.1 One sample t-test and Wilcoxon signed-rank<a class="anchor-link" href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">&#182;</a></h2><h3 id="4.1.1-Theory:-As-linear-models">4.1.1 Theory: As linear models<a class="anchor-link" href="#4.1.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>t-test</strong> model: A single number predicts $y$.</p>
 <p>$y = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$</p>
@@ -13768,13 +13725,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">ttest_wilcoxon_plot</span><span class="p">()</span>
@@ -13791,7 +13744,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt"></div>
+
 
 
 
@@ -13806,21 +13760,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="4.1.2-Python-code:-One-sample-t-test">4.1.2 Python code: One-sample t-test<a class="anchor-link" href="#4.1.2-Python-code:-One-sample-t-test">&#182;</a></h3><p>Try running the Python code below and see that the linear model (<code>smf.ols</code>) produces the same $t$, $p$, and $r$ as <code>scipy.stats.ttest_1samp</code>. The confidence interval is not computed by <code>scipy</code> but would theoretically also be identical:</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -13831,14 +13782,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -13857,7 +13804,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[13]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -13913,20 +13861,17 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="4.1.3-Python-code:-Wilcoxon-signed-rank-test">4.1.3 Python code: Wilcoxon signed-rank test<a class="anchor-link" href="#4.1.3-Python-code:-Wilcoxon-signed-rank-test">&#182;</a></h3>
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">signed_rank_data</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -13939,14 +13884,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -13965,7 +13906,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[15]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -14021,8 +13963,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">4.2 Paired samples t-test and Wilcoxon matched pairs<a class="anchor-link" href="#4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">&#182;</a></h2><h3 id="4.2.1-Theory:-As-linear-models">4.2.1 Theory: As linear models<a class="anchor-link" href="#4.2.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>t-test</strong> model: a single number (intercept) predicts the pairwise differences.</p>
 <p>$y_2-y_1 = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$</p>
@@ -14031,13 +13974,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">pairs_wilcoxon_plot</span><span class="p">()</span>
@@ -14054,7 +13993,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt"></div>
+
 
 
 
@@ -14069,8 +14009,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Similarly, the <strong>Wilcoxon matched pairs</strong> only differ from <strong>Wilcoxon signed-rank</strong> in that it's testing the signed ranks of the pairwise $y_2-y_1$ differences.</p>
 <p>$\text{signed_rank}(y_2-y_1) = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$</p>
@@ -14078,19 +14019,16 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="4.2.2-Python-code:-Paired-sample-t-test">4.2.2 Python code: Paired sample t-test<a class="anchor-link" href="#4.2.2-Python-code:-Paired-sample-t-test">&#182;</a></h3>
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_rel</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
@@ -14101,14 +14039,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -14127,7 +14061,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[18]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -14183,21 +14118,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="4.2.3-Python-code:-Wilcoxon-matched-pairs">4.2.3 Python code: Wilcoxon matched pairs<a class="anchor-link" href="#4.2.3-Python-code:-Wilcoxon-matched-pairs">&#182;</a></h3><p>Again, we do the signed-ranks trick. This is still an approximation, but a close one:</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wilcoxon</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
@@ -14208,14 +14140,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -14234,7 +14162,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[20]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -14290,15 +14219,17 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>For large sample sizes (N &gt;&gt; 100), this approaches the <strong>sign test</strong> to a reasonable degree, but this approximation is too inaccurate to flesh out here.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="5-Two-means">5 Two means<a class="anchor-link" href="#5-Two-means">&#182;</a></h1><h2 id="5.1-Independent-t-test-and-Mann-Whitney-U">5.1 Independent t-test and Mann-Whitney U<a class="anchor-link" href="#5.1-Independent-t-test-and-Mann-Whitney-U">&#182;</a></h2><h3 id="5.1.1-Theory:-As-linear-models">5.1.1 Theory: As linear models<a class="anchor-link" href="#5.1.1-Theory:-As-linear-models">&#182;</a></h3><p><strong>Independent t-test model:</strong> two means predict $y$.</p>
 <p>$y_i = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$</p>
@@ -14310,7 +14241,8 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="5.1.2-Theory:-Dummy-coding">5.1.2 Theory: Dummy coding<a class="anchor-link" href="#5.1.2-Theory:-Dummy-coding">&#182;</a></h3><p>Dummy coding can be understood visually. The indicator is on the x-axis so data points from the first group are located at $x = 0$ and data points from the second group is located at $x = 1$. Then $\beta_0$ is the intercept (blue line) and $\beta_1$ is the slope between the two means (red line). Why? Because when $\Delta x = 1$ the slope equals the difference because:</p>
 <p>$\text{slope} = \Delta y / \Delta x = \Delta y / 1 = \Delta y = \text{difference}$</p>
@@ -14319,13 +14251,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">dummy_coding_plot</span><span class="p">()</span>
@@ -14342,7 +14270,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt"></div>
+
 
 
 
@@ -14357,8 +14286,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="5.1.3-Theory:-Dummy-coding-(continued)">5.1.3 Theory: Dummy coding (continued)<a class="anchor-link" href="#5.1.3-Theory:-Dummy-coding-(continued)">&#182;</a></h3><p>If you feel like you get dummy coding now, just skip ahead to the next section. Here is a more elaborate explanation of dummy coding:</p>
 <p>If a data point was sampled from the first group, i.e., when $x_i = 0$, the model simply becomes $y = \beta_0 + \beta_1 \cdot 0 = \beta_0$. In other words, the model predicts that that data point is $beta_0$. It turns out that the $\beta$ which best predicts a set of data points is the <em>mean</em> of those data points, so $\beta_0$ is the mean of group 1.</p>
@@ -14369,7 +14299,8 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="5.1.4-Python-code:-independent-t-test">5.1.4 Python code: independent t-test<a class="anchor-link" href="#5.1.4-Python-code:-independent-t-test">&#182;</a></h3><p>As a reminder, when we write <code>y ~ 1 + x</code> with <code>patsy</code>, it is shorthand for $y = \beta_0 \cdot 1 + \beta_1 \cdot x$ and it goes on computing the $\beta$s for you. Thus <code>y ~ 1 + x</code> is the <code>patsy</code> (and/or R) way of writing $y = a \cdot x + b$.</p>
 <p>Notice the identical <code>t</code>, <code>df</code>, <code>p</code>, and estimates. We can get the confidence interval by running <code>confint(lm(...))</code>.</p>
@@ -14377,13 +14308,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">groups</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">]),</span>
@@ -14403,7 +14330,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[22]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -14465,14 +14393,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
@@ -14483,14 +14407,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -14509,7 +14429,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[24]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -14565,20 +14486,17 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="5.1.5-Python-code:-Mann-Whitney-U">5.1.5 Python code: Mann-Whitney U<a class="anchor-link" href="#5.1.5-Python-code:-Mann-Whitney-U">&#182;</a></h3>
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">groups</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Only rank `y`, not `group`</span>
@@ -14591,14 +14509,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -14617,7 +14531,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[26]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -14673,21 +14588,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="5.2-Welch&#8217;s-t-test">5.2 Welch&#8217;s t-test<a class="anchor-link" href="#5.2-Welch&#8217;s-t-test">&#182;</a></h2><p>This is identical to the (Student's) <a href="#5.1.4-Python-code:-independent-t-test">independent t-test</a> above except that Student's assumes identical variances and <strong>Welch's t-test</strong> does not. So the linear model is the same and the trick is in the variances, which I won't go further into here.</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -14700,15 +14612,17 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="6-Three-or-more-means">6 Three or more means<a class="anchor-link" href="#6-Three-or-more-means">&#182;</a></h1><p>ANOVAs are linear models with (only) categorical predictors so they simply extend everything we did above, relying heavily on dummy coding. Do make sure to read <a href="#5.1.2-Theory:-Dummy-coding">the section on dummy coding</a> if you haven't already.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="6.1-One-way-ANOVA-and-Kruskal-Wallis">6.1 One-way ANOVA and Kruskal-Wallis<a class="anchor-link" href="#6.1-One-way-ANOVA-and-Kruskal-Wallis">&#182;</a></h2><h3 id="6.1.1-Theory:-As-linear-models">6.1.1 Theory: As linear models<a class="anchor-link" href="#6.1.1-Theory:-As-linear-models">&#182;</a></h3><p>Model: One mean for each group predicts $y$.</p>
 <p>$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +... \qquad \mathcal{H}_0: y = \beta_0$</p>
@@ -14718,13 +14632,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">one_way_anova_plot</span><span class="p">()</span>
@@ -14741,7 +14651,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt"></div>
+
 
 
 
@@ -14756,8 +14667,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>A one-way ANOVA has a log-linear counterpart called <a href="#7.1-Goodness-of-fit">goodness-of-fit</a> test which we'll return to. By the way, since we now regress on more than one $x$, the one-way ANOVA is a <strong>multiple regression</strong> model.</p>
 <p>The <strong>Kruskal-Wallis</strong> test is simply a <strong>one-way ANOVA</strong> on the rank-transformed $y$ (<code>value</code>):</p>
@@ -14767,20 +14679,17 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="6.1.2-Example-data">6.1.2 Example data<a class="anchor-link" href="#6.1.2-Example-data">&#182;</a></h3><p>We make a three-level factor with the levels <code>a</code>, <code>b</code>, and <code>c</code> so that the <strong>one-way ANOVA</strong> basically becomes a "three-sample t-test". Then we manually do the <a href="#5.1.2-Theory:-Dummy-coding">dummy coding</a> of the groups.</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_points</span> <span class="o">=</span> <span class="mi">20</span>
@@ -14807,7 +14716,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[29]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -14881,28 +14791,26 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>With group a's intercept omni-present, see how exactly one other parameter is added to predict <code>value</code> for group b and c in a given row. Thus data points in group b never affect the estimates in group c.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="6.1.3-Python-code:-one-way-ANOVA">6.1.3 Python code: one-way ANOVA<a class="anchor-link" href="#6.1.3-Python-code:-one-way-ANOVA">&#182;</a></h3><p>OK, let's see the identity between a dedicated <strong>ANOVA</strong> function (<code>car::Anova</code>) and the dummy-coded in-your-face linear model in <code>lm</code>.</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">F</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
@@ -14913,14 +14821,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;F statistic&quot;</span><span class="p">,</span> <span class="s2">&quot;p value&quot;</span><span class="p">,</span> <span class="s2">&quot;df&quot;</span><span class="p">])</span>
@@ -14940,7 +14844,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[31]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -14990,8 +14895,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Actually, <code>car::Anova</code> and <code>aov</code> are wrappers around <code>lm</code> so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax <code>y ~ factor</code>. Indeed, the only real reason to use aov and <code>car::Anova</code> rather than <code>lm</code> is to get a nicely formatted ANOVA table.</p>
 <p>The default output of <code>lm</code> returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because this IS the ANOVA model, you can also get parameter estimates out into the open by calling <code>coefficients(aov(...))</code>.</p>
@@ -15000,19 +14906,16 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="6.1.4-Python-code:-Kruskal-Wallis">6.1.4 Python code: Kruskal-Wallis<a class="anchor-link" href="#6.1.4-Python-code:-Kruskal-Wallis">&#182;</a></h3>
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">signed_rank_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -15023,14 +14926,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">kruskal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
@@ -15041,14 +14940,10 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;p value&quot;</span><span class="p">,</span> <span class="s2">&quot;df&quot;</span><span class="p">])</span>
@@ -15068,7 +14963,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[34]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -15115,8 +15011,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="6.2-Two-way-ANOVA">6.2 Two-way ANOVA<a class="anchor-link" href="#6.2-Two-way-ANOVA">&#182;</a></h2><h3 id="6.2.1-Theory:-As-linear-models">6.2.1 Theory: As linear models<a class="anchor-link" href="#6.2.1-Theory:-As-linear-models">&#182;</a></h3><p>Model: one mean per group (main effects) plus these means multiplied across factors (interaction effects). The main effects are the <a href="#6.1-One-way-ANOVA-and-Kruskal-Wallis">one-way ANOVAs</a> above, though in the context of a larger model. The interaction effect is harder to explain in the abstract even though it's just a few numbers multiplied with each other. I will leave that to the teachers to keep focus on equivalences here :-)</p>
 <p>Switching to matrix notation:</p>
@@ -15127,13 +15024,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mood&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;sad&quot;</span><span class="p">]</span>
@@ -15152,7 +15045,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt output_prompt">Out[35]:</div>
+
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -15244,45 +15138,62 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\beta_0$ is now the happy guys from group a!</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">two_way_anova_plot</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAksAAAHNCAYAAAAOvD9aAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjAsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+17YcXAAAgAElEQVR4nO3dfZBd9X0f4M+VEJB1bFK5LYSE3WUa52i9k3o61CUmSms308RW8NhmOnHsa4RNikhCpylMaQJLnAzjdeOhGaCmnnpplIK7xjg2xB6bae2kpQl+oWQ99TTy6nTisLuhwWBDmwRdS9Sr2z/uSuwK6eCV7t5zdu/zzGis872r5YsO1/ezv/N7aXW73QAAcHLb6m4AAKDJhCUAgArCEgBABWEJAKCCsAQAUOGsjfrGc3NzltkBAJvGJZdc0jpZfcPC0so/dCO//VCZn5/PxMRE3W0MPfehfu5BM7gP9XMP+mtubu6Ur3kMBwBQ4bRHloqi2J7k7iRFkm6Sny/L8o/71RgAQBOcycjSm5OkLMsfS3JLkum+dAQA0CCnHZbKsvzdJPtWLseS/N++dAQA0CCtMz0briiKe5K8Lck/Lsvyc8fqc3Nz3ZGRkTNsj2MOHz6cc889t+42hp77UD/3oBnch/q5B/3V6XROuRrujMNSkhRFcUGSR5O8uizLQ0kvLFkN1z9WPTSD+1A/96AZ3If6uQf9NTc3d8qwdNqP4YqiuLIoiptWLjtJjq78AgDYMs5kn6UHkvx2URR/kGRHkn9eluW3+9MWAEAznHZYWnnc9jN97AUAoHFsSgkAUEFYAgA2zKOPPprLL7+87jbOiLAEAFBhQw/SBQAG7N57k/37N/afcfXVyd693/WXdzqdXH/99fnTP/3THDlyJO973/vyyle+Mrfeems6nU6efvrp7Nq1K3fccUfOOeecvPrVr85VV12VRx99NJ1OJzfccEN+8id/Mg888EA++9nP5ujRo3nqqady/vnn5zd+4zeyvLycn/7pn84f/MEf5OUvf3m63W7e+MY35s4778yuXbvO+F/XyBIAsKG+8Y1v5N3vfnc+9alP5Wd/9mfzwQ9+MB//+Mfz1re+Nffff38+97nP5YknnsjDDz+cJFleXs55552XBx54IHfccUduvvnmPPvss0mSr3zlK3nve9+bhx56KJOTk5mens6FF16Y173udfn0pz+dJPnyl7+c7/u+7+tLUEqMLAHA1rJ377pGfQbhoosuymte85okya5du/LJT34yN954Y77whS/k7rvvzsLCQp5++ul0Op3jf+Zd73rX8a//4R/+4Tz22GNJkh/7sR/LxRdfnCT5mZ/5mbzlLW9JkrTb7dx2221pt9u5//778453vKNv/QtLAMCG2rFjx/Hft1qtdLvd3HDDDVleXs6b3vSmvP71r8+TTz6Z1aeKbN++/fjvjx49evz6VPXLLrss3/72t/OlL30pf/RHf5QPfOADfevfYzgAYOAeeeSRXHfdddmzZ09arVa++tWvZnl5+fjrv/u7v5skOXDgQB5//PG89rWvTdJ7xPbUU08lST72sY/lDW94Q5JeCHvnO9+ZqampXH755TnnnHP61quRJQBg4K6//vpcd911Oe+88/I93/M9ee1rX5ulpaXjr3/lK1/Jxz/+8Rw9ejS33357zjvvvCTJ+eefnxtvvDHf/OY380M/9EO59dZbj/+Zt73tbfnABz6Qt7/97X3tVVgCNofZ2WRqKruWlpLR0WR6Omm36+4KeAmXXnppPvOZz5z0ul3xHr7pppuyc+fOF9W///u/Px/+8IdP+mf+8A//MJdddtnxOU39IiwBzTc7m+zbl3Q6aSXJ4mLvOhGYgCTJlVdemW9961v54Ac/2PfvLSwBzTc1laxaJZOkdz01JSzBFlSW5UnrV1xxRa644oqTvvaRj3xkw/oxwRtovlXzGL6rOkAfCUtA842Orq8O0EfCEtB809PJyMja2shIrw6wwYQloPna7WRmJhkbS7fVSsbGetfmKwEDYII3sDm020m7nYPz85mYmKi7G2CIGFkCAKggLAEAjXTttdfmgQceqLsNYQkAoIo5SwCwhdx7b7J//8b+M66+Otm796W/7tChQ7npppuyuLiYbdu2ZXJyMrfeemve//7356tf/WoOHTqUbreb973vfbnkkkvy1FNP5Vd+5Vfy9NNP58ILL8wzzzyzsf8i3yUjSwDAhvj85z+fQ4cO5VOf+lQ+8YlPJOkdkPv000/n/vvvz0MPPZS3ve1tufvuu5Mkt956a17zmtfks5/9bG655ZY8/vjjdbZ/nJElANhC9u797kZ9BuGSSy7J7bffniuvvDKXXXZZrrrqqrzqVa/Kzp0787GPfSx/9md/lkcf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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="6.2.2-Python-code:-Two-way-ANOVA">6.2.2 Python code: Two-way ANOVA<a class="anchor-link" href="#6.2.2-Python-code:-Two-way-ANOVA">&#182;</a></h3><p>Now let's turn to the actual modeling in R. We compare a dedicated ANOVA function (<code>car::Anova</code>; see <a href="#6.1-One-way-ANOVA-and-Kruskal-Wallis">One-Way ANOVA</a> why) to the linear model (<code>lm</code>). Notice that in ANOVA, we are testing a full factor interaction all at once which involves many parameters (two in this case), so we can't look at the overall model fit nor any particular parameter for the result. Therefore, I use a <a href="https://en.wikipedia.org/wiki/Likelihood-ratio_test">likelihood-ratio test</a> to compare a full two-way ANOVA model ("saturated") to one without the interaction effect(s). The <code>anova</code> function does this test. Even though that looks like cheating, it's just computing likelihoods, p-values, etc. on the models that were already fitted, so it's legit!</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15292,8 +15203,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Below, I present approximate main effect models, though exact calculation of ANOVA main effects <a href="https://stats.idre.ucla.edu/stata/faq/how-can-i-get-anova-simple-main-effects-with-dummy-coding/">is more involved</a> if it is to be accurate and furthermore depend on whether type-II or type-III sum of squares are used for inference.</p>
 <p>Look at the model summary statistics to find values comparable to the <code>Anova</code>-estimated main effects above.</p>
@@ -15301,13 +15213,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15317,8 +15225,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="6.3-ANCOVA">6.3 ANCOVA<a class="anchor-link" href="#6.3-ANCOVA">&#182;</a></h3><p>This is simply ANOVA with a continuous regressor added so that it now contains continuous and (dummy-coded) categorical predictors. For example, if we continue with the <a href="#6.1-One-way-ANOVA-and-Kruskal-Wallis">one-way ANOVA</a> example, we can add <code>age</code> and it is now called a <strong>one-way ANCOVA</strong>:</p>
 <p>$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_3 \text{age}$</p>
@@ -15327,13 +15236,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15343,21 +15248,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is best visualized using colors for groups instead of x-position. The $\beta$s are still the average $y$-offset of the data points, only now we model each group using a slope instead of an intercept. In other words, the one-way ANOVA is sort of <a href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">one-sample t-tests</a> model for each group ($y = \beta_0$) while the <strong>one-way ANCOVA</strong> is sort of <a href="#3-Pearson-and-Spearman-correlation">Pearson correlation</a> model for each group ($y_i = \beta_0 + \beta_i + \beta_1 \text{age}$):</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15367,21 +15269,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>And now some R code to run the one-way ANCOVA as a linear model:</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15391,8 +15290,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="7-Proportions:-Chi-square-is-a-log-linear-model">7 Proportions: Chi-square is a log-linear model<a class="anchor-link" href="#7-Proportions:-Chi-square-is-a-log-linear-model">&#182;</a></h1><p>Recall that when you take the logarithm, you can easily make statements about <em>proportions</em>, i.e., that for every increase in $x$, $y$ increases a certain percentage. This turns out to be one of the simplest (and therefore best!) ways to make count data and contingency tables intelligible. See <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">this nice introduction</a> to Chi-Square tests as linear models.</p>
 <h2 id="7.1-Goodness-of-fit">7.1 Goodness of fit<a class="anchor-link" href="#7.1-Goodness-of-fit">&#182;</a></h2><h3 id="7.1.1-Theory:-As-log-linear-model">7.1.1 Theory: As log-linear model<a class="anchor-link" href="#7.1.1-Theory:-As-log-linear-model">&#182;</a></h3><p>Model: a single intercept predicts $log(y)$.</p>
@@ -15401,13 +15301,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15417,21 +15313,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="7.1.2-Example-data">7.1.2 Example data<a class="anchor-link" href="#7.1.2-Example-data">&#182;</a></h3><p>For this, we need some wide count data:</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15441,21 +15334,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="7.1.3-Python-code:-Goodness-of-fit">7.1.3 Python code: Goodness of fit<a class="anchor-link" href="#7.1.3-Python-code:-Goodness-of-fit">&#182;</a></h3><p>Now let's see that the Goodness of fit is just a log-linear equivalent to a one-way ANOVA. We set <code>family = poisson()</code> which defaults to setting a logarithmic <a href="https://en.wikipedia.org/wiki/Generalized_linear_model#Link_function">link function</a> (<code>family = poisson(link='log')</code>).</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15465,8 +15355,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Note the strange <code>anova(..., test='Rao')</code> which merely states that p-values should be computed using the (Rao) <a href="https://en.wikipedia.org/wiki/Score_test">score test</a>. We could also have jotted in <code>test='Chisq'</code> or <code>test='LRT'</code> which would have yielded approximate p-values. You may think that we're cheating here, sneaking in some sort of Chi-Square model post-hoc. However, <code>anova</code> only specifies how p-values are calculated whereas all the log-linear modeling happened in <code>glm</code>.</p>
 <p>By the way, if there are only two counts and a large sample size (N &gt; 100), this model begins to approximate the <strong>binomial test</strong>, <code>binom.test</code>, to a reasonable degree. But this sample size is larger than most use cases, so I won't raise to a rule-of-thumb and won't dig deeper into it here.</p>
@@ -15474,13 +15365,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15490,8 +15377,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="7.2-Contingency-tables">7.2 Contingency tables<a class="anchor-link" href="#7.2-Contingency-tables">&#182;</a></h2><h3 id="7.2.1-Theory:-As-log-linear-model">7.2.1 Theory: As log-linear model<a class="anchor-link" href="#7.2.1-Theory:-As-log-linear-model">&#182;</a></h3><p>The theory here will be a bit more convoluted, and I mainly write it up so that you can get the <em>feeling</em> that it really is just a log-linear <a href="#anova2">two-way ANOVA model</a>. Let's get started...</p>
 <p>For a two-way contingency table, the model of the count variable $y$ is a modeled using the marginal proportions of a contingency table. Why this makes sense, is too involved to go into here, but <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">see the relevant slides by Christoph Scheepers here</a> for an excellent exposition. The model is composed of a lot of counts and the regression coefficients $A_i$ and $B_i$:</p>
@@ -15507,13 +15395,9 @@ div#notebook {
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15523,21 +15407,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="7.2.3-Python-code:-Chi-square-test">7.2.3 Python code: Chi-square test<a class="anchor-link" href="#7.2.3-Python-code:-Chi-square-test">&#182;</a></h3><p>Now let's show the equivalence between a chi-square model and a log-linear model. This is very similar to our <a href="#anova2">two-way ANOVA</a> above:</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15547,21 +15428,18 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>If you unfold the raw R output, I've included <code>summary(full)</code> so that you can see the raw regression coefficients. Being a log-linear model, these are the <em>percentage increase</em>in $y$ over and above the intercept if that category obtains.</p>
 
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
@@ -15571,8 +15449,9 @@ div#notebook {
 </div>
 </div>
 
-  </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="8-Sources-and-further-equivalences">8 Sources and further equivalences<a class="anchor-link" href="#8-Sources-and-further-equivalences">&#182;</a></h1><p>Here are links to other sources who have exposed bits and pieces of this puzzle, including many further equivalences not covered here:</p>
 <ul>
@@ -15588,7 +15467,8 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="9-Teaching-materials-and-a-course-outline">9 Teaching materials and a course outline<a class="anchor-link" href="#9-Teaching-materials-and-a-course-outline">&#182;</a></h1><p>Most advanced stats books (and some intro-books) take the "everything is GLMM" approach as well. However, the "linear model" part often stays at the conceptual level, rather than being made explicit. I wanted to make linear models the <em>tool</em> in a concise way. Luckily, more beginner-friendly materials have emerged lately:</p>
 <ul>
@@ -15621,7 +15501,7 @@ div#notebook {
 <ol>
 <li><p><strong>One mean:</strong> When there is only one x-value, the regression model simplifies to $y = b$. If $y$ is non-metric, you can rank-transform it. Apply the assumptions (homoscedasticity doesn't apply since there is only one $x$). Mention in passing that these intercept-only models are called <a href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">one-sample t-test and Wilcoxon Signed Rank test respectively</a>.</p>
 </li>
-<li><p><strong>Two means:</strong> If we put two variables 1 apart on the x-axis, the difference between the means is the slope. Great! It is accessible to our swizz army knife called linear modeling. Apply the assumption checks to see that homoscedasticity reduces to equal variance between groups. This is called an <a href="#5.1-Independent-t-test-and-Mann-Whitney-U">independent t-test</a>. Do a few worked examples and exercises, maybe adding Welch's test, and do the rank-transformed version, called Mann-Whitney U.</p>
+<li><p><strong>Two means:</strong> If we put two variables 1 apart on the x-axis, the difference between the means is the slope. Great! It is accessible to our Swiss army knife called linear modeling. Apply the assumption checks to see that homoscedasticity reduces to equal variance between groups. This is called an <a href="#5.1-Independent-t-test-and-Mann-Whitney-U">independent t-test</a>. Do a few worked examples and exercises, maybe adding Welch's test, and do the rank-transformed version, called Mann-Whitney U.</p>
 </li>
 <li><p><em>Paired samples:</em> Violates the independence assumption. After computing pairwise differences, this is equivalent to 2.1 (one intercept), though it is called the <a href="#4.2-Paired-samples-t-test-and-Wilcoxon-matched-pairs">paired t-test and Wilcoxon's matched pairs</a>.</p>
 </li>
@@ -15651,7 +15531,7 @@ div#notebook {
 <ol>
 <li><p><em>Hypothesis testing as model comparisons:</em> Hypothesis testing is the act of choosing between a full model and one where a parameter is fixed to a particular value (often zero, i.e., effectively excluded from the model) instead of being estimated. For example, when fixing one of the two means to zero in the <a href="#5.1-Independent-t-test-and-Mann-Whitney-U">t-test</a>, we study how well a single mean (a <a href="#4.1-One-sample-t-test-and-Wilcoxon-signed-rank">one-sample t-test</a>) explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. As tests of single parameters, hypothesis testing is therefore less informative However, when testing multiple parameters at the same time (e.g., a factor in ANOVA), model comparison becomes invaluable.</p>
 </li>
-<li><p><em>Likelihood ratios:</em> Likelihood ratios are the swizz army knife which will do model comparison all the way from the one-sample t-test to GLMMs. BIC penalizes model complexity. Moreover, add priors and you've got Bayes Factors. One tool, and you're done. I've used LRTs in the ANOVAs above.</p>
+<li><p><em>Likelihood ratios:</em> Likelihood ratios are the Swiss army knife which will do model comparison all the way from the one-sample t-test to GLMMs. BIC penalizes model complexity. Moreover, add priors and you've got Bayes Factors. One tool, and you're done. I've used LRTs in the ANOVAs above.</p>
 </li>
 </ol>
 </li>
@@ -15660,7 +15540,8 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="10-Limitations">10 Limitations<a class="anchor-link" href="#10-Limitations">&#182;</a></h1><p>I have made a few simplifications for clarity:</p>
 <ol>
@@ -15670,26 +15551,23 @@ div#notebook {
 </li>
 <li><p>I have not discussed inference. I am only including p-values in the comparisons as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do <em>inference</em> is another matter. Personally, I'm a Bayesian, but going Bayesian here would render it less accessible to the wider audience. Also, doing <a href="https://en.wikipedia.org/wiki/Robust_statistics">robust models</a> would be preferable, but fail to show the equivalences.</p>
 </li>
-<li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#8-Sources-and-further-equivalences">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit "solutions" to <a href="https://github.com/lindeloev/tests-as-linear/">the github repo</a> of this doc!</p>
+<li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#8-Sources-and-further-equivalences">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit "solutions" to <a href="https://github.com/lindeloev/tests-as-linear/">the GitHub repo</a> of this doc!</p>
 </li>
 </ol>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="11-Computing-Environment">11 Computing Environment<a class="anchor-link" href="#11-Computing-Environment">&#182;</a></h1>
 </div>
 </div>
 </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cat requirements.txt
@@ -15705,7 +15583,8 @@ div#notebook {
 
 <div class="output_area">
 
-    
+    <div class="prompt"></div>
+
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>jupyter==1.0.0
@@ -15721,30 +15600,12 @@ statsmodels==0.10.0
 </div>
 </div>
 
-  </div>
-
-
-
-<!-- Loads nbinteract package -->
-<script src="https://unpkg.com/nbinteract-core" async></script>
-<script>
-  (function setupNbinteract() {
-    // If NbInteract hasn't loaded, wait one second and try again
-    if (window.NbInteract === undefined) {
-      setTimeout(setupNbinteract, 1000)
-      return
-    }
-
-    var interact = new window.NbInteract({
-      spec: 'eigenfoo/tests-as-linear/master',
-      baseUrl: 'https://mybinder.org',
-      provider: 'gh',
-    })
-    interact.prepare()
-
-    window.interact = interact
-  })()
-</script>
+</div>
     </div>
   </div>
 </body>
+
+ 
+
+
+</html>

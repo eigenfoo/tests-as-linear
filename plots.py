@@ -240,3 +240,40 @@ def one_way_anova_plot():
     ax.legend(fontsize="large")
 
     return fig, ax
+
+
+def two_way_anova_plot(df):
+    res = smf.ols("y ~ 1 + group * mood", df).fit()
+    beta_0, beta_b, beta_c, beta_sad, beta_b_sad, beta_c_sad = res.params
+
+    # Logical masks
+    is_a = df["group"] == "a"
+    is_b = df["group"] == "b"
+    is_c = df["group"] == "c"
+    is_happy = df["mood"] == "happy"
+    is_sad = df["mood"] == "sad"
+
+    # Plot
+    fig, ax = plt.subplots(figsize=[10, 8])
+    ax.scatter(0 * np.ones(10), df["y"][is_a & is_happy], color="r")
+    ax.scatter(0 * np.ones(10), df["y"][is_a & is_sad], color="b")
+    ax.scatter(1 * np.ones(10), df["y"][is_b & is_happy], color="r")
+    ax.scatter(1 * np.ones(10), df["y"][is_b & is_sad], color="b")
+    ax.scatter(2 * np.ones(10), df["y"][is_c & is_happy], color="r")
+    ax.scatter(2 * np.ones(10), df["y"][is_c & is_sad], color="b")
+
+    # Group a
+    ax.axhline(beta_0, color="r", label="happy")
+    ax.plot([-0.3, 0.3], 2 * [beta_0 + beta_sad], color="b", label="sad")
+
+    # Group b
+    ax.plot([0.7, 1.3], 2 * [beta_0 + beta_b], color="r")
+    ax.plot([0.7, 1.3], 2 * [beta_0 + beta_b + beta_sad + beta_b_sad], color="b")
+
+    # Group c
+    ax.plot([1.7, 2.3], 2 * [beta_0 + beta_c], color="r")
+    ax.plot([1.7, 2.3], 2 * [beta_0 + beta_c + beta_sad + beta_c_sad], color="b")
+
+    ax.legend(fontsize="large")
+
+    return fig, ax
