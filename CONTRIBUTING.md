@@ -18,11 +18,15 @@ some ideas on how to contribute.
 ## Project structure
 
 ```bash
+.
+├── CONTRIBUTING.md
 ├── Makefile
 ├── README.md
-├── index.html             # Generated HTML.
+├── docs                   # Generated HTML. GitHub Pages serves from here.
+│   └── ...
 ├── plots.py               # Functions for large plots in main notebook.
-├── requirements.txt       # Python package dependencies.
+├── requirements-dev.txt   # Dependencies for development.
+├── requirements.txt       # Dependencies.
 ├── scripts                # Shell scripts for development, testing and deployment.
 │   └── ...
 ├── tests-as-linear.ipynb  # Main notebook.
