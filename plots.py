@@ -182,3 +182,54 @@ def dummy_coding_plot():
     ax.legend(fontsize="large")
 
     return fig, ax
+
+
+def one_way_anova_plot():
+    a = np.random.normal(0, 1, 20)
+    b = np.random.normal(-2, 1, 20)
+    c = np.random.normal(3, 1, 20)
+    d = np.random.normal(1.5, 1, 20)
+
+    df = pd.DataFrame()
+    df["y"] = np.concatenate([a, b, c, d])
+    df["group_2"] = np.concatenate(
+        [np.zeros_like(b)] + [np.ones_like(b)] + 2 * [np.zeros_like(b)]
+    )
+    df["group_3"] = np.concatenate(
+        2 * [np.zeros_like(c)] + [np.ones_like(c)] + [np.zeros_like(c)]
+    )
+    df["group_4"] = np.concatenate(3 * [np.zeros_like(d)] + [np.ones_like(d)])
+
+    res = smf.ols("y ~ 1 + group_2 + group_3 + group_4", df).fit()
+    beta0, beta1, beta2, beta3 = res.params
+
+    fig, ax = plt.subplots(figsize=[10, 8])
+    ax.scatter(0 * np.ones_like(a), a, color="k")
+    ax.scatter(1 * np.ones_like(b), b, color="k")
+    ax.scatter(2 * np.ones_like(c), c, color="k")
+    ax.scatter(3 * np.ones_like(d), d, color="k")
+
+    ax.axhline(beta0, color="b", label=r"$\beta_0$ (group 1 mean)")
+
+    ax.plot([0.7, 1.3], 2 * [beta0 + beta1], color="navy")
+    ax.plot(
+        [0, 1],
+        [beta0, beta0 + beta1],
+        color="r",
+        label=r"$\beta_1, \beta_2, ...$ (slopes/differences to $\beta_0$)",
+    )
+
+    ax.plot(
+        [1.7, 2.3],
+        2 * [beta0 + beta2],
+        color="navy",
+        label=r"$\beta_0+\beta_1, \beta_0+\beta_2 ...$ (group 2, 3 ... means)",
+    )
+    ax.plot([1, 2], [beta0, beta0 + beta2], color="r")
+
+    ax.plot([2.7, 3.3], 2 * [beta0 + beta3], color="navy")
+    ax.plot([2, 3], [beta0, beta0 + beta3], color="r")
+
+    ax.legend(fontsize="large")
+
+    return fig, ax

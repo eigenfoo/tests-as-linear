@@ -16,7 +16,7 @@ venv:  # Set up Python virtual environment.
 	python -m venv ${VENV_PATH}; \
 	source ${VENV_PATH}/bin/activate; \
 	pip install -U pip; \
-	pip install -r requirements.txt; \
+	pip install -r requirements-dev.txt; \
 	deactivate; \
 	)
 	@printf "\n\nVirtual environment created! \033[1;34mRun \`source ${VENV_PATH}/bin/activate\` to activate it.\033[0m\n\n\n"
