@@ -13277,6 +13277,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
 <span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">plots</span>
@@ -14790,26 +14791,10 @@ div#notebook {
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 <span class="n">df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">])</span>
-
 <span class="n">df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">num_points</span> <span class="o">*</span> <span class="n">char</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="s2">&quot;abc&quot;</span><span class="p">]))</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
-</pre></div>
 
-    </div>
-</div>
-</div>
-
-  </div>
-
-  
-
-  <div class="
-      cell border-box-sizing code_cell rendered">
-    <div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14920,7 +14905,7 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">F</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ 1 + group_b + group_c&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 
@@ -14938,10 +14923,11 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
-                       <span class="n">res</span><span class="p">,</span>
-                       <span class="p">[</span><span class="s2">&quot;scipy.stats.f_oneway&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1 + group_b + group_c)&quot;</span><span class="p">],</span>
-                       <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;group_b&quot;</span><span class="p">)</span>  <span class="c1"># FIXME what coeff?</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;F statistic&quot;</span><span class="p">,</span> <span class="s2">&quot;p value&quot;</span><span class="p">,</span> <span class="s2">&quot;df&quot;</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s2">&quot;scipy.stats.f_oneway&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">F</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">table</span><span class="p">[</span><span class="s2">&quot;ols (y ~ 1 + group_b + group_c)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">fvalue</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">f_pvalue</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="p">]</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
     </div>
@@ -14976,29 +14962,23 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>value</th>
-      <th>p-values</th>
-      <th>t-values</th>
-      <th>0.025 CI</th>
-      <th>0.975 CI</th>
+      <th>F statistic</th>
+      <th>p value</th>
+      <th>df</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>scipy.stats.f_oneway</th>
-      <td>NaN</td>
+      <td>4.512932</td>
       <td>0.015156</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>smf.ols (y ~ 1 + group_b + group_c)</th>
-      <td>0.801863</td>
-      <td>0.012126</td>
-      <td>2.591178</td>
-      <td>0.182182</td>
-      <td>1.421545</td>
+      <th>ols (y ~ 1 + group_b + group_c)</th>
+      <td>4.512932</td>
+      <td>0.015156</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -15035,8 +15015,8 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">signed_rank_df</span> <span class="o">=</span> <span class="n">df</span>
-<span class="n">signed_rank_df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">signed_rank_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">signed_rank_df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">signed_rank_df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -15071,10 +15051,11 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
-                       <span class="n">res</span><span class="p">,</span>
-                       <span class="p">[</span><span class="s2">&quot;scipy.stats.kruskal&quot;</span><span class="p">,</span> <span class="s2">&quot;smf.ols (y ~ 1 + group_b + group_c, signed rank)&quot;</span><span class="p">],</span>
-                       <span class="n">coeff</span><span class="o">=</span><span class="s2">&quot;group_b&quot;</span><span class="p">)</span>  <span class="c1"># FIXME what coeff?</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;p value&quot;</span><span class="p">,</span> <span class="s2">&quot;df&quot;</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s2">&quot;scipy.stats.kruskal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">table</span><span class="p">[</span><span class="s2">&quot;ols (y ~ 1 + group_b + group_c, signed rank)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">f_pvalue</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="p">]</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
     </div>
@@ -15109,29 +15090,20 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>value</th>
-      <th>p-values</th>
-      <th>t-values</th>
-      <th>0.025 CI</th>
-      <th>0.975 CI</th>
+      <th>p value</th>
+      <th>df</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>scipy.stats.kruskal</th>
-      <td>NaN</td>
       <td>0.019324</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>smf.ols (y ~ 1 + group_b + group_c, signed rank)</th>
-      <td>23.5</td>
-      <td>0.013086</td>
-      <td>2.561678</td>
-      <td>5.130032</td>
-      <td>41.869968</td>
+      <th>ols (y ~ 1 + group_b + group_c, signed rank)</th>
+      <td>0.018058</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -15146,7 +15118,7 @@ div#notebook {
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="6.2-Two-way-ANOVA">6.2 Two-way ANOVA<a class="anchor-link" href="#6.2-Two-way-ANOVA">&#182;</a></h2><h3 id="6.2.1-Theory:-As-linear-models">6.2.1 Theory: As linear models<a class="anchor-link" href="#6.2.1-Theory:-As-linear-models">&#182;</a></h3><p>Model: one mean per group (main effects) plus these means multiplied across factors (interaction effects). The main effects are the <a href="#anova1">one-way ANOVA</a>s above, though in the context of a larger model. The interaction effect is harder to explain in the abstract even though it's just a few numbers multiplied with each other. I will leave that to the teachers to keep focus on equivalences here :-)</p>
+<h2 id="6.2-Two-way-ANOVA">6.2 Two-way ANOVA<a class="anchor-link" href="#6.2-Two-way-ANOVA">&#182;</a></h2><h3 id="6.2.1-Theory:-As-linear-models">6.2.1 Theory: As linear models<a class="anchor-link" href="#6.2.1-Theory:-As-linear-models">&#182;</a></h3><p>Model: one mean per group (main effects) plus these means multiplied across factors (interaction effects). The main effects are the <a href="#6.1-One-way-ANOVA-and-Kruskal-Wallis">one-way ANOVAs</a> above, though in the context of a larger model. The interaction effect is harder to explain in the abstract even though it's just a few numbers multiplied with each other. I will leave that to the teachers to keep focus on equivalences here :-)</p>
 <p>Switching to matrix notation:</p>
 <p>$y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 \qquad \mathcal{H}_0: \beta_3 = 0$</p>
 <p>Here $\beta_i$ are vectors of betas of which only one is selected by the indicator vector $X_i$. The $\mathcal{H}_0$ shown here is the interaction effect. Note that the intercept $\beta_0$, to which all other $\beta$s are relative, is now the mean for the first level of all factors.</p>
@@ -15164,10 +15136,111 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mood&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;sad&quot;</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">mood</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mood&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>y</th>
+      <th>group</th>
+      <th>group_b</th>
+      <th>group_c</th>
+      <th>mood</th>
+      <th>mood_happy</th>
+      <th>mood_sad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.080830</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>happy</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-2.316629</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>sad</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.138365</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>happy</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.003775</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>sad</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.051200</td>
+      <td>a</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>happy</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -15188,7 +15261,7 @@ div#notebook {
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO</span>
 </pre></div>
 
     </div>
