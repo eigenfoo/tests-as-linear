@@ -246,7 +246,7 @@ def two_way_anova_plot(df):
     res = smf.ols("y ~ 1 + group * mood", df).fit()
     beta_0, beta_b, beta_c, beta_sad, beta_b_sad, beta_c_sad = res.params
 
-    # Masks
+    # Logical masks
     is_a = df["group"] == "a"
     is_b = df["group"] == "b"
     is_c = df["group"] == "c"
@@ -255,12 +255,12 @@ def two_way_anova_plot(df):
 
     # Plot
     fig, ax = plt.subplots(figsize=[10, 8])
-    ax.scatter(0*np.ones(10), df["y"][is_a & is_happy], color="r")
-    ax.scatter(0*np.ones(10), df["y"][is_a & is_sad], color="b")
-    ax.scatter(1*np.ones(10), df["y"][is_b & is_happy], color="r")
-    ax.scatter(1*np.ones(10), df["y"][is_b & is_sad], color="b")
-    ax.scatter(2*np.ones(10), df["y"][is_c & is_happy], color="r")
-    ax.scatter(2*np.ones(10), df["y"][is_c & is_sad], color="b")
+    ax.scatter(0 * np.ones(10), df["y"][is_a & is_happy], color="r")
+    ax.scatter(0 * np.ones(10), df["y"][is_a & is_sad], color="b")
+    ax.scatter(1 * np.ones(10), df["y"][is_b & is_happy], color="r")
+    ax.scatter(1 * np.ones(10), df["y"][is_b & is_sad], color="b")
+    ax.scatter(2 * np.ones(10), df["y"][is_c & is_happy], color="r")
+    ax.scatter(2 * np.ones(10), df["y"][is_c & is_sad], color="b")
 
     # Group a
     ax.axhline(beta_0, color="r", label="happy")
