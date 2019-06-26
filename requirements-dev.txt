@@ -1,5 +1,4 @@
 -r requirements.txt
 black==19.3b0
 nbdime==1.0.6
-nbinteract==0.2.4
 pylint==2.3.1
