@@ -26,14 +26,11 @@ please refer to the [original appendices
 upstream](https://github.com/lindeloev/tests-as-linear/tree/master/simulations)
 for the simulations.
 
-<div class="alert alert-warning">
-    Finally, certain statistical functions and tests are supported by neither
-    <code>statsmodels</code> or <code>scipy</code>, the two statistical Python
-    libraries used in this port. R code with no simple Python equivalent (mainly
-    in parts 6 and 7, <i>Three or more means</i> and <i>Proportions: Chi-square
-    is a log-linear model</i>) has not been ported. Such code has been noted in
-    yellow warning boxes such as this one.
-</div>
+Finally, certain statistical functions and tests are supported by neither
+`statsmodels` or `scipy`, the two statistical Python libraries used in this
+port. R code with no simple Python equivalent (mainly in sections 6 and 7,
+"Three or more means" and "Proportions: Chi-square is a log-linear model") has
+not been ported. Such code has been noted in yellow warning boxes.
 
 ## Contributing
 
