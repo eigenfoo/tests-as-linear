@@ -13208,6 +13208,7 @@ div#notebook {
 <li><a href="#8-Sources-and-further-equivalences">8 Sources and further equivalences</a></li>
 <li><a href="#9-Teaching-materials-and-a-course-outline">9 Teaching materials and a course outline</a></li>
 <li><a href="#10-Limitations">10 Limitations</a></li>
+<li><a href="#11-License">11 License</a></li>
 </ul>
 
 </div>
@@ -13221,9 +13222,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This document is summarised in the table below. It shows the linear models underlying common parametric and "non-parametric" tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="linear_tests_cheat_sheet.png">as an image</a> or <a href="linear_tests_cheat_sheet.pdf">as a PDF</a>.</p>
+<p>This document is summarised in the table below. It shows the linear models underlying common parametric and "non-parametric" tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="cheatsheets/linear_tests_cheat_sheet.png">as an image</a> or <a href="cheatsheets/linear_tests_cheat_sheet.pdf">as a PDF</a>.</p>
 <hr>
-<p><a href="linear_tests_cheat_sheet.pdf"><img src="linear_tests_cheat_sheet.png" alt=""></a></p>
+<p><a href="cheatsheets/linear_tests_cheat_sheet.pdf"><img src="cheatsheets/linear_tests_cheat_sheet.png" alt="Cheatsheet"></a></p>
 <hr>
 
 </div>
@@ -13297,7 +13298,8 @@ statsmodels==0.10.0
 <span class="kn">import</span> <span class="nn">scipy</span>
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
 <span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
-<span class="kn">from</span> <span class="nn">tests_as_linear</span> <span class="k">import</span> <span class="n">plots</span><span class="p">,</span> <span class="n">utils</span>  <span class="c1"># Modules for this notebook</span>
+<span class="kn">from</span> <span class="nn">tests_as_linear</span> <span class="k">import</span> <span class="n">plots</span><span class="p">,</span> <span class="n">utils</span>
+
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1618</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">)</span>
 </pre></div>
@@ -15739,6 +15741,14 @@ $$\log(n_{ij}) = \log(N) + \log(\alpha_i) + \log(\beta_j) + \log(\alpha\beta_{ij
 <li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#8-Sources-and-further-equivalences">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit "solutions" to <a href="https://github.com/lindeloev/tests-as-linear/">the GitHub repo</a> of this doc!</p>
 </li>
 </ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="11-License">11 License<a class="anchor-link" href="#11-License">&#182;</a></h1><p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />&lt;span xmlns:dct="<a href="http://purl.org/dc/terms/">http://purl.org/dc/terms/</a>" href="<a href="http://purl.org/dc/dcmitype/Text">http://purl.org/dc/dcmitype/Text</a>" property="dct:title" rel="dct:type"&gt;Common statistical tests are linear models (or: how to teach stats) — Python port&lt;/span&gt; by &lt;a xmlns:cc="<a href="http://creativecommons.org/ns#">http://creativecommons.org/ns#</a>" href="<a href="https://eigenfoo.xyz/tests-as-linear/">https://eigenfoo.xyz/tests-as-linear/</a>" property="cc:attributionName" rel="cc:attributionURL"&gt;Jonas Kristoffer Lindeløv and George Ho&lt;/a&gt; is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br />Based on a work at &lt;a xmlns:dct="<a href="http://purl.org/dc/terms/">http://purl.org/dc/terms/</a>" href="<a href="https://lindeloev.github.io/tests-as-linear/">https://lindeloev.github.io/tests-as-linear/</a>" rel="dct:source"&gt;<a href="https://lindeloev.github.io/tests-as-linear/">https://lindeloev.github.io/tests-as-linear/</a>&lt;/a&gt;.<br />Permissions beyond the scope of this license may be available at &lt;a xmlns:cc="<a href="http://creativecommons.org/ns#">http://creativecommons.org/ns#</a>" href="<a href="https://github.com/eigenfoo/tests-as-linear">https://github.com/eigenfoo/tests-as-linear</a>" rel="cc:morePermissions"&gt;<a href="https://github.com/eigenfoo/tests-as-linear">https://github.com/eigenfoo/tests-as-linear</a>&lt;/a&gt;.</p>
 
 </div>
 </div>

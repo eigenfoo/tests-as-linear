@@ -8,4 +8,5 @@ echo '<script async src="//static.getclicky.com/js"></script>' >> index.html
 tail -n +$LINE tests-as-linear.html >> index.html
 
 # Change title.
-sed -i "s/<title>tests-as-linear<\/title>/<title>Common statistical tests are linear models (or: how to teach stats) | Eigenfoo<\/title>/" "index.html"
+sed -i.bak "s/<title>tests-as-linear<\/title>/<title>Common statistical tests are linear models (or: how to teach stats) | Eigenfoo<\/title>/" "index.html"
+rm index.html.bak
