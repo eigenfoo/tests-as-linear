@@ -13133,6 +13133,9 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Common-statistical-tests-are-linear-models-(or:-how-to-teach-stats)">Common statistical tests are linear models (or: how to teach stats)<a class="anchor-link" href="#Common-statistical-tests-are-linear-models-(or:-how-to-teach-stats)">&#182;</a></h1><p>Original post by Jonas Kristoffer Lindeløv (<a href="https://lindeloev.net">blog</a>, <a href="http://personprofil.aau.dk/117060">profile</a>). Python port by George Ho (<a href="https://eigenfoo.xyz">blog</a>).</p>
+<blockquote><p>This is a Python port of Jonas Kristoffer Lindeløv's post <a href="https://lindeloev.github.io/tests-as-linear/"><em>Common statistical tests are linear models (or: how to teach stats</em>)</a>, which originally had accompanying code in R.</p>
+<p>View this notebook <a href="https://github.com/eigenfoo/tests-as-linear">on GitHub</a>. Launch this notebook <a href="https://gke.mybinder.org/v2/gh/eigenfoo/tests-as-linear/master?filepath=tests-as-linear.ipynb">on Binder</a>.</p>
+</blockquote>
 
 </div>
 </div>
@@ -13205,7 +13208,6 @@ div#notebook {
 <li><a href="#8-Sources-and-further-equivalences">8 Sources and further equivalences</a></li>
 <li><a href="#9-Teaching-materials-and-a-course-outline">9 Teaching materials and a course outline</a></li>
 <li><a href="#10-Limitations">10 Limitations</a></li>
-<li><a href="#11-Computing-environment">11 Computing environment</a></li>
 </ul>
 
 </div>
@@ -13251,9 +13253,47 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cat requirements.txt
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>jupyter==1.0.0
+matplotlib==3.1.0
+numpy==1.16.4
+pandas==0.24.2
+patsy==0.5.1
+scipy==1.3.0
+statsmodels==0.10.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">patsy</span>
 <span class="kn">import</span> <span class="nn">scipy</span>
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
 <span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
@@ -13269,7 +13309,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
@@ -13291,7 +13331,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13380,7 +13420,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">linear_regression_plot</span><span class="p">()</span>
@@ -13428,7 +13468,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">pearson_spearman_plot</span><span class="p">()</span>
@@ -13473,7 +13513,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">signed_rank</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
@@ -13504,7 +13544,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">correlated</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
@@ -13525,7 +13565,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -13543,7 +13583,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -13619,7 +13659,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ranked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">correlated</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -13635,7 +13675,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -13653,7 +13693,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -13726,7 +13766,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">ttest_wilcoxon_plot</span><span class="p">()</span>
@@ -13770,7 +13810,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -13784,7 +13824,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -13803,7 +13843,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -13870,7 +13910,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">signed_rank_data</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -13886,7 +13926,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -13905,7 +13945,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[15]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -13975,7 +14015,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">pairs_wilcoxon_plot</span><span class="p">()</span>
@@ -14027,7 +14067,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_rel</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
@@ -14041,7 +14081,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -14060,7 +14100,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[19]:</div>
 
 
 
@@ -14128,7 +14168,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wilcoxon</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
@@ -14142,7 +14182,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -14161,7 +14201,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[21]:</div>
 
 
 
@@ -14252,7 +14292,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">dummy_coding_plot</span><span class="p">()</span>
@@ -14309,7 +14349,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">groups</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">]),</span>
@@ -14329,7 +14369,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[22]:</div>
+    <div class="prompt output_prompt">Out[23]:</div>
 
 
 
@@ -14395,7 +14435,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">)</span>
@@ -14409,7 +14449,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -14428,7 +14468,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[24]:</div>
+    <div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -14495,7 +14535,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">groups</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">signed_rank</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Only rank `y`, not `group`</span>
@@ -14511,7 +14551,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">tabulate_results</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
@@ -14530,7 +14570,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[26]:</div>
+    <div class="prompt output_prompt">Out[27]:</div>
 
 
 
@@ -14598,7 +14638,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">y2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -14633,7 +14673,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">one_way_anova_plot</span><span class="p">()</span>
@@ -14688,7 +14728,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_points</span> <span class="o">=</span> <span class="mi">20</span>
@@ -14715,7 +14755,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[29]:</div>
+    <div class="prompt output_prompt">Out[30]:</div>
 
 
 
@@ -14809,7 +14849,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">F</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
@@ -14823,7 +14863,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;F statistic&quot;</span><span class="p">,</span> <span class="s2">&quot;p value&quot;</span><span class="p">,</span> <span class="s2">&quot;df&quot;</span><span class="p">])</span>
@@ -14843,7 +14883,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[31]:</div>
+    <div class="prompt output_prompt">Out[32]:</div>
 
 
 
@@ -14912,7 +14952,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">signed_rank_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -14926,7 +14966,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">kruskal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
@@ -14940,7 +14980,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;p value&quot;</span><span class="p">,</span> <span class="s2">&quot;df&quot;</span><span class="p">])</span>
@@ -14960,7 +15000,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[34]:</div>
+    <div class="prompt output_prompt">Out[35]:</div>
 
 
 
@@ -15023,7 +15063,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mood&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;sad&quot;</span><span class="p">]</span>
@@ -15042,7 +15082,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[35]:</div>
+    <div class="prompt output_prompt">Out[36]:</div>
 
 
 
@@ -15146,7 +15186,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plots</span><span class="o">.</span><span class="n">two_way_anova_plot</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -15183,14 +15223,16 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="6.2.2-Python-code:-Two-way-ANOVA">6.2.2 Python code: Two-way ANOVA<a class="anchor-link" href="#6.2.2-Python-code:-Two-way-ANOVA">&#182;</a></h3><p>Unfortunately, <code>scipy.stats</code> does not have any function to perform a two-way ANOVA, so we can't verify that the linear model gives the same results as some other standard function. Nevertheless, we'll go through the motions of performing the linear regression.</p>
-
+<h3 id="6.2.2-Python-code:-Two-way-ANOVA">6.2.2 Python code: Two-way ANOVA<a class="anchor-link" href="#6.2.2-Python-code:-Two-way-ANOVA">&#182;</a></h3><div class="alert alert-warning">
+    <b>Note on Python port:</b>
+    Unfortunately, <code>scipy.stats</code> does not have any function to perform a two-way ANOVA, so we can't verify that the linear model gives the same results as some other Python statistical function. Nevertheless, we'll go through the motions of performing the linear regression.
+</div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># scipy.stats does not support two-way ANOVA</span>
@@ -15198,45 +15240,6 @@ div#notebook {
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[38]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>Intercept                 0.386532
-group[T.b]                3.176575
-group[T.c]               -2.235207
-mood[T.sad]              -0.103156
-group[T.b]:mood[T.sad]   -0.749423
-group[T.c]:mood[T.sad]    0.457337
-dtype: float64</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -15312,8 +15315,10 @@ dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Unfortunately, <code>scipy.stats</code> does not have any function to perform ANCOVA, so we can't verify that the linear model gives the same results as some other standard function. Nevertheless, we'll go through the motions of performing the linear regression.</p>
-
+<div class="alert alert-warning">
+    <b>Note on Python port:</b>
+    Unfortunately, <code>scipy.stats</code> does not have any function to perform ANCOVA, so again, we can't verify that the linear model gives the same results as some other Python statistical function. Nevertheless, we'll go through the motions of performing the linear regression.
+</div>
 </div>
 </div>
 </div>
@@ -15330,12 +15335,27 @@ dtype: float64</pre>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="7-Proportions:-Chi-square-is-a-log-linear-model">7 Proportions: Chi-square is a log-linear model<a class="anchor-link" href="#7-Proportions:-Chi-square-is-a-log-linear-model">&#182;</a></h1><p>Recall that when you take the logarithm, you can easily make statements about <em>proportions</em>, i.e., that for every increase in $x$, $y$ increases a certain percentage. This turns out to be one of the simplest (and therefore best!) ways to make count data and contingency tables intelligible. See <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">this nice introduction</a> to Chi-Square tests as linear models.</p>
+<h2 id="7.1-Goodness-of-fit">7.1 Goodness of fit<a class="anchor-link" href="#7.1-Goodness-of-fit">&#182;</a></h2><h3 id="7.1.1-Theory:-As-log-linear-model">7.1.1 Theory: As log-linear model<a class="anchor-link" href="#7.1.1-Theory:-As-log-linear-model">&#182;</a></h3><p>Model: a single intercept predicts $\log(y)$.</p>
+<p>I'll refer you to take a look at <a href="#contingency">the section on contingency tables</a> which is basically a "two-way goodness of fit".</p>
+<h3 id="7.1.2-Example-data">7.1.2 Example data<a class="anchor-link" href="#7.1.2-Example-data">&#182;</a></h3><p>For this, we need some wide count data:</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">params</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;sad&quot;</span><span class="p">,</span> <span class="s2">&quot;meh&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;mood&#39;</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+
+<span class="n">df</span>
 </pre></div>
 
     </div>
@@ -15352,13 +15372,52 @@ dtype: float64</pre>
 
 
 
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<div class="output_text output_subarea output_execute_result">
-<pre>Intercept     0.249482
-group[T.b]    1.288877
-group[T.c]   -1.236818
-age           0.490013
-dtype: float64</pre>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>counts</th>
+      <th>mood_meh</th>
+      <th>mood_sad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>happy</th>
+      <td>70</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>sad</th>
+      <td>60</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>meh</th>
+      <td>90</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 
 </div>
@@ -15370,19 +15429,26 @@ dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="7-Proportions:-Chi-square-is-a-log-linear-model">7 Proportions: Chi-square is a log-linear model<a class="anchor-link" href="#7-Proportions:-Chi-square-is-a-log-linear-model">&#182;</a></h1><p>Recall that when you take the logarithm, you can easily make statements about <em>proportions</em>, i.e., that for every increase in $x$, $y$ increases a certain percentage. This turns out to be one of the simplest (and therefore best!) ways to make count data and contingency tables intelligible. See <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">this nice introduction</a> to Chi-Square tests as linear models.</p>
-<h2 id="7.1-Goodness-of-fit">7.1 Goodness of fit<a class="anchor-link" href="#7.1-Goodness-of-fit">&#182;</a></h2><h3 id="7.1.1-Theory:-As-log-linear-model">7.1.1 Theory: As log-linear model<a class="anchor-link" href="#7.1.1-Theory:-As-log-linear-model">&#182;</a></h3><p>Model: a single intercept predicts $log(y)$.</p>
-<p>I'll refer you to take a look at <a href="#contingency">the section on contingency tables</a> which is basically a "two-way goodness of fit".</p>
-
+<h3 id="7.1.3-Python-code:-Goodness-of-fit">7.1.3 Python code: Goodness of fit<a class="anchor-link" href="#7.1.3-Python-code:-Goodness-of-fit">&#182;</a></h3><p>Now let's see that the Goodness of fit is just a log-linear equivalent to a one-way ANOVA. We set <code>family=sm.families.Poisson()</code> which defaults to setting a logarithmic <a href="https://en.wikipedia.org/wiki/Generalized_linear_model#Link_function">link function</a> (you can verify that <code>res.model.family.link</code> is a logarithm).</p>
+<p>Note that <code>smf.ols</code> does not support GLMs: we need to use <code>sm.GLM</code>. While <code>sm.GLM</code> does not have a <code>patsy</code>-formula interface, we can still use <code>patsy.dmatrices</code> to get the <a href="https://www.statsmodels.org/stable/endog_exog.html"><code>endog</code> and <code>exog</code> design matrices,</a> and then feed that into <code>sm.GLM</code>.</p>
+<div class="alert alert-warning">
+    <b>Note on Python port:</b>
+    Unfortunately, <code>statsmodels</code> <a href="https://stackoverflow.com/q/27328623">does not currently support performing a one-way ANOVA test on GLMs</a> (the <code>anova_lm</code> function only works for linear models), so while we can perform the GLM, there is no support for computing the F-statistic or its p-value. Nevertheless, we'll go through the motions of performing the generalized linear regression.
+</div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chi2</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
+
+<span class="c1"># The `-1` is to remove the intercept term from the model</span>
+<span class="c1"># See https://patsy.readthedocs.io/en/latest/formulas.html#intercept-handling</span>
+<span class="n">endog</span><span class="p">,</span> <span class="n">exog</span> <span class="o">=</span> <span class="n">patsy</span><span class="o">.</span><span class="n">dmatrices</span><span class="p">(</span><span class="s2">&quot;counts ~ 1 + mood_meh + mood_sad - 1&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Poisson</span><span class="p">())</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -15393,79 +15459,19 @@ dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="7.1.2-Example-data">7.1.2 Example data<a class="anchor-link" href="#7.1.2-Example-data">&#182;</a></h3><p>For this, we need some wide count data:</p>
+<h2 id="7.2-Contingency-tables">7.2 Contingency tables<a class="anchor-link" href="#7.2-Contingency-tables">&#182;</a></h2><h3 id="7.2.1-Theory:-As-log-linear-model">7.2.1 Theory: As log-linear model<a class="anchor-link" href="#7.2.1-Theory:-As-log-linear-model">&#182;</a></h3><p>The theory here will be a bit more convoluted, and I mainly write it up so that you can get the <em>feeling</em> that it really is just a log-linear <a href="#6.2-Two-way-ANOVA">two-way ANOVA model</a>. Let's get started...</p>
+<p>For a two-way contingency table, the model of the count variable $y$ is a modeled using the marginal proportions of a contingency table. Why this makes sense, is too involved to go into here, but <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">see the relevant slides by Christoph Scheepers here</a> for an excellent exposition. The model is composed of a lot of counts and the regression coefficients $A_i$ and $B_j$:</p>
+$$n_{ij} = N \cdot A_i \frac{n_i}{N} \cdot B_j \frac{n_j}{N} \cdot \frac{n_{ij} N}{n_i n_j}$$<p>What a mess!!! Here, $i$ is the row index, $j$ is the column index, $n_{\text{something}}$ is the sum of that row and/or column, $N = \sum_{i, j}{n_{ij}}$. Remember that $n$ is a count variable, so $N$ is just the total count.</p>
+<p>We can simplify the notation by defining the <em>proportions</em>: $\alpha_i = A_i \frac{n_i}{N}$, $\beta_i = B_j \frac{n_j}{N}$ and $\alpha\beta_{ij} = \frac{n_{ij} N}{n_i n_j}$. Let's write the model again:</p>
+$$n_{ij} = N \cdot \alpha_i \cdot \beta_j \cdot \alpha\beta_{ij}$$<p>Ah, much prettier. However, there is still lot's of multiplication which makes it hard to get an intuition about how the actual numbers interact. We can make it much more intelligible when we remember that $\log(A \cdot B) = \log(A) + \log(B)$. Doing logarithms on both sides, we get:</p>
+$$\log(n_{ij}) = \log(N) + \log(\alpha_i) + \log(\beta_j) + \log(\alpha\beta_{ij})$$<p>Snuggly! Now we can get a better grasp on how the regression coefficients (which are proportions) independently contribute to $y$. This is why logarithms are so nice for proportions. Note that this is just <a href="#anova2">the two-way ANOVA model</a> with some logarithms added, so we are back to our good old linear models - only the interpretation of the regression coefficients have changed! And we cannot use <code>smf.ols</code> anymore in <code>statsmodels</code>.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="7.1.3-Python-code:-Goodness-of-fit">7.1.3 Python code: Goodness of fit<a class="anchor-link" href="#7.1.3-Python-code:-Goodness-of-fit">&#182;</a></h3><p>Now let's see that the Goodness of fit is just a log-linear equivalent to a one-way ANOVA. We set <code>family = poisson()</code> which defaults to setting a logarithmic <a href="https://en.wikipedia.org/wiki/Generalized_linear_model#Link_function">link function</a> (<code>family = poisson(link='log')</code>).</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Note the strange <code>anova(..., test='Rao')</code> which merely states that p-values should be computed using the (Rao) <a href="https://en.wikipedia.org/wiki/Score_test">score test</a>. We could also have jotted in <code>test='Chisq'</code> or <code>test='LRT'</code> which would have yielded approximate p-values. You may think that we're cheating here, sneaking in some sort of Chi-Square model post-hoc. However, <code>anova</code> only specifies how p-values are calculated whereas all the log-linear modeling happened in <code>glm</code>.</p>
-<p>By the way, if there are only two counts and a large sample size (N &gt; 100), this model begins to approximate the <strong>binomial test</strong>, <code>binom.test</code>, to a reasonable degree. But this sample size is larger than most use cases, so I won't raise to a rule-of-thumb and won't dig deeper into it here.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="7.2-Contingency-tables">7.2 Contingency tables<a class="anchor-link" href="#7.2-Contingency-tables">&#182;</a></h2><h3 id="7.2.1-Theory:-As-log-linear-model">7.2.1 Theory: As log-linear model<a class="anchor-link" href="#7.2.1-Theory:-As-log-linear-model">&#182;</a></h3><p>The theory here will be a bit more convoluted, and I mainly write it up so that you can get the <em>feeling</em> that it really is just a log-linear <a href="#anova2">two-way ANOVA model</a>. Let's get started...</p>
-<p>For a two-way contingency table, the model of the count variable $y$ is a modeled using the marginal proportions of a contingency table. Why this makes sense, is too involved to go into here, but <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">see the relevant slides by Christoph Scheepers here</a> for an excellent exposition. The model is composed of a lot of counts and the regression coefficients $A_i$ and $B_i$:</p>
-<p>$y_i = N \cdot x_i(A_i/N) \cdot z_j(B_j/N) \cdot x_{ij}/((A_i x_i)/(B_j z_j)/N)$</p>
-<p>What a mess!!! Here, $i$ is the row index, $j$ is the column index, $x_{something}$ is the sum of that row and/or column, $N = sum(y)$. Remember that $y$ is a count variable, so $N$ is just the total count.</p>
-<p>We can simplify the notation by defining the <em>proportions</em>: $\alpha_i = x_i(A_i/N)$, $\beta_i = x_j(B_i/N)$ and $\alpha_i\beta_j =  x_{ij}/(A_i x_i)/(B_j z_j)/N$. Let's write the model again:</p>
-<p>$y_i = N \cdot \alpha_i \cdot \beta_j \cdot \alpha_i\beta_j$</p>
-<p>Ah, much prettier. However, there is still lot's of multiplication which makes it hard to get an intuition about how the actual numbers interact. We can make it much more intelligible when we remember that $log(A \cdot B) = log(A) + log(B)$. Doing logarithms on both sides, we get:</p>
-<p>$log(y_i) = log(N) + log(\alpha_i) + log(\beta_j) + log(\alpha_i\beta_j)$</p>
-<p>Snuggly! Now we can get a better grasp on how the regression coefficients (which are proportions) independently contribute to $y$. This is why logarithms are so nice for proportions. Note that this is just <a href="#anova2">the two-way ANOVA model</a> with some logarithms added, so we are back to our good old linear models - only the interpretation of the regression coefficients have changed! And we cannot use <code>lm</code> anymore in R.</p>
 <h3 id="7.2.2-Example-data">7.2.2 Example data<a class="anchor-link" href="#7.2.2-Example-data">&#182;</a></h3><p>Here we need some long data and we need it in table format for <code>chisq.test</code>:</p>
 
 </div>
@@ -15473,13 +15479,124 @@ dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">70</span><span class="p">],</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="p">[</span><span class="mi">110</span><span class="p">,</span> <span class="mi">120</span><span class="p">]],</span>
+                  <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;male&quot;</span><span class="p">,</span> <span class="s2">&quot;female&quot;</span><span class="p">],</span>
+                  <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;sad&quot;</span><span class="p">,</span> <span class="s2">&quot;meh&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;mood&quot;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;sex&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mood&quot;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">mood</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mood&quot;</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">sex</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="n">df</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[44]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mood</th>
+      <th>sex</th>
+      <th>value</th>
+      <th>mood_meh</th>
+      <th>mood_sad</th>
+      <th>sex_male</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>happy</td>
+      <td>male</td>
+      <td>100</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>sad</td>
+      <td>male</td>
+      <td>30</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>meh</td>
+      <td>male</td>
+      <td>110</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>happy</td>
+      <td>female</td>
+      <td>70</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>sad</td>
+      <td>female</td>
+      <td>32</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>meh</td>
+      <td>female</td>
+      <td>120</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -15487,38 +15604,23 @@ dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="7.2.3-Python-code:-Chi-square-test">7.2.3 Python code: Chi-square test<a class="anchor-link" href="#7.2.3-Python-code:-Chi-square-test">&#182;</a></h3><p>Now let's show the equivalence between a chi-square model and a log-linear model. This is very similar to our <a href="#anova2">two-way ANOVA</a> above:</p>
-
+<h3 id="7.2.3-Python-code:-Chi-square-test">7.2.3 Python code: Chi-square test<a class="anchor-link" href="#7.2.3-Python-code:-Chi-square-test">&#182;</a></h3><p>Now let's show the equivalence between a chi-square model and a log-linear model. This is very similar to our <a href="#6.2-Two-way-ANOVA">two-way ANOVA</a> above:</p>
+<div class="alert alert-warning">
+    <b>Note on Python port:</b>
+    Unfortunately, <code>statsmodels</code> <a href="https://stackoverflow.com/q/27328623">does not currently support performing a two-way ANOVA test on GLMs</a> (the <code>anova_lm</code> function only works for linear models), so while we can perform the GLM, there is no support for computing the F-statistic or its p-value. Nevertheless, we'll go through the motions of performing the generalized linear regression.
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If you unfold the raw R output, I've included <code>summary(full)</code> so that you can see the raw regression coefficients. Being a log-linear model, these are the <em>percentage increase</em>in $y$ over and above the intercept if that category obtains.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">endog</span><span class="p">,</span> <span class="n">exog</span> <span class="o">=</span> <span class="n">patsy</span><span class="o">.</span><span class="n">dmatrices</span><span class="p">(</span><span class="s2">&quot;value ~ 1 + mood_meh*sex_male + mood_sad*sex_male - 1&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Poisson</span><span class="p">())</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -15633,49 +15735,6 @@ dtype: float64</pre>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="11-Computing-environment">11 Computing environment<a class="anchor-link" href="#11-Computing-environment">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cat requirements.txt
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>jupyter==1.0.0
-matplotlib==3.1.0
-numpy==1.16.4
-pandas==0.24.2
-scipy==1.3.0
-statsmodels==0.10.0
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     </div>
   </div>
