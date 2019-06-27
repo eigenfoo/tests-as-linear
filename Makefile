@@ -41,7 +41,7 @@ test: clean  # Run test scripts.
 check: clean lint test  # Alias for `make clean lint test`.
 
 black:  # Format code in-place with black.
-	black *.py --target-version=py36
+	black tests_as_linear/ --target-version=py36
 
 publish:  # Run notebook in-place and generate HTML files.
 	jupyter nbconvert --to notebook --inplace --execute tests-as-linear.ipynb
