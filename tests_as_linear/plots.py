@@ -4,6 +4,8 @@ import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
 from .utils import signed_rank, format_decimals_factory
 
+plt.style.use("seaborn-whitegrid")
+
 
 def linear_regression_plot():
     # Construct data as a pd.DataFrame

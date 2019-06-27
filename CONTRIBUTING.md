@@ -21,15 +21,18 @@ some ideas on how to contribute.
 .
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
+├── LICENSE.txt
 ├── Makefile
 ├── README.md
+├── cheatsheets
+│   └── ...
 ├── index.html             # Published HTML.
 ├── requirements-dev.txt   # Dependencies for development.
 ├── requirements.txt       # Dependencies.
 ├── scripts                # Shell scripts for development, testing and deployment.
 │   └── ...
 ├── tests-as-linear.ipynb  # Main notebook.
-└── tests_as_linear        # Python source code
+└── tests_as_linear        # Supporting Python source code.
     ├── __init__.py
     ├── plots.py           # Functions for large plots in main notebook.
     └── utils.py           # Utility functions used in main notebook.
