@@ -45,5 +45,5 @@ for project structure information and development instructions.
 
 This work is licensed under a Creative Commons Attribution 4.0 International
 License. Please refer to
-[`LICENSE.html`](https://github.com/eigenoo/tests-as-linear/blob/master/LICENSE.html)
+[`LICENSE.txt`](https://github.com/eigenoo/tests-as-linear/blob/master/LICENSE.txt)
 for more details.
