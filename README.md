@@ -26,8 +26,24 @@ please refer to the [original appendices
 upstream](https://github.com/lindeloev/tests-as-linear/tree/master/simulations)
 for the simulations.
 
+<div class="alert alert-warning">
+    Finally, certain statistical functions and tests are supported by neither
+    <code>statsmodels</code> or <code>scipy</code>, the two statistical Python
+    libraries used in this port. R code with no simple Python equivalent (mainly
+    in parts 6 and 7, <i>Three or more means</i> and <i>Proportions: Chi-square
+    is a log-linear model</i>) has not been ported. Such code has been noted in
+    yellow warning boxes such as this one.
+</div>
+
 ## Contributing
 
 Please refer to [the contributing
 guide](https://github.com/eigenfoo/tests-as-linear/blob/master/CONTRIBUTING.md)
 for project structure information and development instructions.
+
+## License
+
+This work is licensed under a Creative Commons Attribution 4.0 International
+License. Please refer to
+[`LICENSE.txt`](https://github.com/eigenoo/tests-as-linear/blob/master/LICENSE.txt)
+for more details.
