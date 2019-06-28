@@ -13167,7 +13167,7 @@ div#notebook {
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<p>Last updated: June 27, 2019</p>
+<p>Last updated: June 28, 2019</p>
 
 </div>
 
@@ -13439,7 +13439,7 @@ statsmodels==0.10.0
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="3.0.3-Python-code:-Pearson-correlation">3.0.3 Python code: Pearson correlation<a class="anchor-link" href="#3.0.3-Python-code:-Pearson-correlation">&#182;</a></h3><p>It couldn't be much simpler to run these models with <code>statsmodels</code> (<a href="https://www.statsmodels.org/stable/example_formulas.html#ols-regression-using-formulas"><code>smf.ols</code></a>) or <code>scipy</code> (<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html"><code>scipy.stats.pearson</code></a>). They yield identical slopes, <code>p</code> and <code>t</code> values, but there's a catch: <code>smf.ols</code> gives you the <em>slope</em> and even though that is usually much more interpretable and informative than the <em>correlation coefficient</em> $r$, you may still want $r$. Luckily, the slope becomes $r$ if <code>x</code> and <code>y</code> have a standard deviation of exactly 1. You can do this by scaling the data: <code>data /= data.std()</code>.</p>
-<p>Notice how <code>scipy.stats.pearsonr</code> and <code>smf.ols (scaled)</code> have the same slopes, $p$ and $t$ values.</p>
+<p>Notice how <code>scipy.stats.pearsonr</code> and <code>smf.ols (scaled)</code> have the same slopes, $p$ and $t$ values. Also note that statistical functions from <code>scipy.stats</code> do not provide confidence intervals, while performing the linear regression with <code>smf.ols</code> does.</p>
 
 </div>
 </div>
@@ -13451,7 +13451,7 @@ statsmodels==0.10.0
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">correlated</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 <span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">correlated</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">correlated</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="n">correlated</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">correlated</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">correlated</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
 
 <span class="n">scaled</span> <span class="o">=</span> <span class="n">correlated</span> <span class="o">/</span> <span class="n">correlated</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
 
@@ -13518,27 +13518,27 @@ statsmodels==0.10.0
   <tbody>
     <tr>
       <th>scipy.stats.pearsonr</th>
-      <td>0.649620</td>
-      <td>3.321709e-07</td>
+      <td>0.249694</td>
+      <td>0.080332</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>smf.ols</th>
-      <td>5.012744</td>
-      <td>3.321709e-07</td>
-      <td>5.91995</td>
-      <td>3.310230</td>
-      <td>6.715258</td>
+      <td>1.512744</td>
+      <td>0.080332</td>
+      <td>1.78652</td>
+      <td>-0.189770</td>
+      <td>3.215258</td>
     </tr>
     <tr>
       <th>smf.ols (scaled)</th>
-      <td>0.649620</td>
-      <td>3.321709e-07</td>
-      <td>5.91995</td>
-      <td>0.428985</td>
-      <td>0.870255</td>
+      <td>0.249694</td>
+      <td>0.080332</td>
+      <td>1.78652</td>
+      <td>-0.031324</td>
+      <td>0.530712</td>
     </tr>
   </tbody>
 </table>
@@ -13628,19 +13628,19 @@ statsmodels==0.10.0
   <tbody>
     <tr>
       <th>scipy.stats.spearmanr</th>
-      <td>0.634958</td>
-      <td>7.322277e-07</td>
+      <td>0.233421</td>
+      <td>0.102803</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>smf.ols (ranked)</th>
-      <td>0.634958</td>
-      <td>7.322277e-07</td>
-      <td>5.694307</td>
-      <td>0.410757</td>
-      <td>0.859159</td>
+      <td>0.233421</td>
+      <td>0.102803</td>
+      <td>1.663134</td>
+      <td>-0.048772</td>
+      <td>0.515615</td>
     </tr>
   </tbody>
 </table>
@@ -15234,7 +15234,7 @@ statsmodels==0.10.0
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="6.2.2-Python-code:-Two-way-ANOVA">6.2.2 Python code: Two-way ANOVA<a class="anchor-link" href="#6.2.2-Python-code:-Two-way-ANOVA">&#182;</a></h3><div class="alert alert-warning">
     <b>Note on Python port:</b>
-    Unfortunately, <code>scipy.stats</code> does not have any function to perform a two-way ANOVA, so we can't verify that the linear model gives the same results as some other Python statistical function. Nevertheless, we'll go through the motions of performing the linear regression.
+    Unfortunately, <code>scipy.stats</code> does not have a dedicated function to perform two-way ANOVA, so we cannot demonstrate directly that it is fundamentally a linear model. Nevertheless, we will write the code to perform the linear regression.
 </div>
 </div>
 </div>
@@ -15326,7 +15326,7 @@ statsmodels==0.10.0
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="alert alert-warning">
     <b>Note on Python port:</b>
-    Unfortunately, <code>scipy.stats</code> does not have any function to perform ANCOVA, so again, we can't verify that the linear model gives the same results as some other Python statistical function. Nevertheless, we'll go through the motions of performing the linear regression.
+    Unfortunately, <code>scipy.stats</code> does not have a dedicated function to perform ANCOVA, so again, we cannot demonstrate directly that it is fundamentally a linear model. Nevertheless, we will write the code to perform the linear regression.
 </div>
 </div>
 </div>
@@ -15442,7 +15442,7 @@ statsmodels==0.10.0
 <p>Note that <code>smf.ols</code> does not support GLMs: we need to use <code>sm.GLM</code>. While <code>sm.GLM</code> does not have a <code>patsy</code>-formula interface, we can still use <code>patsy.dmatrices</code> to get the <a href="https://www.statsmodels.org/stable/endog_exog.html"><code>endog</code> and <code>exog</code> design matrices,</a> and then feed that into <code>sm.GLM</code>.</p>
 <div class="alert alert-warning">
     <b>Note on Python port:</b>
-    Unfortunately, <code>statsmodels</code> <a href="https://stackoverflow.com/q/27328623">does not currently support performing a one-way ANOVA test on GLMs</a> (the <code>anova_lm</code> function only works for linear models), so while we can perform the GLM, there is no support for computing the F-statistic or its p-value. Nevertheless, we'll go through the motions of performing the generalized linear regression.
+    Unfortunately, <code>statsmodels</code> <a href="https://stackoverflow.com/q/27328623">does not currently support performing a one-way ANOVA test on GLMs</a> (the <code>anova_lm</code> function only works for linear models), so while we can perform the GLM, there is no support for computing the F-statistic or its p-value. Nevertheless, we will write the code to perform the generalized linear regression.
 </div>
 </div>
 </div>
@@ -15738,7 +15738,7 @@ $$\log(n_{ij}) = \log(N) + \log(\alpha_i) + \log(\beta_j) + \log(\alpha\beta_{ij
 </li>
 <li><p>I have not discussed inference. I am only including p-values in the comparisons as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do <em>inference</em> is another matter. Personally, I'm a Bayesian, but going Bayesian here would render it less accessible to the wider audience. Also, doing <a href="https://en.wikipedia.org/wiki/Robust_statistics">robust models</a> would be preferable, but fail to show the equivalences.</p>
 </li>
-<li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#8-Sources-and-further-equivalences">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit "solutions" to <a href="https://github.com/lindeloev/tests-as-linear/">the GitHub repo</a> of this doc!</p>
+<li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#8-Sources-and-further-equivalences">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit "solutions" to <a href="https://github.com/eigenfoo/tests-as-linear/">the GitHub repo</a> of this doc!</p>
 </li>
 </ol>
 
@@ -15749,7 +15749,7 @@ $$\log(n_{ij}) = \log(N) + \log(\alpha_i) + \log(\beta_j) + \log(\alpha\beta_{ij
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="11-License">11 License<a class="anchor-link" href="#11-License">&#182;</a></h1><p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a></p>
-<p><em>Common statistical tests are linear models</em>: Python port by <a href="https://eigenfoo.xyz/tests-as-linear/">Jonas Kristoffer Lindeløv and George Ho</a> is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+<p><em>Common statistical tests are linear models</em>: Python port by <a href="https://eigenfoo.xyz/tests-as-linear/">George Ho and Jonas Kristoffer Lindeløv</a> is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 <p>Based on a work at <a href="https://lindeloev.github.io/tests-as-linear/">https://lindeloev.github.io/tests-as-linear/</a>.</p>
 <p>Permissions beyond the scope of this license may be available at <a href="https://github.com/eigenfoo/tests-as-linear">https://github.com/eigenfoo/tests-as-linear</a>.</p>
 
