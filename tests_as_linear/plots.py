@@ -4,7 +4,7 @@ import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
 from .utils import signed_rank, format_decimals_factory
 
-plt.style.use("seaborn-whitegrid")
+plt.style.use("seaborn-v0_8-whitegrid")
 
 
 def linear_regression_plot():
